@@ -1,0 +1,10 @@
+<figure class="quote">
+  <blockquote>
+    {% if short is defined and short %}{{ r.text|truncate(260, true, '…') }}{% else %}{{ r.text }}{% endif %}
+  </blockquote>
+  <figcaption>
+    <strong>{{ r.name }}</strong>
+    <span>{{ r.title }}</span>
+    <span class="mono">{{ r.relation }} · {{ r.date }}</span>
+  </figcaption>
+</figure>

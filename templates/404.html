@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block title %}Not found · {{ site.name }}{% endblock %}
+{% block content %}
+<section class="page-head">
+  <div class="wrap">
+    <p class="eyebrow mono">404 · asset not in inventory</p>
+    <h1>That page isn't in scope.</h1>
+    <p class="lead"><a class="link" href="{{ url_for('home') }}">Back to the homepage</a></p>
+  </div>
+</section>
+{% endblock %}

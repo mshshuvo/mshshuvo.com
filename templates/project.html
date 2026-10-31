@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% from "_icons.html" import icon %}
+{% block title %}{{ p.title }} · {{ site.name }}{% endblock %}
+{% block content %}
+<section class="page-head">
+  <div class="wrap">
+    <p class="eyebrow mono"><a class="crumb" href="{{ url_for('projects') }}">Projects</a> / {{ p.tags|join(' · ') }}</p>
+    <h1>{{ p.title }}</h1>
+    <p class="lead">{{ p.summary }}</p>
+  </div>
+</section>
+<section class="section section--tight">
+  <div class="wrap case">
+    <div class="case__body">
+      <h2>The challenge</h2>
+      <p>{{ p.challenge }}</p>
+      <h2>What I did</h2>
+      <ul class="case__list">{% for w in p.work %}<li>{{ w }}</li>{% endfor %}</ul>
+      <h2>Outcomes</h2>
+      <ul class="outcomes outcomes--big">{% for o in p.outcomes %}<li>{{ o }}</li>{% endfor %}</ul>
+    </div>
+    <aside class="profile case__facts" aria-label="Project facts">
+      <ul class="profile__list">
+        <li><span class="mono">Client</span><strong>{{ p.org }}</strong></li>
+        <li><span class="mono">Period</span><strong>{{ p.period }}</strong></li>
+        <li><span class="mono">My role</span><strong>{{ p.role }}</strong></li>
+      </ul>
+    </aside>
+  </div>
+</section>
+<section class="section">
+  <div class="wrap callout">
+    <div>
+      <p class="mono certs__label">Next project</p>
+      <h2>{{ nxt.title }}</h2>
+    </div>
+    <a class="btn btn--ghost" href="{{ url_for('project_detail', slug=nxt.slug) }}">Read it {{ icon('arrow') }}</a>
+  </div>
+</section>
+{% endblock %}

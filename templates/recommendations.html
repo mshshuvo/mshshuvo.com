@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% from "_icons.html" import icon %}
+{% block title %}Recommendations · {{ site.name }}{% endblock %}
+{% block content %}
+<section class="page-head">
+  <div class="wrap">
+    <p class="eyebrow mono">Recommendations</p>
+    <h1>From managers, teammates and clients.</h1>
+    <p class="lead">{{ recs|length }} recommendations from LinkedIn, including NATO, NRD Cyber Security and government clients.
+      <a class="link" href="{{ site.linkedin_recs }}" rel="noopener" target="_blank">View on LinkedIn {{ icon('external') }}</a></p>
+  </div>
+</section>
+<section class="section section--tight">
+  <div class="wrap quotes quotes--all">
+    {% for r in recs %}{% with short=false %}{% include "partials/quote.html" %}{% endwith %}{% endfor %}
+  </div>
+</section>
+{% endblock %}

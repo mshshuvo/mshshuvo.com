@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% from "_icons.html" import icon %}
+{% block title %}Projects · {{ site.name }}{% endblock %}
+{% block content %}
+<section class="page-head">
+  <div class="wrap">
+    <p class="eyebrow mono">Projects</p>
+    <h1>National programmes, delivered.</h1>
+    <p class="lead">Strategy, incident response, audit, offensive security, forensics and research, from national CIRT build-outs to central-bank testing. Filter by domain.</p>
+  </div>
+</section>
+<section class="section section--tight">
+  <div class="wrap">
+    <nav class="filters" aria-label="Filter projects by domain">
+      <a href="{{ url_for('projects') }}" class="filter" {% if not tag %}aria-current="true"{% endif %}
+         hx-get="{{ url_for('projects') }}" hx-target="#project-grid" hx-push-url="true">All</a>
+      {% for t in tags %}
+      <a href="{{ url_for('projects', tag=t) }}" class="filter" {% if tag == t %}aria-current="true"{% endif %}
+         hx-get="{{ url_for('projects', tag=t) }}" hx-target="#project-grid" hx-push-url="true">{{ t }}</a>
+      {% endfor %}
+    </nav>
+    <div id="project-grid" aria-live="polite">
+      {% include "partials/project_grid.html" %}
+    </div>
+  </div>
+</section>
+<section class="section">
+  <div class="wrap callout">
+    <div>
+      <h2>Open-source security tools</h2>
+      <p>A new defensive tool every week: ISO 27001, NIST CSF, PCI DSS and FINTRAC-aligned utilities with tests and documentation.</p>
+    </div>
+    <a class="btn btn--ghost" href="{{ site.github }}" rel="noopener" target="_blank">View on GitHub {{ icon('external') }}</a>
+  </div>
+</section>
+{% endblock %}

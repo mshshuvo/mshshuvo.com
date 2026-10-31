@@ -1,0 +1,107 @@
+{% extends "base.html" %}
+{% from "_icons.html" import icon %}
+{% block content %}
+<section class="hero">
+  <div class="wrap hero__grid">
+    <div>
+      <p class="eyebrow mono">{{ site.title }} · {{ site.location }}</p>
+      <h1>I build cyber defence at <em>national scale</em>.</h1>
+      <p class="lead">{{ site.intro }}</p>
+      <div class="cta">
+        <a class="btn" href="{{ url_for('projects') }}">View major projects {{ icon('arrow') }}</a>
+        <a class="btn btn--ghost" href="{{ url_for('contact') }}">Get in touch</a>
+      </div>
+      <ul class="chips" aria-label="Selected credentials">
+        {% for c in site.creds %}<li>{{ c }}</li>{% endfor %}
+      </ul>
+    </div>
+
+    <aside class="profile" aria-label="Profile summary">
+      <div class="profile__head">
+        <div class="profile__mark" aria-hidden="true">MS</div>
+        <div>
+          <p class="profile__name">{{ site.name }}</p>
+          <p class="profile__role">{{ site.title }}</p>
+        </div>
+      </div>
+      <ul class="profile__list">
+        {% for label, value in site.profile %}
+        <li><span class="mono">{{ label }}</span><strong>{{ value }}</strong></li>
+        {% endfor %}
+        <li><span class="mono">Status</span><strong class="status">Open to senior roles &amp; advisory</strong></li>
+      </ul>
+    </aside>
+  </div>
+</section>
+
+<section class="stats">
+  <div class="wrap stats__grid">
+    {% for n, label in site.stats %}<div class="stat"><strong>{{ n }}</strong><span>{{ label }}</span></div>{% endfor %}
+  </div>
+</section>
+
+<section class="band">
+  <div class="wrap">
+    <p class="mono band__label">Across the cyber domain</p>
+    <ul class="domains">{% for d in site.domains %}<li>{{ d }}</li>{% endfor %}</ul>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+    <div class="section__head">
+      <h2>Selected projects</h2>
+      <a class="link" href="{{ url_for('projects') }}">All projects {{ icon('arrow') }}</a>
+    </div>
+    <div class="cards">
+      {% for p in projects %}{% include "partials/project_card.html" %}{% endfor %}
+    </div>
+  </div>
+</section>
+
+<section class="section section--split">
+  <div class="wrap">
+    <div class="section__head">
+      <h2>What colleagues say</h2>
+      <a class="link" href="{{ url_for('recommendations') }}">All recommendations {{ icon('arrow') }}</a>
+    </div>
+    <div class="quotes">
+      {% for r in recs %}{% with short=true %}{% include "partials/quote.html" %}{% endwith %}{% endfor %}
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+    <div class="section__head">
+      <h2>Certifications across the domain</h2>
+      <a class="link" href="{{ url_for('experience') }}#certifications">Full list {{ icon('arrow') }}</a>
+    </div>
+    <div class="cert-grid">
+      {% for group, names in certs %}{% if group != 'In progress' %}
+      <div class="cert-tile">
+        <p class="mono certs__label">{{ group }}</p>
+        <p>{{ names|join(' · ') }}</p>
+      </div>
+      {% endif %}{% endfor %}
+    </div>
+  </div>
+</section>
+
+<section class="section section--split">
+  <div class="wrap split">
+    <div>
+      <p class="eyebrow mono">For hiring teams</p>
+      <h2>Senior cyber, risk and GRC leadership</h2>
+      <p>Open to senior cybersecurity, IT risk, GRC and security programme roles in Canada. I bring national CIRT and critical-infrastructure delivery, programme and P&amp;L leadership, and current Canadian AML/KYC experience.</p>
+      <a class="link" href="{{ url_for('experience') }}">See experience {{ icon('arrow') }}</a>
+    </div>
+    <div>
+      <p class="eyebrow mono">For organisations</p>
+      <h2>Strategy, resilience and assurance</h2>
+      <p>From cyber strategy and incident-response capability to audits, AI governance and penetration-test programmes, on fixed-scope engagements or as a fractional leader.</p>
+      <a class="link" href="{{ url_for('services') }}">See services {{ icon('arrow') }}</a>
+    </div>
+  </div>
+</section>
+{% endblock %}

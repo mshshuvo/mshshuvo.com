@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{% block title %}Experience · {{ site.name }}{% endblock %}
+{% block content %}
+<section class="page-head">
+  <div class="wrap">
+    <p class="eyebrow mono">Experience</p>
+    <h1>From national cyber defence to Canadian financial services.</h1>
+    <p class="lead">Select any role to expand the details.</p>
+  </div>
+</section>
+<section class="section section--tight">
+  <div class="wrap">
+    <ol class="timeline">
+      {% for item in items %}
+      <li class="tl">
+        <div class="tl__dot" aria-hidden="true"></div>
+        <button class="tl__head"
+                hx-get="{{ url_for('experience_detail', idx=loop.index0) }}"
+                hx-target="#exp-{{ loop.index0 }}" hx-swap="innerHTML"
+                aria-expanded="false" aria-controls="exp-{{ loop.index0 }}">
+          <span class="mono tl__period">{{ item.period }}</span>
+          <span class="tl__role">{{ item.role }}</span>
+          <span class="tl__org">{{ item.org }}</span>
+          <span class="tl__sum">{{ item.summary }}</span>
+          <span class="tl__more mono">details +</span>
+        </button>
+        <div id="exp-{{ loop.index0 }}" class="tl__body" aria-live="polite"></div>
+      </li>
+      {% endfor %}
+    </ol>
+  </div>
+</section>
+
+<section class="section section--split" id="certifications">
+  <div class="wrap">
+    <h2>Certifications</h2>
+    <div class="certs">
+      {% for group, names in certs %}
+      <div class="certs__group">
+        <p class="mono certs__label">{{ group }}</p>
+        <ul class="chips chips--flush">{% for n in names %}<li>{{ n }}</li>{% endfor %}</ul>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap split">
+    <div>
+      <h2>Education</h2>
+      <ul class="plain">{% for t, d in education %}<li><strong>{{ t }}</strong><span>{{ d }}</span></li>{% endfor %}</ul>
+    </div>
+    <div>
+      <h2>Professional service</h2>
+      <ul class="plain">{% for t, d in service %}<li><strong>{{ t }}</strong><span>{{ d }}</span></li>{% endfor %}</ul>
+    </div>
+  </div>
+</section>
+{% endblock %}

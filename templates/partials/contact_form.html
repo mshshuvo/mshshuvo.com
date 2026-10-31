@@ -1,0 +1,32 @@
+{% set topics = ['Job opportunity', 'ISO 27001 readiness', 'Cyber risk assessment', 'Internal audit', 'Something else'] %}
+<form class="form" hx-post="{{ url_for('contact_post') }}" hx-target="#contact-slot" hx-swap="innerHTML" novalidate>
+  {% if errors.form %}<p class="form__err form__err--top">{{ errors.form }}</p>{% endif %}
+  <div class="field">
+    <label for="name">Name</label>
+    <input id="name" name="name" autocomplete="name" value="{{ form.get('name', '') }}" maxlength="100"
+           {% if errors.name %}aria-invalid="true" aria-describedby="name-err"{% endif %}>
+    {% if errors.name %}<p class="form__err" id="name-err">{{ errors.name }}</p>{% endif %}
+  </div>
+  <div class="field">
+    <label for="email">Email</label>
+    <input id="email" name="email" type="email" autocomplete="email" value="{{ form.get('email', '') }}" maxlength="200"
+           {% if errors.email %}aria-invalid="true" aria-describedby="email-err"{% endif %}>
+    {% if errors.email %}<p class="form__err" id="email-err">{{ errors.email }}</p>{% endif %}
+  </div>
+  <div class="field">
+    <span class="label">What's it about?</span>
+    <div class="pills">
+      {% for t in topics %}
+      <label class="pill"><input type="radio" name="topic" value="{{ t }}" {% if form.get('topic') == t %}checked{% endif %}><span>{{ t }}</span></label>
+      {% endfor %}
+    </div>
+  </div>
+  <div class="field">
+    <label for="message">Message</label>
+    <textarea id="message" name="message" rows="6" maxlength="4000"
+              {% if errors.message %}aria-invalid="true" aria-describedby="message-err"{% endif %}>{{ form.get('message', '') }}</textarea>
+    {% if errors.message %}<p class="form__err" id="message-err">{{ errors.message }}</p>{% endif %}
+  </div>
+  <div class="hp" aria-hidden="true"><label>Website <input name="website" tabindex="-1" autocomplete="off"></label></div>
+  <button class="btn" type="submit">Send message <span class="htmx-indicator mono">…</span></button>
+</form>

@@ -1,0 +1,9 @@
+{% from "_icons.html" import icon %}
+<article class="card project">
+  <p class="mono project__meta">{{ p.period }}</p>
+  <h3><a class="project__link" href="{{ url_for('project_detail', slug=p.slug) }}">{{ p.title }}</a></h3>
+  <p class="project__org">{{ p.org }}</p>
+  <p>{{ p.summary }}</p>
+  <ul class="outcomes">{% for o in p.outcomes[:2] %}<li>{{ o }}</li>{% endfor %}</ul>
+  <ul class="chips chips--small">{% for t in p.tags %}<li>{{ t }}</li>{% endfor %}</ul>
+</article>

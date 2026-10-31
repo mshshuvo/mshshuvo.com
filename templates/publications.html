@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% from "_icons.html" import icon %}
+{% block title %}Publications & policy · {{ site.name }}{% endblock %}
+{% block content %}
+<section class="page-head">
+  <div class="wrap">
+    <p class="eyebrow mono">Publications &amp; policy</p>
+    <h1>National policy, reports and writing.</h1>
+    <p class="lead">Strategies, frameworks and guidelines I led or contributed to at national level, plus articles on phishing, critical infrastructure, AI and privacy.</p>
+  </div>
+</section>
+
+<section class="section section--tight">
+  <div class="wrap">
+    <h2>National policy &amp; frameworks</h2>
+    <ul class="plain plain--wide">
+      {% for t, d in policies %}<li><strong>{{ t }}</strong><span>{{ d }}</span></li>{% endfor %}
+    </ul>
+  </div>
+</section>
+
+<section class="section section--split">
+  <div class="wrap">
+    <h2>Articles</h2>
+    <div class="pubs">
+      {% for a in articles %}
+      <article class="pub">
+        <p class="mono project__meta">{{ a.venue }}{% if a.date %} · {{ a.date }}{% endif %}</p>
+        <h3>{% if a.url %}<a class="project__link" href="{{ a.url }}" rel="noopener" target="_blank">{{ a.title }}</a>{% else %}{{ a.title }}{% endif %}</h3>
+        {% if a.url %}<p class="pub__link mono">Read article {{ icon('external') }}</p>{% else %}<p class="pub__link mono pub__link--off">Print edition</p>{% endif %}
+      </article>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap split">
+    <div>
+      <h2>Press</h2>
+      <ul class="plain">{% for t, d in press %}<li><strong>{{ t }}</strong><span>{{ d }}</span></li>{% endfor %}</ul>
+    </div>
+    <div>
+      <h2>Early technical writing</h2>
+      <ul class="plain">{% for t, d in early %}<li><strong>{{ t }}</strong><span>{{ d }}</span></li>{% endfor %}</ul>
+    </div>
+  </div>
+</section>
+{% endblock %}

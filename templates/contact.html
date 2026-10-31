@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block title %}Contact · {{ site.name }}{% endblock %}
+{% block content %}
+<section class="page-head">
+  <div class="wrap">
+    <p class="eyebrow mono">Contact</p>
+    <h1>Let's talk.</h1>
+    <p class="lead">Recruiters, hiring managers and organisations are all welcome. I reply within two business days.</p>
+  </div>
+</section>
+<section class="section section--tight">
+  <div class="wrap contact-layout">
+    <div id="contact-slot">
+      {% with form={'topic': request.args.get('topic', '')}, errors={} %}
+        {% include "partials/contact_form.html" %}
+      {% endwith %}
+    </div>
+    <aside class="aside">
+      <h3>Elsewhere</h3>
+      <p class="mono"><a href="mailto:{{ site.email }}">{{ site.email }}</a></p>
+      <p class="mono"><a href="{{ site.linkedin }}" rel="noopener">LinkedIn</a></p>
+      <p>Based in {{ site.location }}. Available for roles across Canada and remote advisory work.</p>
+    </aside>
+  </div>
+</section>
+{% endblock %}
