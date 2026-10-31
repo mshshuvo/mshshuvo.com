@@ -14,17 +14,19 @@
       {% for item in items %}
       <li class="tl">
         <div class="tl__dot" aria-hidden="true"></div>
-        <button class="tl__head"
-                hx-get="{{ url_for('experience_detail', idx=loop.index0) }}"
-                hx-target="#exp-{{ loop.index0 }}" hx-swap="innerHTML"
-                aria-expanded="false" aria-controls="exp-{{ loop.index0 }}">
-          <span class="mono tl__period">{{ item.period }}</span>
-          <span class="tl__role">{{ item.role }}</span>
-          <span class="tl__org">{{ item.org }}</span>
-          <span class="tl__sum">{{ item.summary }}</span>
-          <span class="tl__more mono">details +</span>
-        </button>
-        <div id="exp-{{ loop.index0 }}" class="tl__body" aria-live="polite"></div>
+        <details class="tl__item">
+          <summary class="tl__head">
+            <span class="mono tl__period">{{ item.period }}</span>
+            <span class="tl__role">{{ item.role }}</span>
+            <span class="tl__org">{{ item.org }}</span>
+            <span class="tl__sum">{{ item.summary }}</span>
+            <span class="tl__more mono" aria-hidden="true"></span>
+          </summary>
+          <div class="tl__detail">
+            <ul>{% for pt in item.points %}<li>{{ pt }}</li>{% endfor %}</ul>
+            <ul class="chips chips--small">{% for t in item.tags %}<li>{{ t }}</li>{% endfor %}</ul>
+          </div>
+        </details>
       </li>
       {% endfor %}
     </ol>

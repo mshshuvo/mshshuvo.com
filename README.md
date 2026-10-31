@@ -1,53 +1,42 @@
 # mshshuvo.com
 
-Personal site for Md Sabbir Hossain: Flask + HTMX, hand-written CSS, no external CDNs.
+Personal site of Md Sabbir Hossain. Python (Flask + Jinja) builds a fully static
+site that Cloudflare Pages serves for free: no server, nothing sleeps.
+
+## Edit content
+
+All text lives in `content.py`: profile, projects, publications, recommendations,
+experience, certifications and services. Push to `main` and Cloudflare rebuilds.
 
 ## Run locally
 
 ```bash
-python -m venv .venv && source .venv/bin/activate   # Windows: .venv\Scripts\activate
 pip install -r requirements.txt
-python app.py            # http://127.0.0.1:5000
+python app.py        # live preview at http://127.0.0.1:5000
+python build.py      # writes the static site to dist/
 ```
 
-## Edit content
+## Deploy (Cloudflare Pages)
 
-All text (bio, experience, services, quiz questions) lives in `content.py`.
-Search for `TODO` to find the details only you can fill in.
-
-## Pages and interactive features
-
-| Route | What it does |
+| Setting | Value |
 |---|---|
-| `/` | Hero with animated risk heat map, services preview, recruiter / client split |
-| `/experience` | Timeline; each role expands in place via HTMX |
-| `/services` | Six services with outcomes |
-| `/assessment` | ISO 27001 readiness check; scores live as you answer, nothing stored |
-| `/contact` | HTMX form with validation, honeypot and per-IP rate limit |
+| Framework preset | None |
+| Build command | `pip install -r requirements.txt && python build.py` |
+| Build output directory | `dist` |
+| Environment variable | `PYTHON_VERSION` = `3.12` |
 
-Contact messages are appended to `data/messages.jsonl`. On Render's free tier the
-disk resets on each deploy, so before launch we should wire this to email
-(e.g. Resend or Postmark) — see "Next steps".
+Custom domain: Pages project → Custom domains → add `mshshuvo.com` and `www.mshshuvo.com`.
+
+## Contact form
+
+Set `SITE["form_key"]` in `content.py` to a free Web3Forms access key
+(web3forms.com) and messages are emailed to you. Left empty, the contact page
+shows email buttons instead.
 
 ## Security
 
-- Strict Content-Security-Policy (`'self'` only); htmx and fonts are self-hosted
-- HSTS (on HTTPS), `nosniff`, `frame-ancestors 'none'`, Referrer- and Permissions-Policy
-- No inline scripts or styles; htmx `allowEval` disabled
-- Honeypot + rate limiting on the contact form
-
-## Deploy (Render)
-
-1. Push this folder to a GitHub repo.
-2. In Render: **New → Blueprint**, pick the repo (it reads `render.yaml`).
-3. Settings → Custom Domains → add `mshshuvo.com` and `www.mshshuvo.com`.
-4. At your registrar, set the DNS records Render shows (A record for the apex,
-   CNAME for `www`), and delete old records pointing at the previous host.
-5. Render issues the HTTPS certificate automatically.
-
-## Next steps
-
-- Fill in the TODOs in `content.py` (LinkedIn URL, earlier roles, email)
-- Send contact messages to your inbox instead of a file
-- Add an Insights/blog section for your LinkedIn posts
-- Add a headshot and a downloadable resume
+- Strict Content-Security-Policy (`'self'` plus the form endpoint), HSTS,
+  `nosniff`, `X-Frame-Options: DENY`, Referrer- and Permissions-Policy,
+  set in `dist/_headers` by `build.py` from `SECURITY_HEADERS` in `app.py`
+- No third-party scripts, fonts or trackers; everything is self-hosted
+- No inline scripts or styles

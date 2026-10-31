@@ -1,6 +1,8 @@
 {% extends "base.html" %}
+{% from "_icons.html" import icon %}
 {% block title %}Contact · {{ site.name }}{% endblock %}
 {% block content %}
+{% set topics = ['Job opportunity', 'Consulting engagement', 'Speaking or training', 'Something else'] %}
 <section class="page-head">
   <div class="wrap">
     <p class="eyebrow mono">Contact</p>
@@ -11,14 +13,60 @@
 <section class="section section--tight">
   <div class="wrap contact-layout">
     <div id="contact-slot">
-      {% with form={'topic': request.args.get('topic', '')}, errors={} %}
-        {% include "partials/contact_form.html" %}
-      {% endwith %}
+      {% if site.form_key %}
+      <form class="form" id="contact-form" action="{{ form_origin }}/submit" method="post" novalidate>
+        <input type="hidden" name="access_key" value="{{ site.form_key }}">
+        <input type="hidden" name="subject" value="New message from mshshuvo.com">
+        <input type="hidden" name="from_name" value="mshshuvo.com">
+        <p class="form__err form__err--top" id="form-error" hidden></p>
+        <div class="field">
+          <label for="name">Name</label>
+          <input id="name" name="name" autocomplete="name" maxlength="100" required minlength="2">
+          <p class="form__err" id="name-err" hidden>Please enter your name.</p>
+        </div>
+        <div class="field">
+          <label for="email">Email</label>
+          <input id="email" name="email" type="email" autocomplete="email" maxlength="200" required>
+          <p class="form__err" id="email-err" hidden>Please enter a valid email.</p>
+        </div>
+        <div class="field">
+          <span class="label" id="topic-label">What's it about?</span>
+          <div class="pills" role="radiogroup" aria-labelledby="topic-label">
+            {% for t in topics %}
+            <label class="pill"><input type="radio" name="topic" value="{{ t }}"{% if loop.first %} checked{% endif %}><span>{{ t }}</span></label>
+            {% endfor %}
+          </div>
+        </div>
+        <div class="field">
+          <label for="message">Message</label>
+          <textarea id="message" name="message" rows="6" maxlength="4000" required minlength="10"></textarea>
+          <p class="form__err" id="message-err" hidden>A few more words, please (10–4000 characters).</p>
+        </div>
+        <input type="checkbox" name="botcheck" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
+        <button class="btn" type="submit" id="contact-submit">Send message</button>
+      </form>
+      <div class="sent" id="contact-sent" role="status" hidden>
+        <svg viewBox="0 0 24 24" class="icon icon--big" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M8 12l3 3 5-6"/></svg>
+        <h2>Message received.</h2>
+        <p>Thanks for reaching out. I'll reply within two business days.</p>
+      </div>
+      {% else %}
+      <div class="sent">
+        <h2>Email is the fastest way to reach me.</h2>
+        <p>Pick a topic and your email app opens with a subject line ready.</p>
+        <div class="cta">
+          {% for t in topics %}
+          <a class="btn{% if not loop.first %} btn--ghost{% endif %}" href="mailto:{{ site.email }}?subject={{ (t ~ ' — via mshshuvo.com')|urlencode }}">{{ t }}</a>
+          {% endfor %}
+        </div>
+      </div>
+      {% endif %}
     </div>
     <aside class="aside">
       <h3>Elsewhere</h3>
       <p class="mono"><a href="mailto:{{ site.email }}">{{ site.email }}</a></p>
       <p class="mono"><a href="{{ site.linkedin }}" rel="noopener">LinkedIn</a></p>
+      <p class="mono"><a href="{{ site.github }}" rel="noopener">GitHub</a></p>
       <p>Based in {{ site.location }}. Available for roles across Canada and remote advisory work.</p>
     </aside>
   </div>

@@ -1,5 +1,5 @@
 {% from "_icons.html" import icon %}
-<article class="card project">
+<article class="card project" data-tags="{{ p.tags|join('|') }}">
   <p class="mono project__meta">{{ p.period }}</p>
   <h3><a class="project__link" href="{{ url_for('project_detail', slug=p.slug) }}">{{ p.title }}</a></h3>
   <p class="project__org">{{ p.org }}</p>

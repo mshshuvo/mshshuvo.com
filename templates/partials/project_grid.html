@@ -1,4 +1,0 @@
-<p class="mono filters__count">{{ projects|length }} project{{ '' if projects|length == 1 else 's' }}{% if tag %} · {{ tag }}{% endif %}</p>
-<div class="cards">
-  {% for p in projects %}{% include "partials/project_card.html" %}{% endfor %}
-</div>

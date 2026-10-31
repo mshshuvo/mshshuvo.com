@@ -11,16 +11,14 @@
 </section>
 <section class="section section--tight">
   <div class="wrap">
-    <nav class="filters" aria-label="Filter projects by domain">
-      <a href="{{ url_for('projects') }}" class="filter" {% if not tag %}aria-current="true"{% endif %}
-         hx-get="{{ url_for('projects') }}" hx-target="#project-grid" hx-push-url="true">All</a>
-      {% for t in tags %}
-      <a href="{{ url_for('projects', tag=t) }}" class="filter" {% if tag == t %}aria-current="true"{% endif %}
-         hx-get="{{ url_for('projects', tag=t) }}" hx-target="#project-grid" hx-push-url="true">{{ t }}</a>
+    <div class="filters" role="group" aria-label="Filter projects by domain" hidden>
+      <button type="button" class="filter" data-tag="" aria-pressed="true">All</button>
+      {% for t in tags %}<button type="button" class="filter" data-tag="{{ t }}" aria-pressed="false">{{ t }}</button>
       {% endfor %}
-    </nav>
-    <div id="project-grid" aria-live="polite">
-      {% include "partials/project_grid.html" %}
+    </div>
+    <p class="mono filters__count" id="project-count" aria-live="polite">{{ projects|length }} projects</p>
+    <div class="cards" id="project-grid">
+      {% for p in projects %}{% include "partials/project_card.html" %}{% endfor %}
     </div>
   </div>
 </section>
