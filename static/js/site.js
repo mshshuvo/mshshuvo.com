@@ -141,10 +141,12 @@ function initContactForm() {
       });
       const data = await res.json().catch(() => ({}));
       if (!res.ok || data.success === false) throw new Error(data.message || "Send failed");
+      if (window.turnstile) window.turnstile.remove();
       form.hidden = true;
       document.getElementById("contact-sent").hidden = false;
     } catch (_) {
-      top.textContent = "Sorry, the message couldn't be sent. Please email me directly instead.";
+      if (window.turnstile) window.turnstile.reset();
+      top.textContent = "Sorry, the message couldn't be sent. Please try again or email me directly.";
       top.hidden = false;
       btn.disabled = false;
       btn.textContent = "Send message";

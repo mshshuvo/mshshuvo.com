@@ -4,8 +4,8 @@ Flask is used to *build* the site: `python build.py` renders every page to
 static HTML in dist/, which Cloudflare Pages serves. `python app.py` runs a
 local preview with the same security headers.
 
-All interactivity (project filters, readiness check, contact form) runs in the
-browser from static/js/site.js; there is no server-side state.
+All interactivity runs in the browser from static/js/site.js. The only
+server-side code is the Cloudflare Worker in worker/ (contact form).
 """
 from datetime import datetime
 
@@ -16,13 +16,14 @@ from content import (ARTICLES, CERTIFICATIONS, EARLY_WRITING, EDUCATION, EXPERIE
 
 PROJECTS_BY_SLUG = {p["slug"]: p for p in PROJECTS}
 
-# Contact form submissions go to Web3Forms (free); it must be allowed in the CSP.
-FORM_ORIGIN = "https://api.web3forms.com"
+# Cloudflare Turnstile (contact form bot check) loads a script and an iframe from here.
+TURNSTILE_ORIGIN = "https://challenges.cloudflare.com"
 
 CSP = (
-    "default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; "
-    f"font-src 'self'; connect-src 'self' {FORM_ORIGIN}; form-action 'self' {FORM_ORIGIN}; "
-    "frame-ancestors 'none'; base-uri 'self'; object-src 'none'; upgrade-insecure-requests"
+    f"default-src 'self'; script-src 'self' {TURNSTILE_ORIGIN}; frame-src {TURNSTILE_ORIGIN}; "
+    "style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self'; "
+    "form-action 'self'; frame-ancestors 'none'; base-uri 'self'; object-src 'none'; "
+    "upgrade-insecure-requests"
 )
 
 SECURITY_HEADERS = {
@@ -31,7 +32,7 @@ SECURITY_HEADERS = {
     "X-Content-Type-Options": "nosniff",
     "X-Frame-Options": "DENY",
     "Referrer-Policy": "strict-origin-when-cross-origin",
-    "Permissions-Policy": "camera=(), microphone=(), geolocation=(), interest-cohort=()",
+    "Permissions-Policy": "camera=(), microphone=(), geolocation=(), payment=(), usb=()",
     "Cross-Origin-Opener-Policy": "same-origin",
 }
 
@@ -48,7 +49,7 @@ def security_headers(resp):
 
 @app.context_processor
 def inject_site():
-    return {"site": SITE, "year": datetime.now().year, "form_origin": FORM_ORIGIN}
+    return {"site": SITE, "year": datetime.now().year, "turnstile_origin": TURNSTILE_ORIGIN}
 
 
 @app.get("/")
@@ -109,4 +110,6 @@ def not_found(_):
 
 
 if __name__ == "__main__":
-    app.run(debug=True, port=5000)
+    import os
+    # Local preview only; debug mode is opt-in and the server binds to localhost.
+    app.run(host="127.0.0.1", port=5000, debug=os.environ.get("FLASK_DEBUG") == "1")

@@ -1,0 +1,28 @@
+// Cloudflare Worker with static assets (Workers Free plan).
+// Deployed by .github/workflows/ci.yml after all security checks pass.
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "mshshuvo",
+  "main": "worker/index.js",
+  "compatibility_date": "2026-10-01",
+  "assets": {
+    "directory": "./dist",
+    "binding": "ASSETS",
+    "html_handling": "auto-trailing-slash",
+    "not_found_handling": "404-page"
+  },
+  // Email Routing: the Worker may only send to this verified address.
+  "send_email": [
+    { "name": "EMAIL", "destination_address": "mshshuvo@gmail.com" }
+  ],
+  "vars": {
+    "CONTACT_TO": "mshshuvo@gmail.com",
+    "CONTACT_FROM": "contact@mshshuvo.com"
+  },
+  // TURNSTILE_SECRET is set with `wrangler secret put`, never committed.
+  "observability": { "enabled": true },
+  // Keep the default *.workers.dev URL on until the custom domain works, then set both to false
+  // so the site is only reachable through mshshuvo.com (and Cloudflare's WAF rules).
+  "workers_dev": true,
+  "preview_urls": false
+}

@@ -10,6 +10,7 @@
   <link rel="stylesheet" href="{{ url_for('static', filename='css/site.css') }}">
   <link rel="icon" href="{{ url_for('static', filename='favicon.svg') }}" type="image/svg+xml">
   <script src="{{ url_for('static', filename='js/site.js') }}" defer></script>
+  {% block head %}{% endblock %}
 </head>
 <body>
   <a class="skip" href="#main">Skip to content</a>

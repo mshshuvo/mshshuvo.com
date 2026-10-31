@@ -15,8 +15,8 @@ SITE = {
     "location": "Ottawa, Canada",
     "email": "mshshuvo@gmail.com",
     "linkedin": "https://www.linkedin.com/in/mshshuvo/",
-    # Web3Forms access key (free, from web3forms.com). Empty = contact page shows email buttons instead.
-    "form_key": "",
+    # Cloudflare Turnstile site key (public). Empty = contact page shows email buttons instead.
+    "turnstile_sitekey": "",
     "github": "https://github.com/mshshuvo/Cyber-Projects",
     "linkedin_recs": "https://www.linkedin.com/in/mshshuvo/details/recommendations/",
     "creds": ["C|CISO", "ISO 27001 Senior Lead Auditor", "ISO 42001 AI Lead Auditor", "CEH", "ACE"],

@@ -1,12 +1,15 @@
-"""Render the whole site to static files in dist/ for Cloudflare Pages.
+"""Render the whole site to static files in dist/ for a Cloudflare Worker with static assets.
 
     python build.py            # writes dist/
     python -m http.server -d dist 8000   # quick local check (no security headers)
 
-Each route is written as <path>.html; Cloudflare Pages serves /projects from
-projects.html, so links need no extension.
+Each route is written as <path>.html; Cloudflare serves /projects from
+projects.html, so links need no extension. The same security headers are
+written to dist/_headers (static pages) and worker/site_headers.json (Worker 404s).
 """
+import json
 import shutil
+from datetime import date, timedelta
 from pathlib import Path
 
 from app import PROJECTS, SECURITY_HEADERS, app
@@ -42,10 +45,21 @@ def main() -> None:
 
     shutil.copytree(ROOT / "static", DIST / "static")
 
-    # Cloudflare Pages response headers
+    # Response headers for static assets, and the same set for Worker-generated pages
+    (ROOT / "worker" / "site_headers.json").write_text(json.dumps(SECURITY_HEADERS, indent=2) + "\n")
     lines = ["/*"] + [f"  {k}: {v}" for k, v in SECURITY_HEADERS.items()]
     lines += ["", "/static/*", "  Cache-Control: public, max-age=604800", ""]
     (DIST / "_headers").write_text("\n".join(lines))
+
+    # RFC 9116 security.txt (Expires must be under a year away; refreshed on every build)
+    wk = DIST / ".well-known"
+    wk.mkdir()
+    expires = (date.today() + timedelta(days=330)).isoformat() + "T00:00:00Z"
+    (wk / "security.txt").write_text(
+        "Contact: mailto:mshshuvo@gmail.com\n"
+        f"Expires: {expires}\n"
+        "Preferred-Languages: en\n"
+        f"Canonical: {SITE_URL}/.well-known/security.txt\n")
 
     (DIST / "robots.txt").write_text(f"User-agent: *\nAllow: /\nSitemap: {SITE_URL}/sitemap.xml\n")
     urls = "\n".join(f"  <url><loc>{SITE_URL}{'' if r == '/' else r}</loc></url>" for r in PAGES)

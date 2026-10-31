@@ -1,0 +1,66 @@
+# Free monitoring: hourly uptime/headers/TLS checks and a weekly OWASP ZAP scan of production.
+# Alerts are GitHub issues (labelled "monitor"), which GitHub emails to the repo owner.
+# Disabled until the repository variable SITE_URL is set (e.g. https://mshshuvo.com).
+name: Monitor
+
+on:
+  schedule:
+    - cron: "17 * * * *"    # hourly health + security-header check
+    - cron: "41 7 * * 0"    # weekly ZAP baseline against production
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  health:
+    if: vars.SITE_URL != '' && (github.event_name == 'workflow_dispatch' || github.event.schedule == '17 * * * *')
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      issues: write
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with: { persist-credentials: false }
+      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7.1.0
+        with: { python-version: "3.12" }
+      - name: Run checks
+        id: check
+        continue-on-error: true
+        run: python tools/monitor.py "${{ vars.SITE_URL }}" | tee report.md
+      - name: Open or update alert issue
+        if: steps.check.outcome == 'failure'
+        env: { GH_TOKEN: "${{ github.token }}" }
+        run: |
+          gh label create monitor --color B60205 --description "Production monitor alert" 2>/dev/null || true
+          n=$(gh issue list --label monitor --state open --json number --jq '.[0].number')
+          if [ -n "$n" ]; then gh issue comment "$n" --body-file report.md
+          else gh issue create --title "Production monitor alert" --label monitor --body-file report.md; fi
+          exit 1
+      - name: Close alert issue when healthy
+        if: steps.check.outcome == 'success'
+        env: { GH_TOKEN: "${{ github.token }}" }
+        run: |
+          for n in $(gh issue list --label monitor --state open --json number --jq '.[].number'); do
+            gh issue close "$n" --comment "Recovered: $(cat report.md)"
+          done
+
+  zap-production:
+    if: vars.SITE_URL != '' && (github.event_name == 'workflow_dispatch' || github.event.schedule == '41 7 * * 0')
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      issues: write
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with: { persist-credentials: false }
+      - name: OWASP ZAP baseline (passive, production)
+        uses: zaproxy/action-baseline@de8ad967d3548d44ef623df22cf95c3b0baf8b25 # v0.15.0
+        with:
+          target: ${{ vars.SITE_URL }}
+          rules_file_name: .zap/rules-prod.tsv
+          cmd_options: "-a -j"
+          issue_title: "ZAP weekly scan findings"
+          allow_issue_writing: true
+          fail_action: false
+          artifact_name: zap-production-report

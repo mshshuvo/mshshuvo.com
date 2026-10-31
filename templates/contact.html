@@ -1,6 +1,9 @@
 {% extends "base.html" %}
 {% from "_icons.html" import icon %}
 {% block title %}Contact · {{ site.name }}{% endblock %}
+{% block head %}{% if site.turnstile_sitekey %}
+  <script src="{{ turnstile_origin }}/turnstile/v0/api.js" async defer></script>{% endif %}
+{% endblock %}
 {% block content %}
 {% set topics = ['Job opportunity', 'Consulting engagement', 'Speaking or training', 'Something else'] %}
 <section class="page-head">
@@ -13,11 +16,8 @@
 <section class="section section--tight">
   <div class="wrap contact-layout">
     <div id="contact-slot">
-      {% if site.form_key %}
-      <form class="form" id="contact-form" action="{{ form_origin }}/submit" method="post" novalidate>
-        <input type="hidden" name="access_key" value="{{ site.form_key }}">
-        <input type="hidden" name="subject" value="New message from mshshuvo.com">
-        <input type="hidden" name="from_name" value="mshshuvo.com">
+      {% if site.turnstile_sitekey %}
+      <form class="form" id="contact-form" action="/api/contact" method="post" novalidate>
         <p class="form__err form__err--top" id="form-error" hidden></p>
         <div class="field">
           <label for="name">Name</label>
@@ -43,6 +43,7 @@
           <p class="form__err" id="message-err" hidden>A few more words, please (10–4000 characters).</p>
         </div>
         <input type="checkbox" name="botcheck" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
+        <div class="cf-turnstile" data-sitekey="{{ site.turnstile_sitekey }}" data-theme="dark" data-size="flexible"></div>
         <button class="btn" type="submit" id="contact-submit">Send message</button>
       </form>
       <div class="sent" id="contact-sent" role="status" hidden>
