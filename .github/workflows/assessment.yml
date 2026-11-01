@@ -1,0 +1,74 @@
+# One-off, owner-authorized security assessment of production (runs only on this branch).
+# Results are committed back to the branch under assessment/results/.
+name: Security assessment
+
+on:
+  push:
+    branches: ["security/assessment-*"]
+    paths: [".github/workflows/assessment.yml", "tools/assessment/**"]
+
+permissions:
+  contents: read
+
+jobs:
+  assess:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7.1.0
+        with: { python-version: "3.12" }
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with: { node-version: "22" }
+
+      - name: Prepare
+        run: mkdir -p assessment/results && sudo apt-get install -y -qq dnsutils bsdmainutils >/dev/null
+
+      - name: DNS records
+        run: |
+          R=assessment/results/dns.txt
+          for t in NS A AAAA MX TXT CAA SOA DS DNSKEY; do echo "=== mshshuvo.com $t" >> $R; dig +short mshshuvo.com $t >> $R; done
+          echo "=== _dmarc.mshshuvo.com TXT" >> $R; dig +short _dmarc.mshshuvo.com TXT >> $R
+          echo "=== www.mshshuvo.com A/AAAA/CNAME" >> $R; dig +short www.mshshuvo.com A >> $R; dig +short www.mshshuvo.com AAAA >> $R; dig +short www.mshshuvo.com CNAME >> $R
+          echo "=== DNSSEC validation (AD flag via 1.1.1.1)" >> $R; dig @1.1.1.1 +dnssec mshshuvo.com A | grep -E "flags:|RRSIG" >> $R
+          echo "=== mshshuvo.mshshuvo.workers.dev" >> $R; dig +short mshshuvo.mshshuvo.workers.dev >> $R
+
+      - name: HTTP checks
+        run: bash tools/assessment/http_tests.sh https://mshshuvo.com assessment/results/http.txt
+
+      - name: TLS configuration (testssl.sh, no vulnerability probes)
+        run: |
+          git clone -q https://github.com/testssl/testssl.sh /tmp/testssl
+          git -C /tmp/testssl checkout -q 97763a411c525720a5f9bd9d2cded416b10f210a  # v3.2.4
+          /tmp/testssl/testssl.sh --quiet --color 0 --warnings off --sneaky -p -S -P -s -h \
+            mshshuvo.com > assessment/results/tls.txt 2>&1 || true
+
+      - name: Static analysis (Semgrep CE, Bandit)
+        run: |
+          pip install -q semgrep==1.183.0 -r requirements-dev.txt
+          semgrep scan --metrics=off --quiet --config p/python --config p/flask --config p/javascript \
+            --config p/secrets --config p/github-actions --text > assessment/results/semgrep.txt 2>&1 || true
+          bandit -r app.py build.py content.py tools/ -f txt > assessment/results/bandit.txt 2>&1 || true
+
+      - name: Dependency and secret scans (pip-audit, npm audit, Gitleaks)
+        run: |
+          pip install -q -r requirements.txt
+          pip-audit -r requirements.txt --desc > assessment/results/pip-audit.txt 2>&1 || true
+          npm ci --ignore-scripts --silent && npm audit > assessment/results/npm-audit.txt 2>&1 || true
+          git fetch -q --unshallow || true
+          V=8.30.1; f=gitleaks_${V}_linux_x64.tar.gz
+          curl -sSfLO https://github.com/gitleaks/gitleaks/releases/download/v$V/$f
+          curl -sSfL https://github.com/gitleaks/gitleaks/releases/download/v$V/gitleaks_${V}_checksums.txt | grep " $f\$" | sha256sum -c -
+          tar -xzf $f gitleaks
+          ./gitleaks git . --redact --verbose > assessment/results/gitleaks.txt 2>&1 || true
+          rm -f gitleaks $f
+
+      - name: Commit results to this branch
+        run: |
+          date -u +"%Y-%m-%dT%H:%M:%SZ" > assessment/results/RUN_AT.txt
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add assessment/results
+          git commit -q -m "Assessment results $(cat assessment/results/RUN_AT.txt)" || exit 0
+          git push -q
