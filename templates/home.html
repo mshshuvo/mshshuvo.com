@@ -71,7 +71,20 @@
   </div>
 </section>
 
+{% if posts %}
 <section class="section">
+  <div class="wrap">
+    <div class="section__head">
+      <h2>Latest insights</h2>
+      <a class="link" href="{{ url_for('insights') }}">All articles {{ icon('arrow') }}</a>
+    </div>
+    <div class="posts posts--teaser">
+      {% for post in posts %}{% include "partials/post_card.html" %}{% endfor %}
+    </div>
+  </div>
+</section>
+
+{% endif %}<section class="section">
   <div class="wrap">
     <div class="section__head">
       <h2>Certifications across the domain</h2>

@@ -21,15 +21,16 @@ function initMenu() {
   });
 }
 
-// ---------------------------------------------------------------- project filter
+// ---------------------------------------------------------------- tag filter (projects, insights)
 function initProjectFilter() {
   const bar = document.querySelector(".filters");
-  const grid = document.getElementById("project-grid");
-  const count = document.getElementById("project-count");
+  const grid = document.querySelector("[data-filter-grid]");
+  const count = document.querySelector("[data-filter-count]");
   if (!bar || !grid) return;
   bar.hidden = false;
+  const noun = grid.dataset.noun || "item";
   const buttons = [...bar.querySelectorAll(".filter")];
-  const cards = [...grid.querySelectorAll(".project")];
+  const cards = [...grid.querySelectorAll("[data-tags]")];
   const known = new Set(buttons.map((b) => b.dataset.tag));
 
   const apply = (tag, push) => {
@@ -40,7 +41,7 @@ function initProjectFilter() {
       if (match) shown += 1;
     });
     buttons.forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.tag === tag)));
-    count.textContent = `${shown} project${shown === 1 ? "" : "s"}${tag ? " · " + tag : ""}`;
+    if (count) count.textContent = `${shown} ${noun}${shown === 1 ? "" : "s"}${tag ? " · " + tag : ""}`;
     if (push) {
       const url = new URL(window.location.href);
       if (tag) url.searchParams.set("tag", tag); else url.searchParams.delete("tag");

@@ -16,8 +16,8 @@
       {% for t in tags %}<button type="button" class="filter" data-tag="{{ t }}" aria-pressed="false">{{ t }}</button>
       {% endfor %}
     </div>
-    <p class="mono filters__count" id="project-count" aria-live="polite">{{ projects|length }} projects</p>
-    <div class="cards" id="project-grid">
+    <p class="mono filters__count" data-filter-count aria-live="polite">{{ projects|length }} projects</p>
+    <div class="cards" data-filter-grid data-noun="project">
       {% for p in projects %}{% include "partials/project_card.html" %}{% endfor %}
     </div>
   </div>

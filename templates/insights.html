@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% from "_icons.html" import icon %}
+{% block title %}Insights · {{ site.name }}{% endblock %}
+{% block description %}Articles by {{ site.name }} on cybersecurity, GRC, AI governance, security operations and financial crime.{% endblock %}
+{% block content %}
+<section class="page-head">
+  <div class="wrap">
+    <p class="eyebrow mono">Insights</p>
+    <h1>Notes from the field.</h1>
+    <p class="lead">Writing on cyber risk, AI governance, security operations and financial crime, from national CIRT work to today's regulated sector. Newest first.</p>
+    <p class="mono feed-link"><a href="/insights/feed.xml">Subscribe via RSS</a></p>
+  </div>
+</section>
+<section class="section section--tight">
+  <div class="wrap">
+    <div class="filters" role="group" aria-label="Filter articles by topic" hidden>
+      <button type="button" class="filter" data-tag="" aria-pressed="true">All</button>
+      {% for t in tags %}<button type="button" class="filter" data-tag="{{ t }}" aria-pressed="false">{{ t }}</button>
+      {% endfor %}
+    </div>
+    <p class="mono filters__count" data-filter-count aria-live="polite">{{ posts|length }} articles</p>
+    <div class="posts" data-filter-grid data-noun="article">
+      {% for post in posts %}{% include "partials/post_card.html" %}{% endfor %}
+    </div>
+  </div>
+</section>
+<section class="section">
+  <div class="wrap callout">
+    <div>
+      <h2>Published elsewhere</h2>
+      <p>National policies, frameworks and articles for Bangladesh Post, BGD e-GOV CIRT and Computer Jagat.</p>
+    </div>
+    <a class="btn btn--ghost" href="{{ url_for('publications') }}">Publications {{ icon('arrow') }}</a>
+  </div>
+</section>
+{% endblock %}
