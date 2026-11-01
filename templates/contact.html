@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% from "_icons.html" import icon %}
 {% block title %}Contact · {{ site.name }}{% endblock %}
+{% block description %}Get in touch with {{ site.name }} about senior cybersecurity roles, GRC and AI governance advisory, or consulting work.{% endblock %}
 {% block head %}{% if site.turnstile_sitekey %}
   <script src="{{ turnstile_origin }}/turnstile/v0/api.js" async defer></script>{% endif %}
 {% endblock %}

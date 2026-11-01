@@ -1,6 +1,8 @@
 {% extends "base.html" %}
 {% from "_icons.html" import icon %}
 {% block title %}{{ p.title }} · {{ site.name }}{% endblock %}
+{% block description %}{{ p.summary }}{% endblock %}
+{% block structured_data %}<script type="application/ld+json">{{ {"@context": "https://schema.org", "@graph": [breadcrumb_ld(("Projects", "/projects"), (p.title, "/projects/" ~ p.slug))]}|ldjson }}</script>{% endblock %}
 {% block content %}
 <section class="page-head">
   <div class="wrap">

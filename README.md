@@ -8,6 +8,15 @@ A tiny Worker handles the contact form (Turnstile + Email Routing).
 
 All text is in `content.py`. Push to `main`; CI runs every security check and deploys only if all pass.
 
+## Search engines (SEO)
+
+- Every page has its own title and description; pages carry schema.org data (Person, ProfessionalService,
+  Service, BlogPosting, BreadcrumbList) so search engines understand who the site is about.
+- Each service has its own page at `/services/<slug>`, linked to relevant projects and Insights.
+  Copy lives in `SERVICES` in `content.py`.
+- `sitemap.xml` lists every page; after each deploy CI pings IndexNow (Bing and others) with it.
+- Google Search Console and Bing Webmaster Tools are verified with DNS TXT records in Cloudflare.
+
 ## Publish an Insights article
 
 1. Add a file to `posts/`, named like the URL you want: `posts/zero-trust-for-small-banks.md`

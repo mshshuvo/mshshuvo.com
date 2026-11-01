@@ -2,6 +2,9 @@
 {% from "_icons.html" import icon %}
 {% block title %}Insights · {{ site.name }}{% endblock %}
 {% block description %}Articles by {{ site.name }} on cybersecurity, GRC, AI governance, security operations and financial crime.{% endblock %}
+{% block structured_data %}<script type="application/ld+json">{{ {"@context": "https://schema.org", "@graph": [
+  {"@type": "Blog", "name": "Insights · " ~ site.name, "url": site_url ~ "/insights", "author": {"@id": site_url ~ "/#person"},
+   "blogPost": posts|map(attribute="slug")|map("insight_url")|list}, person_ld()]}|ldjson }}</script>{% endblock %}
 {% block content %}
 <section class="page-head">
   <div class="wrap">

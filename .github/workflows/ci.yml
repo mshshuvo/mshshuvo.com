@@ -144,3 +144,15 @@ jobs:
           python build.py
           npm ci --ignore-scripts
           npx wrangler deploy
+      - name: Tell search engines about the pages (IndexNow, free)
+        continue-on-error: true
+        run: |
+          key=$(python -c "import build; print(build.INDEXNOW_KEY)")
+          python - "$key" > indexnow.json <<'PY'
+          import json, re, sys
+          urls = re.findall(r"<loc>(.*?)</loc>", open("dist/sitemap.xml").read())
+          print(json.dumps({"host": "mshshuvo.com", "key": sys.argv[1],
+                            "keyLocation": f"https://mshshuvo.com/{sys.argv[1]}.txt", "urlList": urls}))
+          PY
+          curl -sS -o /dev/null -w "IndexNow HTTP %{http_code}\n" -X POST https://api.indexnow.org/indexnow \
+            -H "Content-Type: application/json; charset=utf-8" --data @indexnow.json

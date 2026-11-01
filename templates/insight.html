@@ -4,6 +4,12 @@
 {% block description %}{{ post.summary }}{% endblock %}
 {% block og_type %}article{% endblock %}
 {% block og_image %}{% if post.cover_og %}https://mshshuvo.com{{ post.cover_og }}{% endif %}{% endblock %}
+{% block structured_data %}<script type="application/ld+json">{{ {"@context": "https://schema.org", "@graph": [
+  {"@type": "BlogPosting", "headline": post.title, "description": post.summary, "datePublished": post.date.isoformat(),
+   "url": site_url ~ "/insights/" ~ post.slug, "mainEntityOfPage": site_url ~ "/insights/" ~ post.slug,
+   "inLanguage": post.lang or "en", "keywords": post.tags|join(", "), "author": {"@id": site_url ~ "/#person"}, "publisher": {"@id": site_url ~ "/#person"},
+   "image": (site_url ~ post.cover_og) if post.cover_og else none, "wordCount": post.minutes * 220},
+  person_ld(), breadcrumb_ld(("Insights", "/insights"), (post.title, "/insights/" ~ post.slug))]}|ldjson }}</script>{% endblock %}
 {% block head %}
   <meta property="article:published_time" content="{{ post.date.isoformat() }}">
   <meta property="article:author" content="{{ site.name }}">
@@ -38,6 +44,12 @@
   </div>
   {% endif %}
 </article>
+{% if services %}
+<aside class="wrap wrap--narrow related-services" aria-label="Related services" lang="en">
+  <p class="mono">Need help with this?</p>
+  <ul>{% for sv in services %}<li><a href="{{ url_for('service_detail', slug=sv.slug) }}">{{ sv.seo_title }} {{ icon('arrow') }}</a></li>{% endfor %}</ul>
+</aside>
+{% endif %}
 <nav class="section" aria-label="More insights" lang="en">
   <div class="wrap wrap--narrow pager">
     {% if older %}<a class="pager__link" href="{{ url_for('insight_detail', slug=older.slug) }}"><span class="mono">Older</span>{{ older.title }}</a>{% else %}<span></span>{% endif %}
