@@ -1,7 +1,7 @@
 // Unit tests for the contact Worker: node --test worker/
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import worker from "./index.js";
+import worker, { buildMime } from "./index.js";
 
 const ORIGIN = "https://mshshuvo.com";
 const good = { name: "Jane Doe", email: "jane@example.com", topic: "Job opportunity",
@@ -109,4 +109,15 @@ test("valid message is emailed with sanitised fields and security headers", asyn
   assert.equal(sent[0].replyTo, "jane@example.com");
   assert.equal(r.headers.get("X-Frame-Options"), "DENY");
   assert.match(r.headers.get("Content-Security-Policy"), /default-src 'none'/);
+});
+
+test("MIME fallback message is well-formed and header-safe", () => {
+  const raw = buildMime({ to: "to@example.com", from: "contact@mshshuvo.com", replyTo: "jane@example.com",
+    subject: "[mshshuvo.com] Job opportunity from Jöhn", text: "Héllo\nworld" }, new Date(0), "abc");
+  const [head, body] = raw.split("\r\n\r\n");
+  assert.match(head, /^From: .*<contact@mshshuvo.com>$/m);
+  assert.match(head, /^Reply-To: <jane@example.com>$/m);
+  assert.match(head, /^Message-ID: <abc@mshshuvo.com>$/m);
+  assert.match(head, /^Subject: =\?UTF-8\?B\?/m);
+  assert.equal(Buffer.from(body.replace(/\r\n/g, ""), "base64").toString("utf8"), "Héllo\nworld");
 });
