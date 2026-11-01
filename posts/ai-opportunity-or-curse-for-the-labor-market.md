@@ -4,9 +4,13 @@ date: 2020-03-16
 tags: [Future of Work]
 summary: What the WEF, Gartner and McKinsey forecasts actually say about AI and jobs, and the two ways professionals can prepare for roles that do not exist yet.
 canonical_url: https://www.linkedin.com/pulse/ai-opportunity-labor-market-curse-sabbir-hossain-/
+cover: ai-opportunity-or-curse-for-the-labor-market-cover
+cover_alt: "Illustration of an office where people work alongside an AI system"
 ---
 
 Recently, many reports and analyses have been created that try to predict how dynamically the labor market will evolve in response to the development of artificial intelligence. World Economic Forum, Gartner, McKinsey- everyone is trying to estimate the scale and tame us with inevitable change. The subsequent numbers cause a lot of noise and mixed moods around the AI. However, is there really something to worry about and how specialists developing artificial intelligence perceive these processes?
+
+![Illustration of an AI chip connected to a network](/static/img/insights/ai-opportunity-or-curse-for-the-labor-market-1.webp)
 
 The World Economic Forum (WEF) has analyzed how large, international employers look at the employment structure in the perspective of 2022. Last year’s Future of Work report identified jobs that are threatened with disappearance, stable roles that AI does not threaten, and that 133 million new jobs are estimated to be created. A comparison of 2018 to 2022 clearly shows that the 10% reduction in some types of jobs will be fully offset by the creation of new jobs and the emergence of new professions (an increase of 11%). In turn, 48% of today’s jobs defined as universal, representing the majority of employment in various industries, will remain at the same level until 2022.
 

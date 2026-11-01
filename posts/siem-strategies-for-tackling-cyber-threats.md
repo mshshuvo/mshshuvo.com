@@ -4,6 +4,8 @@ date: 2024-05-27
 tags: [Security Operations]
 summary: The indicators and log sources a SIEM should use to catch malware, phishing, web application attacks, insider threats and APTs, threat by threat.
 canonical_url: https://www.linkedin.com/pulse/defend-detect-respond-siem-strategies-tackling-cyber-threats-hossain-pt7nc/
+cover: siem-strategies-for-tackling-cyber-threats-cover
+cover_alt: "A SIEM console at the centre of incoming security alerts"
 ---
 
 In the ever-evolving landscape of cybersecurity, Security Information and Event Management (SIEM) systems are pivotal in defending against a wide array of threats. By aggregating, correlating, and analyzing data from diverse sources, SIEM systems provide critical insights that enable organizations to detect, investigate, and respond to security incidents effectively. This article delves into how SIEM can be optimized to identify and scrutinize different types of cyber threats, including malware, phishing attacks, web application attacks, insider threats, and advanced persistent threats (APTs).

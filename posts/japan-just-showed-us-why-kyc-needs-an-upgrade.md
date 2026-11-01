@@ -4,6 +4,8 @@ date: 2026-10-26
 tags: [Identity & Fraud, Governance & Risk]
 summary: Japan's first cyberspace state of emergency leaked millions of ID images. What that means for photo-and-selfie KYC, the stronger methods replacing it, and the policy changes that matter more.
 canonical_url: https://www.linkedin.com/pulse/japan-just-showed-us-why-kyc-needs-upgrade-md-sabbir-hossain-xrkcc/
+cover: japan-just-showed-us-why-kyc-needs-an-upgrade-cover
+cover_alt: "Hit Japan: government declares state of emergency in cyberspace"
 ---
 
 ## What happened

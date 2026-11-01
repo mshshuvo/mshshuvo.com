@@ -4,6 +4,8 @@ date: 2024-01-17
 tags: [AI Governance, Governance & Risk]
 summary: Saving thousands of hours with AI is real, but so is the day it goes down. Why AI dependency needs fail-safes, contingency plans and people who know what to do without it.
 canonical_url: https://www.linkedin.com/pulse/ai-paradox-maximizing-efficiency-while-minimizing-risks-hossain-onmec/
+cover: the-ai-paradox-cover
+cover_alt: "Abstract network of glowing points"
 ---
 
 In an era dominated by the relentless integration of artificial intelligence into our daily operations, the recent surge in reliance on AI tools has become a focal point of discussion. A LinkedIn post caught my attention, where the author proudly declared an investment of $3000 in AI, resulting in the saving of 2000 human hours each month. While the efficiency gains are undeniable, a pertinent question looms over this AI-driven landscape: What happens when the technological cornerstone encounters unexpected downtime?

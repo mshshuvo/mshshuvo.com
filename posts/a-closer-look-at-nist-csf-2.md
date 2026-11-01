@@ -4,6 +4,8 @@ date: 2024-02-26
 tags: [Governance & Risk]
 summary: What changed in NIST CSF 2.0, from the new Govern function and supply chain risk guidance to outcome-focused measurement and better alignment with ISO 27001 and COBIT.
 canonical_url: https://www.linkedin.com/pulse/unlocking-cyber-resilience-closer-look-nist-framework-hossain-n5cyc/
+cover: a-closer-look-at-nist-csf-2-cover
+cover_alt: "NIST Cybersecurity Framework 1.1 beside version 2.0, which adds the Govern function"
 ---
 
 In the face of escalating cyber threats, the need for robust defenses has become paramount. Recognizing this urgency, the National Institute of Standards and Technology (NIST) has unveiled **Cybersecurity Framework Version 2.0**, a landmark advancement in organizational cyber resilience.

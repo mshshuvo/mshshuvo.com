@@ -4,6 +4,8 @@ date: 2023-12-19
 tags: [AI Governance]
 summary: How NIST's AI Risk Management Framework, ISO/IEC 42001 and the EU AI Act fit together as a blueprint for trustworthy, accountable AI.
 canonical_url: https://www.linkedin.com/pulse/beyond-compliance-forging-ethical-pathways-ai-md-sabbir-hossain-camqc/
+cover: ethical-pathways-in-ai-governance-cover
+cover_alt: "Pen drawing of a human head made of circuitry"
 ---
 
 In an era where artificial intelligence (AI) seamlessly integrates into the fabric of our daily lives, ethical considerations are paramount. Three groundbreaking documents NIST’s AI Risk Management Framework (AI RMF), ISO/IEC 42001 Management System standard, and the European Union’s AI Act (EU AI Act) emerged as guardians of trust, collectively charting a course towards responsible and ethical AI practices. Together, they not only address the inherent risks of AI but also set the stage for a future where innovation aligns seamlessly with accountability.

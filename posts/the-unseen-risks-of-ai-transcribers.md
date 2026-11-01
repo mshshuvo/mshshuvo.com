@@ -4,6 +4,8 @@ date: 2024-12-02
 tags: [AI Governance, Privacy]
 summary: Meeting bots and casual screenshots can hand attackers enough voice and image data to clone you. The risks, and the consent and tooling controls that reduce them.
 canonical_url: https://www.linkedin.com/pulse/from-voice-cloning-data-leaks-unseen-risks-ai-md-sabbir-hossain-vhhgc/
+cover: the-unseen-risks-of-ai-transcribers-cover
+cover_alt: "Silhouetted people walking toward a wall of glowing servers"
 ---
 
 As a seasoned cybersecurity professional, I’ve witnessed how seemingly harmless decisions like using AI transcription tools can introduce **significant security and privacy risks.** Recently, I experienced firsthand how these tools can compromise sensitive data, undermine trust, and even facilitate identity theft. This is a critical warning: **never invite AI transcribers into meetings without explicit consent.**

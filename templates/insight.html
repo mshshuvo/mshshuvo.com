@@ -3,6 +3,7 @@
 {% block title %}{{ post.title }} · {{ site.name }}{% endblock %}
 {% block description %}{{ post.summary }}{% endblock %}
 {% block og_type %}article{% endblock %}
+{% block og_image %}{% if post.cover_og %}https://mshshuvo.com{{ post.cover_og }}{% endif %}{% endblock %}
 {% block head %}
   <meta property="article:published_time" content="{{ post.date.isoformat() }}">
   <meta property="article:author" content="{{ site.name }}">
@@ -20,6 +21,11 @@
       </p>
     </div>
   </header>
+  {% if post.cover %}
+  <figure class="wrap wrap--narrow article__cover">
+    <img src="{{ post.cover }}" alt="{{ post.cover_alt }}" decoding="async">
+  </figure>
+  {% endif %}
   <div class="wrap wrap--narrow prose">
     {{ post.html|safe }}
   </div>

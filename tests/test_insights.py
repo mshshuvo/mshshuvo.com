@@ -40,6 +40,19 @@ class SanitiserTests(unittest.TestCase):
         for bad in ("<iframe", "<img", "<style"):
             self.assertNotIn(bad, html)
 
+    def test_only_local_insight_images_survive(self):
+        html = insights.render_markdown(
+            "![ok](/static/img/insights/the-ai-paradox-cover.webp)\n\n"
+            "![remote](https://evil.example/x.png)\n\n"
+            "![traversal](/static/img/insights/../../../app.py)\n\n"
+            "![missing](/static/img/insights/does-not-exist.webp)\n\n"
+            '<img src="/static/img/insights/the-ai-paradox-cover.webp" onerror="alert(1)">')
+        self.assertEqual(html.count("<img"), 2)
+        self.assertNotIn("evil.example", html)
+        self.assertNotIn("onerror", html)
+        self.assertNotIn("..", html)
+        self.assertIn('loading="lazy"', html)
+
     def test_links_get_noopener(self):
         html = insights.render_markdown("[site](https://example.com)")
         self.assertIn('rel="noopener noreferrer"', html)
@@ -77,6 +90,16 @@ class LoaderTests(unittest.TestCase):
         with self.assertRaises(insights.PostError):
             insights.parse_post(write(self.dir, "bad-date.md", GOOD.replace("2026-01-02", "Jan 2")))
 
+    def test_rejects_missing_cover(self):
+        text = GOOD.replace("summary:", "cover: no-such-image\ncover_alt: x\nsummary:")
+        with self.assertRaises(insights.PostError):
+            insights.parse_post(write(self.dir, "bad-cover.md", text))
+
+    def test_cover_needs_alt_text(self):
+        text = GOOD.replace("summary:", "cover: the-ai-paradox-cover\nsummary:")
+        with self.assertRaises(insights.PostError):
+            insights.parse_post(write(self.dir, "no-alt.md", text))
+
     def test_rejects_non_https_canonical(self):
         text = GOOD.replace("summary:", "canonical_url: javascript:alert(1)\nsummary:")
         with self.assertRaises(insights.PostError):
@@ -93,6 +116,7 @@ class LoaderTests(unittest.TestCase):
         posts = insights.load_posts()
         self.assertGreaterEqual(len(posts), 10)
         self.assertTrue(all(p["canonical_url"] for p in posts))
+        self.assertTrue(all(p["cover"] and p["cover_og"] and p["cover_alt"] for p in posts))
 
 
 if __name__ == "__main__":

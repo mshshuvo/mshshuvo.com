@@ -32,8 +32,14 @@ All text is in `content.py`. Push to `main`; CI runs every security check and de
 3. Commit to `main` (GitHub's web editor works: *Add file → Create new file*). The build adds it to
    /insights, the homepage, the RSS feed and the sitemap, newest first.
 
-Reuse existing tags where possible so the topic filter stays short. Images, embeds and raw HTML
-such as scripts or iframes are stripped on purpose: every post is sanitised against an allowlist.
+**Images:** put them in `static/img/insights/` (lowercase-hyphen names; `.webp` preferred, keep them
+under ~200 KB). Add a cover with `cover: zero-trust-for-small-banks-cover` and `cover_alt: what it shows`
+in the header: it needs `<name>.webp`, plus `<name>.jpg` (about 1200 px wide) for LinkedIn link
+previews. In the body use `![what it shows](/static/img/insights/my-diagram.webp)`.
+
+Reuse existing tags where possible so the topic filter stays short. Images hosted elsewhere, embeds
+and raw HTML such as scripts or iframes are stripped on purpose: every post is sanitised against an
+allowlist, and the site only loads images from itself.
 
 ## Run locally
 

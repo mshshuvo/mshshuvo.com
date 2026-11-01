@@ -13,7 +13,9 @@
   <meta property="og:description" content="{{ page_desc|trim }}">
   <meta property="og:url" content="{{ page_url }}">
   <meta property="og:type" content="{% block og_type %}website{% endblock %}">
-  <meta name="twitter:card" content="summary">
+  {% set og_image %}{% block og_image %}{% endblock %}{% endset %}
+  {% if og_image|trim %}<meta property="og:image" content="{{ og_image|trim }}">
+  <meta name="twitter:card" content="summary_large_image">{% else %}<meta name="twitter:card" content="summary">{% endif %}
   <link rel="alternate" type="application/rss+xml" title="Insights · {{ site.name }}" href="/insights/feed.xml">
   <link rel="preload" href="{{ url_for('static', filename='fonts/inter-latin-400-normal.woff2') }}" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="{{ url_for('static', filename='fonts/manrope-latin-800-normal.woff2') }}" as="font" type="font/woff2" crossorigin>

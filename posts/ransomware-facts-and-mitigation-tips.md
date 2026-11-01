@@ -4,6 +4,8 @@ date: 2016-10-03
 tags: [Awareness, Security Operations]
 summary: What ransomware is, how it gets in, and eleven practical habits that keep individuals and organisations out of the ransom conversation.
 canonical_url: https://www.linkedin.com/pulse/ransomware-facts-mitigation-tips-sabbir-hossain/
+cover: ransomware-facts-and-mitigation-tips-cover
+cover_alt: "Rows of padlocks over code, one unlocked and red"
 ---
 
 In the world of cyber security threats, Ransomware is a comparatively new word which has become a big concern in the recent years. In the US, May 2016 was the second worst month for Ransomware attacks in history. It came to light first time in the last year and caused a huge loss of data.
@@ -23,6 +25,8 @@ Ransomware do:
 - Stop certain apps from running (like web browser).
 
 Ransomware will demand that users pay money (ransom) to get access to your PC or files. Once executed in the system, a ransomware can be two types. Either it locks the computer screen or it encrypts predetermined files with a password. There is no guarantee that paying the fine or doing what the ransomware tells will give access to the PC or files again.
+
+![Illustration of ransomware: a locked laptop and a hand trading a key for cash](/static/img/insights/ransomware-facts-and-mitigation-tips-1.webp)
 
 ## How does Ransomware work?
 

@@ -4,6 +4,8 @@ date: 2025-11-16
 tags: [AI Security, Security Operations]
 summary: How AI changes each of the seven phases of the Cyber Kill Chain, from reconnaissance to actions on objectives, and what defenders must do now that security is becoming model versus model.
 canonical_url: https://www.linkedin.com/pulse/when-attacks-think-themselves-ai-augmented-cyber-kill-hossain-hql8c/
+cover: the-ai-augmented-cyber-kill-chain-cover
+cover_alt: "Cyber security versus artificial intelligence"
 ---
 
 The Cyber Kill Chain (CKC), originally introduced by Lockheed Martin, has long been a staple for analyzing cyber intrusions. What has changed dramatically is the technology surrounding it. The rise of artificial intelligence has reshaped every phase of the chain, pushing operations that once required significant manual effort into an era of speed, automation, and adaptive decision-making.
