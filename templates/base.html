@@ -19,9 +19,9 @@
   <link rel="alternate" type="application/rss+xml" title="Insights · {{ site.name }}" href="/insights/feed.xml">
   <link rel="preload" href="{{ url_for('static', filename='fonts/inter-latin-400-normal.woff2') }}" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="{{ url_for('static', filename='fonts/manrope-latin-800-normal.woff2') }}" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/site.css') }}">
+  <link rel="stylesheet" href="{{ asset('css/site.css') }}">
   <link rel="icon" href="{{ url_for('static', filename='favicon.svg') }}" type="image/svg+xml">
-  <script src="{{ url_for('static', filename='js/site.js') }}" defer></script>
+  <script src="{{ asset('js/site.js') }}" defer></script>
   {% block head %}{% endblock %}
 </head>
 <body>

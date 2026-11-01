@@ -7,7 +7,10 @@ local preview with the same security headers.
 All interactivity runs in the browser from static/js/site.js. The only
 server-side code is the Cloudflare Worker in worker/ (contact form).
 """
+import hashlib
 from datetime import datetime
+from functools import lru_cache
+from pathlib import Path
 
 from flask import Flask, abort, render_template
 
@@ -51,9 +54,17 @@ def security_headers(resp):
     return resp
 
 
+@lru_cache(maxsize=None)
+def asset(filename: str) -> str:
+    """Static URL with a content hash, so browsers fetch new CSS/JS after each deploy
+    even though /static/* is cached for a week."""
+    digest = hashlib.sha256((Path(app.static_folder) / filename).read_bytes()).hexdigest()[:10]
+    return f"/static/{filename}?v={digest}"
+
+
 @app.context_processor
 def inject_site():
-    return {"site": SITE, "year": datetime.now().year, "turnstile_origin": TURNSTILE_ORIGIN}
+    return {"site": SITE, "year": datetime.now().year, "turnstile_origin": TURNSTILE_ORIGIN, "asset": asset}
 
 
 @app.get("/")
