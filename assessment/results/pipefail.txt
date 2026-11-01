@@ -1,0 +1,1 @@
+pipeline 'false | tee' exited 0 under the default run shell: a failing check would not fail the step

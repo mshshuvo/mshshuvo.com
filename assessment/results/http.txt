@@ -1244,10 +1244,10 @@ server: cloudflare
 === RATE LIMIT BURST
 request 1 -> 403
 request 2 -> 403
-request 3 -> 429
-request 4 -> 429
-request 5 -> 429
-request 6 -> 429
-request 7 -> 429
-request 8 -> 429
+request 3 -> 403
+request 4 -> 403
+request 5 -> 403
+request 6 -> 403
+request 7 -> 403
+request 8 -> 403
 === DONE
