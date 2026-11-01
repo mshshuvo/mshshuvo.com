@@ -15,6 +15,15 @@
   "send_email": [
     { "name": "EMAIL" }
   ],
+  // Anonymous readiness-check counts: one SQLite-backed Durable Object (free plan).
+  "durable_objects": {
+    "bindings": [{ "name": "STATS", "class_name": "AssessmentStats" }]
+  },
+  "migrations": [
+    { "tag": "v1", "new_sqlite_classes": ["AssessmentStats"] }
+  ],
+  // Daily digest of new completions, 13:07 UTC (8:07 Toronto in winter, 9:07 in summer).
+  "triggers": { "crons": ["7 13 * * *"] },
   "vars": {
     "CONTACT_FROM": "contact@mshshuvo.com"
   },

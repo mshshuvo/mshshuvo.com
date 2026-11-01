@@ -496,21 +496,3 @@ SERVICES = [{'icon': 'compass',
   'insight_tags': ['Awareness']}]
 
 # ISO 27001 readiness check: each answer is No (0) / Partly (1) / Yes (2).
-QUIZ = [
-    {"q": "Have you defined the scope of your ISMS: which people, sites, systems and data it covers?",
-     "clause": "Clause 4.3", "fix": "Write a one-page scope statement and get leadership to sign it off."},
-    {"q": "Does top management formally own information security, with assigned roles and responsibilities?",
-     "clause": "Clause 5", "fix": "Name an accountable executive and document security roles."},
-    {"q": "Do you run a documented, repeatable information security risk assessment?",
-     "clause": "Clause 6.1.2", "fix": "Adopt a risk method (likelihood × impact) and build a risk register."},
-    {"q": "Do you have a Statement of Applicability covering the Annex A controls?",
-     "clause": "Clause 6.1.3", "fix": "Map all 93 Annex A controls, justify inclusions and exclusions."},
-    {"q": "Are security policies approved, published and acknowledged by staff?",
-     "clause": "Annex A 5.1", "fix": "Publish a policy set and track staff acknowledgement."},
-    {"q": "Is there a security awareness programme, including phishing training?",
-     "clause": "Annex A 6.3", "fix": "Run onboarding training plus quarterly phishing simulations."},
-    {"q": "Do you have an incident management process that has actually been tested?",
-     "clause": "Annex A 5.24–5.28", "fix": "Write an incident playbook and run a tabletop exercise."},
-    {"q": "Have you carried out an internal audit and a management review in the last 12 months?",
-     "clause": "Clauses 9.2 & 9.3", "fix": "Schedule an independent internal audit, then a management review."},
-]

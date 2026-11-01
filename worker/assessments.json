@@ -1,0 +1,94 @@
+{
+  "iso-27001": {
+    "name": "ISO 27001",
+    "refs": [
+      "Clause 4.3",
+      "Clause 5",
+      "Clause 6.1.2",
+      "Clause 6.1.3",
+      "Annex A 5.1",
+      "Annex A 6.3",
+      "Annex A 5.24–5.28",
+      "Clauses 9.2 & 9.3"
+    ],
+    "fixes": [
+      "Write a one-page scope statement and get leadership to sign it off.",
+      "Name an accountable executive and document security roles.",
+      "Adopt a risk method (likelihood × impact) and build a risk register.",
+      "Map all 93 Annex A controls, justify inclusions and exclusions.",
+      "Publish a policy set and track staff acknowledgement.",
+      "Run onboarding training plus quarterly phishing simulations.",
+      "Write an incident playbook and run a tabletop exercise.",
+      "Schedule an independent internal audit, then a management review."
+    ]
+  },
+  "iso-42001": {
+    "name": "ISO 42001 · AI governance",
+    "refs": [
+      "Clause 4.3",
+      "Clauses 5.2–5.3",
+      "Clause 6.1.2",
+      "Clause 6.1.4 · A.5",
+      "Clause 6.1.3",
+      "Annex A.7",
+      "Annex A.9–A.10",
+      "Clauses 9.1–9.3"
+    ],
+    "fixes": [
+      "Inventory the AI you build, buy and use, then write a scope statement leadership signs off.",
+      "Publish an AI policy and name who approves, owns and monitors each AI system.",
+      "Adopt an AI risk method and record the risks of each AI system in a register.",
+      "Make an AI system impact assessment a gate before deployment.",
+      "Map the 38 Annex A controls and justify inclusions and exclusions.",
+      "Record provenance, quality checks and usage rights for training and input data.",
+      "Set acceptable-use rules for AI tools and add AI terms to supplier due diligence.",
+      "Track performance and incidents per AI system, then run an internal audit and management review."
+    ]
+  },
+  "nist-csf": {
+    "name": "NIST CSF 2.0",
+    "refs": [
+      "GV.RM",
+      "GV.RR",
+      "GV.SC",
+      "ID.AM",
+      "PR.AA",
+      "PR.PS · PR.DS",
+      "DE.CM · DE.AE",
+      "RS.MA · RC.RP"
+    ],
+    "fixes": [
+      "Agree a risk appetite with leadership and report cyber risk alongside other business risks.",
+      "Name an accountable executive and document who decides, who does and who checks.",
+      "Tier suppliers by risk and add security requirements to contracts and onboarding.",
+      "Build an asset inventory and give every critical asset an owner.",
+      "Enforce phishing-resistant MFA for admins first, then everyone.",
+      "Set patch deadlines by severity and prove backups with a scheduled restore test.",
+      "Centralise logs and alerts for critical systems and define who responds to them.",
+      "Write response and recovery playbooks and run a tabletop exercise."
+    ]
+  },
+  "ransomware": {
+    "name": "Ransomware & incident readiness",
+    "refs": [
+      "Recovery",
+      "Access",
+      "Exposure",
+      "Detection",
+      "Logging",
+      "Response plan",
+      "Exercise",
+      "Notification"
+    ],
+    "fixes": [
+      "Keep at least one backup copy offline or immutable and restore from it on a schedule.",
+      "Close any remote access without MFA, starting with admin and VPN accounts.",
+      "Track internet-facing assets and patch known-exploited vulnerabilities first.",
+      "Deploy EDR on all endpoints and servers and assign who watches the alerts.",
+      "Send key logs to one place and keep them for at least 90 days.",
+      "Write a short plan naming who leads, who decides and who to call, including outside help.",
+      "Run a two-hour tabletop with leadership, including the pay or don't-pay decision.",
+      "List deadlines and contacts for regulators, your insurer, law enforcement and customers."
+    ]
+  }
+}

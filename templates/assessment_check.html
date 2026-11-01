@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+{% from "_icons.html" import icon %}
+{% block title %}{{ check.seo_title }} · {{ site.name }}{% endblock %}
+{% block description %}{{ check.meta }}{% endblock %}
+{% block structured_data %}<script type="application/ld+json">{{ {"@context": "https://schema.org", "@graph": [breadcrumb_ld(("Readiness checks", "/assessment"), (check.name, "/assessment/" ~ check.slug))]}|ldjson }}</script>{% endblock %}
+{% block content %}
+<section class="page-head">
+  <div class="wrap">
+    <p class="eyebrow mono"><a class="crumb" href="{{ url_for('assessment') }}">Readiness checks</a> / {{ check.name }}</p>
+    <h1>{{ check.title }}</h1>
+    <p class="lead">Eight questions, about two minutes. Answer honestly: "Partly" counts for half.</p>
+  </div>
+</section>
+<section class="section section--tight">
+  <div class="wrap quiz-layout">
+    <form class="quiz" id="quiz" novalidate data-check="{{ check.slug }}" data-name="{{ check.name }}"
+          data-bands='{{ bands|map("first")|list|tojson }}' data-tones='{{ bands|map("last")|list|tojson }}'
+          data-verdicts='{{ check.verdicts|tojson }}'>
+      <div class="progress" aria-hidden="true"><span id="progress-bar"></span></div>
+      {% for q in check.questions %}
+      {% set qi = loop.index0 %}
+      <fieldset class="q" data-clause="{{ q.ref }}" data-fix="{{ q.fix }}">
+        <legend><span class="mono q__n">{{ '%02d' % loop.index }}</span>{{ q.q }}</legend>
+        <div class="q__opts">
+          {% for val, label in [('2', 'Yes'), ('1', 'Partly'), ('0', 'No')] %}
+          <label class="opt">
+            <input type="radio" name="q{{ qi }}" value="{{ val }}">
+            <span>{{ label }}</span>
+          </label>
+          {% endfor %}
+        </div>
+      </fieldset>
+      {% endfor %}
+    </form>
+
+    <aside class="result" aria-live="polite">
+      <noscript><p class="mono result__placeholder">The readiness check needs JavaScript to calculate your score.</p></noscript>
+      <div class="score" id="score" hidden>
+        <div class="score__ring">
+          <svg viewBox="0 0 120 120" aria-hidden="true">
+            <circle cx="60" cy="60" r="48" class="ring-bg"/>
+            <circle cx="60" cy="60" r="48" class="ring-fg" id="ring" stroke-dasharray="0 301.6" transform="rotate(-90 60 60)"/>
+          </svg>
+          <div class="score__num"><strong id="score-pct">0</strong><span>%</span></div>
+        </div>
+        <p class="mono score__meta" id="score-meta">0 of {{ check.questions|length }} answered</p>
+        <p class="score__band" id="score-band">Keep going…</p>
+        <div id="score-done" hidden>
+          <p id="score-advice"></p>
+          <h3 class="mono score__h" id="gaps-h">Top priorities</h3>
+          <ol class="gaps" id="gaps"></ol>
+          <a class="btn" id="discuss" href="{{ url_for('contact') }}?from=assessment">Discuss my results</a>
+          {% if service %}<p class="score__more"><a href="{{ url_for('service_detail', slug=service.slug) }}">How I help with {{ service.name|lower }}</a></p>{% endif %}
+        </div>
+      </div>
+      <p class="mono result__placeholder" id="score-placeholder">Answer the questions and your score appears here.</p>
+    </aside>
+  </div>
+</section>
+<section class="section">
+  <div class="wrap">
+    <h2>Other readiness checks</h2>
+    <ul class="service-links">{% for o in others %}<li><a href="{{ url_for('assessment_check', slug=o.slug) }}">{{ o.name }}</a></li>{% endfor %}</ul>
+    <p class="fineprint">A quick indication, not an audit or certification opinion. Completed checks are counted anonymously (the check, your answers and your country); nothing that identifies you is stored unless you choose to contact me.</p>
+  </div>
+</section>
+{% endblock %}

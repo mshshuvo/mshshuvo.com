@@ -3,7 +3,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "test": "node --test worker/index.test.mjs",
+    "test": "node --no-warnings --test worker/index.test.mjs",
     "dev": "wrangler dev",
     "deploy": "wrangler deploy"
   },

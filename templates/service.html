@@ -32,6 +32,17 @@
     </aside>
   </div>
 </section>
+{% if check %}
+<section class="section section--tight">
+  <div class="wrap callout">
+    <div>
+      <h2>Free {{ check.name }} readiness check</h2>
+      <p>Eight questions, two minutes: see your score and the first fix for each gap.</p>
+    </div>
+    <a class="btn btn--ghost" href="{{ url_for('assessment_check', slug=check.slug) }}">Take the check {{ icon('arrow') }}</a>
+  </div>
+</section>
+{% endif %}
 {% if projects %}
 <section class="section">
   <div class="wrap">

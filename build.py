@@ -14,7 +14,8 @@ from email.utils import format_datetime
 from html import escape  # writes the RSS feed; nothing is parsed
 from pathlib import Path
 
-from app import POSTS, PROJECTS, SECURITY_HEADERS, SERVICES, SITE, app
+from app import ASSESSMENTS, POSTS, PROJECTS, SECURITY_HEADERS, SERVICES, SITE, app
+from assessments import worker_spec
 
 ROOT = Path(__file__).parent
 DIST = ROOT / "dist"
@@ -27,7 +28,7 @@ INDEXNOW_KEY = "53de5a436f6b78ef495a04f085b56ab9"  # gitleaks:allow (public veri
 PAGES = ["/", "/projects", "/experience", "/publications", "/recommendations",
          "/services", "/assessment", "/contact", "/insights", "/insights/follow"] + \
         [f"/projects/{p['slug']}" for p in PROJECTS] + [f"/insights/{p['slug']}" for p in POSTS] + \
-        [f"/services/{s['slug']}" for s in SERVICES]
+        [f"/services/{s['slug']}" for s in SERVICES] + [f"/assessment/{a['slug']}" for a in ASSESSMENTS]
 
 
 def rss_feed() -> str:
@@ -75,6 +76,7 @@ def main() -> None:
 
     # Response headers for static assets, and the same set for Worker-generated pages
     (ROOT / "worker" / "site_headers.json").write_text(json.dumps(SECURITY_HEADERS, indent=2) + "\n")
+    (ROOT / "worker" / "assessments.json").write_text(json.dumps(worker_spec(), indent=2, ensure_ascii=False) + "\n")
     lines = ["/*"] + [f"  {k}: {v}" for k, v in SECURITY_HEADERS.items()]
     lines += ["", "/static/*", "  Cache-Control: public, max-age=604800", ""]
     (DIST / "_headers").write_text("\n".join(lines))

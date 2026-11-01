@@ -360,6 +360,15 @@ details[open] .tl__more::after { content: "hide −"; }
 .pager__link .mono { font: 500 .75rem var(--font-mono); color: var(--color-secondary); text-transform: uppercase; letter-spacing: .08em; }
 .pager__link--next { text-align: right; grid-column: 2; }
 
+/* ---------- readiness checks hub ---------- */
+.checks { display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--s3); }
+.check-card h2 { font-size: 1.375rem; margin-bottom: var(--s1); }
+.check-card p:not(.project__meta) { color: var(--color-muted); margin-bottom: var(--s3); }
+.check-card__go { margin-top: auto; display: inline-flex; align-items: center; gap: 6px; color: var(--color-primary); font-weight: 600; }
+.check-card__go .icon { width: 16px; height: 16px; }
+.fineprint { color: var(--color-muted); font-size: .875rem; margin-top: var(--s3); }
+.score__more { margin: var(--s2) 0 0; font-size: .9375rem; }
+
 /* ---------- follow page ---------- */
 .follow { display: grid; gap: var(--s3); }
 .follow .card p { margin-bottom: var(--s3); }
@@ -407,7 +416,7 @@ details[open] .tl__more::after { content: "hide −"; }
   .brand__name { font-size: 1rem; }
   .cards { grid-template-columns: 1fr; }
   .cert-grid { grid-template-columns: 1fr; }
-  .posts, .posts--teaser, .pager { grid-template-columns: 1fr; gap: var(--s2); }
+  .posts, .posts--teaser, .pager, .checks { grid-template-columns: 1fr; gap: var(--s2); }
   .filters { flex-wrap: nowrap; overflow-x: auto; margin-inline: calc(var(--s2) * -1); padding: 2px var(--s2) var(--s1); scrollbar-width: none; -webkit-overflow-scrolling: touch; scroll-snap-type: x proximity; scroll-padding-inline: var(--s2); }
   .filters::-webkit-scrollbar { display: none; }
   .filter { flex: none; white-space: nowrap; scroll-snap-align: start; min-height: 40px; }
