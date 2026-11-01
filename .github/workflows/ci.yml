@@ -27,9 +27,11 @@ jobs:
         with: { python-version: "3.12" }
       - run: pip install -r requirements.txt -r requirements-dev.txt
       - name: Bandit (Python SAST)
-        run: bandit -r app.py build.py content.py tools/ -f txt
+        run: bandit -r app.py build.py content.py insights.py tools/ -f txt
       - name: pip-audit (dependency CVEs)
         run: pip-audit -r requirements.txt --strict --desc
+      - name: Python unit tests (Insights loader and sanitiser)
+        run: python -m unittest discover -s tests -v
 
   secrets:
     name: Gitleaks

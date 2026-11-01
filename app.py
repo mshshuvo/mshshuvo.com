@@ -13,8 +13,11 @@ from flask import Flask, abort, render_template
 
 from content import (ARTICLES, CERTIFICATIONS, EARLY_WRITING, EDUCATION, EXPERIENCE, POLICIES, PRESS,
                      PROJECT_TAGS, PROJECTS, QUIZ, RECOMMENDATIONS, SERVICE, SERVICES, SITE)
+from insights import all_tags, load_posts
 
 PROJECTS_BY_SLUG = {p["slug"]: p for p in PROJECTS}
+POSTS = load_posts()
+POSTS_BY_SLUG = {p["slug"]: p for p in POSTS}
 
 # Cloudflare Turnstile (contact form bot check) loads a script and an iframe from here.
 TURNSTILE_ORIGIN = "https://challenges.cloudflare.com"
@@ -58,7 +61,7 @@ def home():
     return render_template("home.html",
                            projects=[p for p in PROJECTS if p.get("featured")],
                            recs=[r for r in RECOMMENDATIONS if r.get("featured")],
-                           certs=CERTIFICATIONS)
+                           certs=CERTIFICATIONS, posts=POSTS[:3])
 
 
 @app.get("/projects")
@@ -77,6 +80,20 @@ def project_detail(slug):
 def publications():
     return render_template("publications.html", policies=POLICIES, articles=ARTICLES,
                            early=EARLY_WRITING, press=PRESS)
+
+
+@app.get("/insights")
+def insights():
+    return render_template("insights.html", posts=POSTS, tags=all_tags(POSTS))
+
+
+@app.get("/insights/<slug>")
+def insight_detail(slug):
+    post = POSTS_BY_SLUG.get(slug) or abort(404)
+    i = POSTS.index(post)
+    newer = POSTS[i - 1] if i > 0 else None
+    older = POSTS[i + 1] if i + 1 < len(POSTS) else None
+    return render_template("insight.html", post=post, newer=newer, older=older)
 
 
 @app.get("/recommendations")

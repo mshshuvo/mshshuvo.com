@@ -8,6 +8,33 @@ A tiny Worker handles the contact form (Turnstile + Email Routing).
 
 All text is in `content.py`. Push to `main`; CI runs every security check and deploys only if all pass.
 
+## Publish an Insights article
+
+1. Add a file to `posts/`, named like the URL you want: `posts/zero-trust-for-small-banks.md`
+   becomes `mshshuvo.com/insights/zero-trust-for-small-banks` (lowercase words and hyphens only).
+2. Start it with this header, then write the article in Markdown below it:
+
+   ```markdown
+   ---
+   title: Zero Trust for Small Banks
+   date: 2026-11-15
+   tags: [Governance & Risk, Identity & Fraud]
+   summary: One or two sentences shown on the list page, in RSS and in link previews.
+   canonical_url: https://www.linkedin.com/pulse/...   # optional: if it also appeared on LinkedIn
+   draft: true                                          # optional: hide until ready
+   ---
+
+   ## First heading
+
+   Paragraphs, **bold**, *italics*, lists, > quotes, `code`, tables and [links](https://example.com).
+   ```
+
+3. Commit to `main` (GitHub's web editor works: *Add file → Create new file*). The build adds it to
+   /insights, the homepage, the RSS feed and the sitemap, newest first.
+
+Reuse existing tags where possible so the topic filter stays short. Images, embeds and raw HTML
+such as scripts or iframes are stripped on purpose: every post is sanitised against an allowlist.
+
 ## Run locally
 
 ```bash
