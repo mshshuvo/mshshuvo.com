@@ -56,7 +56,8 @@ def main() -> None:
     wk.mkdir()
     expires = (date.today() + timedelta(days=330)).isoformat() + "T00:00:00Z"
     (wk / "security.txt").write_text(
-        "Contact: mailto:mshshuvo@gmail.com\n"
+        f"Contact: {SITE_URL}/contact\n"
+        "Policy: https://github.com/mshshuvo/mshshuvo.com/blob/main/SECURITY.md\n"
         f"Expires: {expires}\n"
         "Preferred-Languages: en\n"
         f"Canonical: {SITE_URL}/.well-known/security.txt\n")

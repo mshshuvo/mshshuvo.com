@@ -1,6 +1,7 @@
 # Security policy
 
-Found a security issue on mshshuvo.com? Please email **mshshuvo@gmail.com** with steps to reproduce.
+Found a security issue on mshshuvo.com? Please report it through the contact form at
+https://mshshuvo.com/contact (choose "Something else") with steps to reproduce.
 I aim to reply within 3 business days. Please do not run denial-of-service, spam or social-engineering
 tests. Good-faith research is welcome. See also `/.well-known/security.txt`.
 

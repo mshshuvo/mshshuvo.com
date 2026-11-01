@@ -114,6 +114,10 @@ async function handleContact(request, env) {
     return json(422, { success: false, message: "Please check the form fields." });
   }
 
+  if (!env.CONTACT_TO) {
+    log("contact_misconfigured", request);
+    return json(503, { success: false, message: "Could not send right now." });
+  }
   try {
     await env.EMAIL.send({
       to: env.CONTACT_TO,

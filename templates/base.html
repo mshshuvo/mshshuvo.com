@@ -40,7 +40,7 @@
     <div class="wrap foot__inner">
       <p>© {{ year }} {{ site.name }} · {{ site.location }}</p>
       <p class="mono">
-        <a href="mailto:{{ site.email }}">{{ site.email }}</a> ·
+        <a href="{{ url_for('contact') }}">Contact</a> ·
         <a href="{{ site.linkedin }}" rel="noopener">LinkedIn</a> ·
         <a href="{{ site.github }}" rel="noopener">GitHub</a>
       </p>

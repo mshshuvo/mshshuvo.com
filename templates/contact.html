@@ -53,19 +53,14 @@
       </div>
       {% else %}
       <div class="sent">
-        <h2>Email is the fastest way to reach me.</h2>
-        <p>Pick a topic and your email app opens with a subject line ready.</p>
-        <div class="cta">
-          {% for t in topics %}
-          <a class="btn{% if not loop.first %} btn--ghost{% endif %}" href="mailto:{{ site.email }}?subject={{ (t ~ ' — via mshshuvo.com')|urlencode }}">{{ t }}</a>
-          {% endfor %}
-        </div>
+        <h2>The contact form is coming back shortly.</h2>
+        <p>In the meantime, the best way to reach me is a LinkedIn message.</p>
+        <div class="cta"><a class="btn" href="{{ site.linkedin }}" rel="noopener">Message me on LinkedIn</a></div>
       </div>
       {% endif %}
     </div>
     <aside class="aside">
       <h3>Elsewhere</h3>
-      <p class="mono"><a href="mailto:{{ site.email }}">{{ site.email }}</a></p>
       <p class="mono"><a href="{{ site.linkedin }}" rel="noopener">LinkedIn</a></p>
       <p class="mono"><a href="{{ site.github }}" rel="noopener">GitHub</a></p>
       <p>Based in {{ site.location }}. Available for roles across Canada and remote advisory work.</p>

@@ -32,7 +32,9 @@ card, stop: that feature is not part of this setup.
 ## 5. Email Routing (delivers contact-form messages)
 
 1. Email → **Email Routing** → enable it. Cloudflare adds the needed MX/TXT records.
-2. Add **mshshuvo@gmail.com** as a destination address and click the verification link in Gmail.
+2. Add your Gmail address as a destination address and click the verification link in Gmail.
+   Then add it to the Worker as a **Secret** named `CONTACT_TO` (Worker → Settings → Variables and Secrets).
+   It is kept out of the public repo and never shown on the site.
 3. Optional: route `hello@mshshuvo.com` to your Gmail as a public address.
 
 ## 6. Turnstile

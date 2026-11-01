@@ -146,7 +146,7 @@ function initContactForm() {
       document.getElementById("contact-sent").hidden = false;
     } catch (_) {
       if (window.turnstile) window.turnstile.reset();
-      top.textContent = "Sorry, the message couldn't be sent. Please try again or email me directly.";
+      top.textContent = "Sorry, the message couldn't be sent. Please try again in a few minutes, or message me on LinkedIn.";
       top.hidden = false;
       btn.disabled = false;
       btn.textContent = "Send message";

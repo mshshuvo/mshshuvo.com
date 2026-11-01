@@ -11,15 +11,16 @@
     "html_handling": "auto-trailing-slash",
     "not_found_handling": "404-page"
   },
-  // Email Routing: the Worker may only send to this verified address.
+  // Email Routing: on the Free plan the Worker can only send to addresses verified in Email Routing.
   "send_email": [
-    { "name": "EMAIL", "destination_address": "mshshuvo@gmail.com" }
+    { "name": "EMAIL" }
   ],
   "vars": {
-    "CONTACT_TO": "mshshuvo@gmail.com",
     "CONTACT_FROM": "contact@mshshuvo.com"
   },
-  // TURNSTILE_SECRET is set with `wrangler secret put`, never committed.
+  // Secrets (set in the dashboard or with `wrangler secret put`, never committed):
+  //   TURNSTILE_SECRET  - Turnstile secret key
+  //   CONTACT_TO        - the verified inbox that receives contact messages (kept out of the public repo)
   "observability": { "enabled": true },
   // Custom domains mshshuvo.com and www.mshshuvo.com are live, so the default *.workers.dev
   // URL is off: the site is only reachable through the zone's WAF, bot and rate-limit rules.

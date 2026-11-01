@@ -13,7 +13,6 @@ SITE = {
               "after the 2016 Bangladesh Bank SWIFT heist, director of $10M+ national programmes, and "
               "contributor to the country's national cybersecurity strategy."),
     "location": "Ottawa, Canada",
-    "email": "mshshuvo@gmail.com",
     "linkedin": "https://www.linkedin.com/in/mshshuvo/",
     # Cloudflare Turnstile site key (public). Empty = contact page shows email buttons instead.
     "turnstile_sitekey": "0x4AAAAAAFur_A35mfi5lTXU",
