@@ -17,7 +17,9 @@ from flask import Flask, abort, render_template
 from markupsafe import Markup
 
 from content import (ARTICLES, CERTIFICATIONS, EARLY_WRITING, EDUCATION, EXPERIENCE, POLICIES, PRESS,
-                     PROJECT_TAGS, PROJECTS, QUIZ, RECOMMENDATIONS, SERVICE, SERVICES, SITE)
+                     PROJECT_TAGS, PROJECTS, RECOMMENDATIONS, SERVICE, SERVICES, SITE)
+from assessments import ASSESSMENTS, BANDS
+from assessments import BY_SLUG as ASSESSMENTS_BY_SLUG
 from insights import all_tags, load_posts
 
 PROJECTS_BY_SLUG = {p["slug"]: p for p in PROJECTS}
@@ -191,12 +193,21 @@ def service_detail(slug):
     projects = [PROJECTS_BY_SLUG[p] for p in svc["projects"]]
     posts = [p for p in POSTS if set(p["tags"]) & set(svc["insight_tags"])][:3]
     others = [s for s in SERVICES if s is not svc]
-    return render_template("service.html", s=svc, projects=projects, posts=posts, others=others)
+    check = next((a for a in ASSESSMENTS if a["service"] == slug), None)
+    return render_template("service.html", s=svc, projects=projects, posts=posts, others=others, check=check)
 
 
 @app.get("/assessment")
 def assessment():
-    return render_template("assessment.html", quiz=QUIZ)
+    return render_template("assessment.html", checks=ASSESSMENTS)
+
+
+@app.get("/assessment/<slug>")
+def assessment_check(slug):
+    check = ASSESSMENTS_BY_SLUG.get(slug) or abort(404)
+    others = [a for a in ASSESSMENTS if a is not check]
+    service = SERVICES_BY_SLUG.get(check["service"])
+    return render_template("assessment_check.html", check=check, bands=BANDS, others=others, service=service)
 
 
 @app.get("/contact")

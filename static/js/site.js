@@ -59,47 +59,52 @@ function initProjectFilter() {
   apply(known.has(initial) ? initial : "", false);
 }
 
-// ---------------------------------------------------------------- readiness check
+// ---------------------------------------------------------------- readiness checks
+const SUMMARY_KEY = "mshshuvo:assessment-summary";
+
 function initReadinessCheck() {
   const quiz = document.getElementById("quiz");
   if (!quiz) return;
   const qs = [...quiz.querySelectorAll("fieldset")];
   const el = (id) => document.getElementById(id);
   const CIRC = 301.6;
-  const BANDS = [
-    [80, "Audit-ready", "good", "You're in strong shape. A pre-certification internal audit would confirm it."],
-    [50, "Building", "mid", "Solid foundations, but auditors will find gaps. Prioritise the items below."],
-    [0, "Early stage", "low", "Start with scope, risk assessment and leadership buy-in before anything else."],
-  ];
+  const mins = JSON.parse(quiz.dataset.bands);
+  const tones = JSON.parse(quiz.dataset.tones);
+  const verdicts = JSON.parse(quiz.dataset.verdicts);
+  let counted = false;
 
   quiz.addEventListener("change", () => {
     let earned = 0, answered = 0;
+    const answers = [];
     const gaps = [];
     qs.forEach((fs, i) => {
       const picked = quiz.querySelector(`input[name="q${i}"]:checked`);
       const pts = picked ? Number(picked.value) : 0;
       if (picked) answered += 1;
+      answers.push(pts);
       earned += pts;
-      if (pts < 2) gaps.push(fs);
+      if (pts < 2) gaps.push({ fs, pts });
     });
     const pct = Math.round((100 * earned) / (2 * qs.length));
-    const band = BANDS.find(([min]) => pct >= min);
+    const b = mins.findIndex((min) => pct >= min);
+    const [verdict, advice] = verdicts[b];
 
     el("progress-bar").style.width = `${(100 * answered) / qs.length}%`;
     el("score-placeholder").hidden = true;
     el("score").hidden = false;
-    el("score").className = `score score--${band[2]}`;
+    el("score").className = `score score--${tones[b]}`;
     el("score-pct").textContent = String(pct);
     el("ring").setAttribute("stroke-dasharray", `${((CIRC * pct) / 100).toFixed(1)} ${CIRC}`);
     el("score-meta").textContent = `${answered} of ${qs.length} answered`;
 
     const done = answered === qs.length;
-    el("score-band").textContent = done ? band[1] : "Keep going…";
+    el("score-band").textContent = done ? verdict : "Keep going…";
     el("score-done").hidden = !done;
     if (!done) return;
-    el("score-advice").textContent = band[3];
-    const list = el("gaps");
-    list.replaceChildren(...gaps.slice(0, 4).map((fs) => {
+    el("score-advice").textContent = advice;
+    // "No" answers first, then "Partly", in question order.
+    gaps.sort((x, y) => x.pts - y.pts);
+    el("gaps").replaceChildren(...gaps.slice(0, 4).map(({ fs }) => {
       const li = document.createElement("li");
       const clause = document.createElement("span");
       clause.className = "mono";
@@ -108,6 +113,24 @@ function initReadinessCheck() {
       return li;
     }));
     el("gaps-h").hidden = gaps.length === 0;
+
+    // Hand-off to the contact form (stays in this browser tab until the visitor sends it).
+    const lines = gaps.map(({ fs, pts }) => `- ${fs.dataset.clause} (${pts ? "partly" : "no"}): ${fs.dataset.fix}`);
+    const summary = `My ${quiz.dataset.name} readiness check: ${pct}% (${verdict}).\n` +
+      (lines.length ? `Gaps:\n${lines.join("\n")}\n` : "No gaps flagged.\n") +
+      "\nI'd like to discuss: ";
+    try { sessionStorage.setItem(SUMMARY_KEY, summary); } catch (_) { /* storage blocked: button still opens the form */ }
+
+    // Count the completion anonymously, once per page view.
+    if (!counted) {
+      counted = true;
+      fetch("/api/assessment", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ check: quiz.dataset.check, answers }),
+        keepalive: true,
+      }).catch(() => {});
+    }
   });
 }
 
@@ -115,6 +138,7 @@ function initReadinessCheck() {
 function initContactForm() {
   const form = document.getElementById("contact-form");
   if (!form) return;
+  prefillFromAssessment(form);
   const err = (id, show) => { document.getElementById(id).hidden = !show; };
   const emailOk = (v) => /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(v);
 
@@ -173,4 +197,15 @@ function initCopyButtons() {
       setTimeout(() => { btn.textContent = "Copy"; }, 2000);
     });
   });
+}
+
+// ---------------------------------------------------------------- contact prefill from a readiness check
+function prefillFromAssessment(form) {
+  if (new URLSearchParams(window.location.search).get("from") !== "assessment") return;
+  let summary = null;
+  try { summary = sessionStorage.getItem(SUMMARY_KEY); } catch (_) { return; }
+  if (!summary || form.message.value) return;
+  form.message.value = summary.slice(0, 3800);
+  const topic = form.querySelector('input[name="topic"][value="Consulting engagement"]');
+  if (topic) topic.checked = true;
 }

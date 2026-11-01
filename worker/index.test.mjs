@@ -121,3 +121,96 @@ test("MIME fallback message is well-formed and header-safe", () => {
   assert.match(head, /^Subject: =\?UTF-8\?B\?/m);
   assert.equal(Buffer.from(body.replace(/\r\n/g, ""), "base64").toString("utf8"), "Héllo\nworld");
 });
+
+// ---------------------------------------------------------------- readiness-check counter
+import { parseCompletion, buildDigest, AssessmentStats, runDigest } from "./index.js";
+import { DatabaseSync } from "node:sqlite";
+
+function areq(body, { origin = ORIGIN, type = "application/json" } = {}) {
+  return new Request("https://mshshuvo.com/api/assessment", {
+    method: "POST", headers: { Origin: origin, "Content-Type": type },
+    body: typeof body === "string" ? body : JSON.stringify(body),
+  });
+}
+
+// In-memory stand-in for ctx.storage.sql, backed by real SQLite so the SQL itself is tested.
+function fakeSql() {
+  const db = new DatabaseSync(":memory:");
+  return {
+    exec(query, ...bindings) {
+      const stmt = db.prepare(query);
+      const rows = /^\s*(SELECT|WITH)/i.test(query) ? stmt.all(...bindings) : (stmt.run(...bindings), []);
+      return { toArray: () => rows.map((r) => ({ ...r })) };
+    },
+  };
+}
+
+function statsEnv(sent = []) {
+  const obj = new AssessmentStats({ storage: { sql: fakeSql() } });
+  return {
+    obj, sent,
+    env: {
+      CONTACT_TO: "to@example.com", CONTACT_FROM: "contact@mshshuvo.com",
+      EMAIL: { send: async (m) => { sent.push(m); return { messageId: "1" }; } },
+      STATS: { idFromName: () => "global", get: () => ({ fetch: (u, init) => obj.fetch(new Request(u, init)) }) },
+    },
+  };
+}
+
+test("completion validation accepts only known checks with 8 answers of 0, 1 or 2", () => {
+  assert.deepEqual(parseCompletion({ check: "iso-42001", answers: [2, 2, 2, 2, 1, 1, 0, 0] }),
+    { check: "iso-42001", answers: [2, 2, 2, 2, 1, 1, 0, 0], score: 63 });
+  for (const bad of [null, [], "x", { check: "nope", answers: [2, 2, 2, 2, 2, 2, 2, 2] },
+    { check: "iso-27001", answers: [2, 2] }, { check: "iso-27001", answers: [3, 2, 2, 2, 2, 2, 2, 2] },
+    { check: "__proto__", answers: [] }, { check: "toString", answers: [] }]) {
+    assert.equal(parseCompletion(bad), null);
+  }
+});
+
+test("assessment API refuses cross-origin, wrong type, junk and oversize", async () => {
+  const { env } = statsEnv();
+  assert.equal((await worker.fetch(areq({}, { origin: "https://evil.example" }), env)).status, 403);
+  assert.equal((await worker.fetch(areq("{}", { type: "text/plain" }), env)).status, 415);
+  assert.equal((await worker.fetch(areq("{bad"), env)).status, 400);
+  assert.equal((await worker.fetch(areq({ check: "iso-27001", answers: [9] }), env)).status, 400);
+  assert.equal((await worker.fetch(areq({ check: "iso-27001", answers: [], pad: "x".repeat(2000) }), env)).status, 413);
+});
+
+test("completions are stored and the digest emails once, then only new ones", async () => {
+  const { env, sent } = statsEnv();
+  assert.equal(await runDigest(env), false, "no digest without completions");
+  for (const answers of [[2, 2, 2, 2, 2, 2, 2, 2], [0, 1, 2, 2, 2, 2, 0, 2], [0, 0, 0, 1, 1, 2, 2, 2]]) {
+    const r = await worker.fetch(areq({ check: "ransomware", answers }), env);
+    assert.equal(r.status, 200);
+  }
+  assert.equal(await runDigest(env), true);
+  assert.equal(sent.length, 1);
+  assert.match(sent[0].subject, /3 readiness checks completed/);
+  assert.match(sent[0].text, /Ransomware & incident readiness: 3 completed, average 73%/);
+  assert.match(sent[0].text, /- Recovery \(2\):/);
+  assert.match(sent[0].text, /All-time totals:[\s\S]*Ransomware & incident readiness: 3/);
+  assert.equal(await runDigest(env), false, "already reported");
+  await worker.fetch(areq({ check: "nist-csf", answers: [1, 1, 1, 1, 1, 1, 1, 1] }), env);
+  assert.equal(await runDigest(env), true);
+  assert.match(sent[1].subject, /1 readiness check completed/);
+  assert.match(sent[1].text, /Ransomware & incident readiness: 3\n/);
+});
+
+test("a failed digest email is retried next time", async () => {
+  const { env, sent } = statsEnv();
+  await worker.fetch(areq({ check: "iso-27001", answers: [2, 2, 2, 2, 2, 2, 2, 0] }), env);
+  const ok = env.EMAIL.send;
+  env.EMAIL.send = async () => { throw new Error("down"); };
+  await assert.rejects(runDigest(env));
+  env.EMAIL.send = ok;
+  assert.equal(await runDigest(env), true);
+  assert.match(sent[0].text, /ISO 27001: 1 completed, average 88%/);
+});
+
+test("digest text never contains HTML or more than counts", () => {
+  const text = buildDigest([{ check: "iso-27001", score: 50, answers: "[1,1,1,1,1,1,1,1]", country: "CA" }],
+    { "iso-27001": 1 }, 0, 86400000);
+  assert.match(text, /1 readiness check completed/);
+  assert.match(text, /Countries: CA/);
+  assert.doesNotMatch(text, /</);
+});
