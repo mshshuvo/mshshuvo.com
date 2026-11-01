@@ -1,6 +1,5 @@
 {% from "_icons.html" import icon %}
-<article class="card post{% if post.cover %} post--cover{% endif %}" data-tags="{{ post.tags|join('|') }}"{% if post.lang %} lang="{{ post.lang }}"{% endif %}>
-  {% if post.cover %}<img class="post__img" src="{{ post.cover }}" alt="" loading="lazy" decoding="async">{% endif %}
+<article class="card post" data-tags="{{ post.tags|join('|') }}"{% if post.lang %} lang="{{ post.lang }}"{% endif %}>
   <p class="mono post__meta"><time datetime="{{ post.date.isoformat() }}">{{ post.date_display }}</time> · {{ post.minutes }} min read</p>
   <h3><a class="project__link" href="{{ url_for('insight_detail', slug=post.slug) }}">{{ post.title }}</a></h3>
   <p lang="en">{{ post.summary }}</p>
