@@ -27,7 +27,13 @@ jobs:
       - name: Run checks
         id: check
         continue-on-error: true
-        run: python tools/monitor.py "${{ vars.SITE_URL }}" | tee report.md
+        env:
+          SITE_URL: ${{ vars.SITE_URL }}   # passed as data, never spliced into the shell script
+        # pipefail: without it the step takes tee's exit code (always 0) and a failed check never alerts
+        shell: bash
+        run: |
+          set -o pipefail
+          python tools/monitor.py "$SITE_URL" | tee report.md
       - name: Open or update alert issue
         if: steps.check.outcome == 'failure'
         env: { GH_TOKEN: "${{ github.token }}" }

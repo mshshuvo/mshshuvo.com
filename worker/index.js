@@ -21,7 +21,9 @@ const SECURITY_HEADERS = {
 
 const ALLOWED_ORIGINS = new Set(["https://mshshuvo.com", "https://www.mshshuvo.com"]);
 const MAX_BODY_BYTES = 16 * 1024;
-const EMAIL_RE = /^[^@\s]+@[^@\s]+\.[^@\s]+$/;
+// Conservative address check: no whitespace, quotes, commas, semicolons or angle brackets,
+// so a submitted address can only ever be a single plain Reply-To mailbox.
+const EMAIL_RE = /^[A-Za-z0-9.!#$%&'*+\/=?^_`{|}~-]+@[A-Za-z0-9](?:[A-Za-z0-9-]{0,61}[A-Za-z0-9])?(?:\.[A-Za-z0-9](?:[A-Za-z0-9-]{0,61}[A-Za-z0-9])?)+$/;
 const TOPICS = new Set(["Job opportunity", "Consulting engagement", "Speaking or training", "Something else"]);
 
 function json(status, body) {
@@ -52,6 +54,27 @@ function cleanLine(value, max) {
 function cleanText(value, max) {
   return String(value ?? "").replace(/\r\n?/g, "\n")
     .replace(/[\u0000-\u0009\u000B-\u001F\u007F]/g, "").trim().slice(0, max);
+}
+
+async function readLimited(request, max) {
+  if (!request.body) return "";
+  const reader = request.body.getReader();
+  const chunks = [];
+  let size = 0;
+  for (;;) {
+    const { done, value } = await reader.read();
+    if (done) break;
+    size += value.byteLength;
+    if (size > max) {
+      await reader.cancel().catch(() => {});
+      return null;
+    }
+    chunks.push(value);
+  }
+  const buf = new Uint8Array(size);
+  let offset = 0;
+  for (const c of chunks) { buf.set(c, offset); offset += c.byteLength; }
+  return new TextDecoder().decode(buf);
 }
 
 async function verifyTurnstile(token, ip, secret) {
@@ -85,12 +108,21 @@ async function handleContact(request, env) {
     return json(413, { success: false, message: "Message too large" });
   }
 
+  // Read the body as a stream and stop at the limit, so an oversized (e.g. chunked) upload
+  // is never buffered in full.
+  const text = await readLimited(request, MAX_BODY_BYTES);
+  if (text === null) {
+    log("contact_rejected_size", request, { length: "stream" });
+    return json(413, { success: false, message: "Message too large" });
+  }
   let body;
   try {
-    const text = await request.text();
-    if (text.length > MAX_BODY_BYTES) return json(413, { success: false, message: "Message too large" });
     body = JSON.parse(text);
   } catch {
+    return json(400, { success: false, message: "Invalid request" });
+  }
+  // JSON.parse also accepts null, numbers, strings and arrays; only a plain object is valid here.
+  if (body === null || typeof body !== "object" || Array.isArray(body)) {
     return json(400, { success: false, message: "Invalid request" });
   }
 
@@ -143,9 +175,12 @@ export default {
     }
     // Anything that reaches here is not a static asset and not the API.
     log("not_found", request, { path: url.pathname.slice(0, 200) });
-    const page = await env.ASSETS.fetch(new Request(new URL("/404.html", url), request));
-    const headers = new Headers(page.headers);
-    for (const [k, v] of Object.entries(PAGE_HEADERS)) headers.set(k, v);  // set, never append
-    return new Response(page.body, { status: 404, headers });
+    // "/404" (not "/404.html"): with html_handling the .html URL answers with a redirect,
+    // which left non-browser clients an empty 404 carrying a stray Location header.
+    const page = await env.ASSETS.fetch(new Request(new URL("/404", url), { method: "GET" }));
+    const headers = new Headers({ "Content-Type": "text/html; charset=utf-8" });
+    for (const [k, v] of Object.entries(PAGE_HEADERS)) headers.set(k, v);
+    const html = page.ok ? await page.text() : "<!doctype html><title>Not found</title><h1>Not found</h1>";
+    return new Response(html, { status: 404, headers });
   },
 };
