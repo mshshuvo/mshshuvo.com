@@ -25,7 +25,7 @@ BING_SITE_AUTH = "EDD4DB453EB168ED05257A3F0C13D1F5"  # gitleaks:allow
 INDEXNOW_KEY = "53de5a436f6b78ef495a04f085b56ab9"  # gitleaks:allow (public verification key)
 
 PAGES = ["/", "/projects", "/experience", "/publications", "/recommendations",
-         "/services", "/assessment", "/contact", "/insights"] + \
+         "/services", "/assessment", "/contact", "/insights", "/insights/follow"] + \
         [f"/projects/{p['slug']}" for p in PROJECTS] + [f"/insights/{p['slug']}" for p in POSTS] + \
         [f"/services/{s['slug']}" for s in SERVICES]
 

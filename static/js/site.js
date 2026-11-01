@@ -7,6 +7,7 @@ document.addEventListener("DOMContentLoaded", () => {
   initProjectFilter();
   initReadinessCheck();
   initContactForm();
+  initCopyButtons();
 });
 
 // ---------------------------------------------------------------- mobile menu
@@ -152,5 +153,24 @@ function initContactForm() {
       btn.disabled = false;
       btn.textContent = "Send message";
     }
+  });
+}
+
+// ---------------------------------------------------------------- copy buttons
+function initCopyButtons() {
+  if (!navigator.clipboard) return;
+  document.querySelectorAll("[data-copy]").forEach((btn) => {
+    const source = document.getElementById(btn.dataset.copy);
+    if (!source) return;
+    btn.hidden = false;
+    btn.addEventListener("click", async () => {
+      try {
+        await navigator.clipboard.writeText(source.textContent.trim());
+        btn.textContent = "Copied";
+      } catch {
+        btn.textContent = "Select and copy";
+      }
+      setTimeout(() => { btn.textContent = "Copy"; }, 2000);
+    });
   });
 }

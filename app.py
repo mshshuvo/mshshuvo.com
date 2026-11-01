@@ -154,6 +154,11 @@ def insights():
     return render_template("insights.html", posts=POSTS, tags=all_tags(POSTS))
 
 
+@app.get("/insights/follow")
+def subscribe():
+    return render_template("subscribe.html")
+
+
 @app.get("/insights/<slug>")
 def insight_detail(slug):
     post = POSTS_BY_SLUG.get(slug) or abort(404)

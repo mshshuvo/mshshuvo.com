@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% from "_icons.html" import icon %}
+{% block title %}Follow new articles · {{ site.name }}{% endblock %}
+{% block description %}Get new Insights articles from {{ site.name }} on cybersecurity, GRC and AI governance, by RSS reader or on LinkedIn.{% endblock %}
+{% block content %}
+{% set feed = site_url ~ "/insights/feed.xml" %}
+<section class="page-head">
+  <div class="wrap wrap--narrow">
+    <p class="eyebrow mono"><a class="crumb" href="{{ url_for('insights') }}">Insights</a> / Follow</p>
+    <h1>Follow new articles.</h1>
+    <p class="lead">Two ways to hear when I publish something new. No email list, no tracking.</p>
+  </div>
+</section>
+<section class="section section--tight">
+  <div class="wrap wrap--narrow follow">
+    <article class="card">
+      <h2>On LinkedIn</h2>
+      <p>Every new article is also shared on LinkedIn. Follow me there to see it in your feed.</p>
+      <a class="btn" href="{{ site.linkedin }}" rel="noopener" target="_blank">Follow on LinkedIn {{ icon('external') }}</a>
+    </article>
+    <article class="card">
+      <h2>In an RSS reader</h2>
+      <p>RSS delivers new articles to a feed reader app such as Feedly, Inoreader or NetNewsWire. Opening the feed link directly in a browser shows raw code; that is normal, it is meant for reader apps.</p>
+      <div class="copy-row">
+        <code id="feed-url">{{ feed }}</code>
+        <button type="button" class="btn btn--ghost btn--small" data-copy="feed-url" hidden>Copy</button>
+      </div>
+      <p class="follow__readers">
+        <a class="btn btn--ghost btn--small" href="https://feedly.com/i/subscription/feed/{{ feed|urlencode }}" rel="noopener" target="_blank">Add to Feedly {{ icon('external') }}</a>
+        <a class="btn btn--ghost btn--small" href="https://www.inoreader.com/?add_feed={{ feed|urlencode }}" rel="noopener" target="_blank">Add to Inoreader {{ icon('external') }}</a>
+      </p>
+    </article>
+  </div>
+</section>
+{% endblock %}
