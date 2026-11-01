@@ -1,0 +1,312 @@
+
+Testing all IP addresses (port 443): 172.67.188.158 104.21.92.71
+-----------------------------------------------------
+ Start 2026-11-01 15:47:20        -->> 172.67.188.158:443 (mshshuvo.com) <<--
+
+ Further IP addresses:   104.21.92.71 2606:4700:3033::6815:5c47
+                         2606:4700:3031::ac43:bc9e 
+ rDNS (172.67.188.158):  --
+
+ Service detected:       HTTP
+ mshshuvo.com:443 appeared to support TLS 1.3 ONLY. Thus switched automagically from
+ "/tmp/testssl/bin/openssl.Linux.x86_64" to "/usr/bin/openssl".
+
+ Testing protocols via sockets except NPN+ALPN 
+
+ SSLv2      not offered (OK)
+ SSLv3      not offered (OK)
+ TLS 1      not offered
+ TLS 1.1    not offered
+ TLS 1.2    not offered
+ TLS 1.3    offered (OK): final
+ NPN/SPDY   There's no such thing as NPN on TLS 1.3-only hosts
+ ALPN/HTTP2 h2, http/1.1 (offered)
+
+ Testing cipher categories 
+
+ NULL ciphers (no encryption)                      not offered (OK)
+ Anonymous NULL Ciphers (no authentication)        not offered (OK)
+ Export ciphers (w/o ADH+NULL)                     not offered (OK)
+ LOW: 64 Bit + DES, RC[2,4], MD5 (w/o export)      not offered (OK)
+ Triple DES Ciphers / IDEA                         not offered
+ Obsoleted CBC ciphers (AES, ARIA etc.)            not offered
+ Strong encryption (AEAD ciphers) with no FS       not offered
+ Forward Secrecy strong encryption (AEAD ciphers)  offered (OK)
+
+
+ Testing server's cipher preferences 
+
+Hexcode  Cipher Suite Name (OpenSSL)       KeyExch.   Encryption  Bits     Cipher Suite Name (IANA/RFC)
+-----------------------------------------------------------------------------------------------------------------------------
+SSLv2
+ - 
+SSLv3
+ - 
+TLSv1
+ - 
+TLSv1.1
+ - 
+TLSv1.2
+ - 
+TLSv1.3 (listed by strength)
+ x1302   TLS_AES_256_GCM_SHA384            ECDH/MLKEM AESGCM      256      TLS_AES_256_GCM_SHA384                             
+ x1303   TLS_CHACHA20_POLY1305_SHA256      ECDH/MLKEM ChaCha20    256      TLS_CHACHA20_POLY1305_SHA256                       
+ x1301   TLS_AES_128_GCM_SHA256            ECDH/MLKEM AESGCM      128      TLS_AES_128_GCM_SHA256                             
+
+ Has server cipher order?     no (TLS 1.3 only)
+ (limited sense as client will pick)
+
+ Testing server defaults (Server Hello) 
+
+ TLS extensions (standard)    "server name/#0" "compress_certificate/#27"
+                              "supported versions/#43" "key share/#51"
+ Session Ticket RFC 5077 hint no -- no lifetime advertised
+ SSL Session ID support       no
+ Session Resumption           Tickets no, ID: no
+ TLS clock skew               Random values, no fingerprinting possible 
+ Certificate Compression      0002/Brotli
+ Client Authentication        none
+
+  Server Certificate #1
+   Signature Algorithm          SHA256 with RSA
+   Server key size              RSA 2048 bits (exponent is 65537)
+   Server key usage             Digital Signature, Key Encipherment
+   Server extended key usage    TLS Web Server Authentication
+   Serial                       B1CCEDD95BD017A413C88DB5AAD32AD4 (OK: length 16)
+   Fingerprints                 SHA1 2DAAB2B0A0DFAD5C3D2D354C59C6E37503758ADD
+                                SHA256 09555AEDC33A6CA3A7FEEAD09687D279EC44E1FA8C58FBB552D8DBBDDE169B2A
+   Common Name (CN)             mshshuvo.com  (request w/o SNI didn't succeed)
+   subjectAltName (SAN)         mshshuvo.com www.mshshuvo.com
+                                *.www.mshshuvo.com 
+   Trust (hostname)             Ok via SAN and CN (SNI mandatory)
+   Chain of trust               Ok   
+   EV cert (experimental)       no 
+   Certificate Validity (UTC)   89 >= 60 days (2026-11-01 01:27 --> 2027-01-30 02:25)
+   ETS/"eTLS", visibility info  not present
+   Certificate Revocation List  http://c.pki.goog/wr1/bH_7IsHNcaQ.crl
+   OCSP URI                     --
+   OCSP stapling                not offered
+   OCSP must staple extension   --
+   DNS CAA RR (experimental)    not offered
+   Certificate Transparency     yes (certificate extension)
+   Certificates provided        3
+   Issuer                       WR1 (Google Trust Services from US)
+   Intermediate cert validity   #1: ok > 40 days (2029-02-20 14:00). WR1 <-- GTS Root R1
+                                #2: ok > 40 days (2028-01-28 00:00). GTS Root R1 <-- GlobalSign Root CA
+   Intermediate Bad OCSP (exp.) Ok
+
+  Server Certificate #2
+   Signature Algorithm          ECDSA with SHA256
+   Server key size              EC 256 bits (curve P-256)
+   Server key usage             Digital Signature
+   Server extended key usage    TLS Web Server Authentication
+   Serial                       B7E503A712A28AAF0EDB8C20A19CD1C9 (OK: length 16)
+   Fingerprints                 SHA1 0C8EDB24E75B103214D95A8493CF6A7BF043E13A
+                                SHA256 F18FE6A2976F77A9506074A328A2013FDC970D3C9532CE11A7FC8D1526657CCF
+   Common Name (CN)             mshshuvo.com  (request w/o SNI didn't succeed, usual for EC certificates)
+   subjectAltName (SAN)         mshshuvo.com www.mshshuvo.com
+                                *.www.mshshuvo.com 
+   Trust (hostname)             Ok via SAN and CN (SNI mandatory)
+   Chain of trust               Ok   
+   EV cert (experimental)       no 
+   Certificate Validity (UTC)   89 >= 60 days (2026-11-01 01:27 --> 2027-01-30 02:27)
+   ETS/"eTLS", visibility info  not present
+   Certificate Revocation List  http://c.pki.goog/we1/x6Eg-8TSwUw.crl
+   OCSP URI                     --
+   OCSP stapling                not offered
+   OCSP must staple extension   --
+   DNS CAA RR (experimental)    not offered
+   Certificate Transparency     yes (certificate extension)
+   Certificates provided        3
+   Issuer                       WE1 (Google Trust Services from US)
+   Intermediate cert validity   #1: ok > 40 days (2029-02-20 14:00). WE1 <-- GTS Root R4
+                                #2: ok > 40 days (2028-01-28 00:00). GTS Root R4 <-- GlobalSign Root CA
+   Intermediate Bad OCSP (exp.) Ok
+
+
+ Testing HTTP header response @ "/" 
+
+ HTTP Status Code             200 OK
+ HTTP clock skew              0 sec from localtime
+ Strict Transport Security    730 days=63072000 s, includeSubDomains
+ Public Key Pinning           --
+ Server banner                cloudflare
+ Application banner           --
+ Cookie(s)                    (none issued at "/")
+ Security headers             X-Frame-Options: DENY
+                              X-Content-Type-Options: nosniff
+                              Content-Security-Policy: default-src 'self';
+                                script-src 'self'
+                                https://challenges.cloudflare.com; frame-src
+                                https://challenges.cloudflare.com; style-src
+                                'self'; img-src 'self' data:; font-src 'self';
+                                connect-src 'self'; form-action 'self';
+                                frame-ancestors 'none'; base-uri 'self';
+                                object-src 'none'; upgrade-insecure-requests
+                              Permissions-Policy: camera=(), microphone=(),
+                                geolocation=(), payment=(), usb=()
+                              Cross-Origin-Opener-Policy: same-origin
+                              Cross-Origin-Resource-Policy: same-origin
+                              Referrer-Policy: strict-origin-when-cross-origin
+                              Cache-Control: public, max-age=0, must-revalidate
+ Reverse Proxy banner         --
+
+
+
+ Done 2026-11-01 15:47:42 [  24s] -->> 172.67.188.158:443 (mshshuvo.com) <<--
+
+-----------------------------------------------------
+ Start 2026-11-01 15:47:42        -->> 104.21.92.71:443 (mshshuvo.com) <<--
+
+ Further IP addresses:   172.67.188.158 2606:4700:3033::6815:5c47
+                         2606:4700:3031::ac43:bc9e 
+ rDNS (104.21.92.71):    --
+ Service detected:       HTTP
+
+ Testing protocols via sockets except NPN+ALPN 
+
+ SSLv2      not offered (OK)
+ SSLv3      not offered (OK)
+ TLS 1      not offered
+ TLS 1.1    not offered
+ TLS 1.2    not offered
+ TLS 1.3    offered (OK): final
+ NPN/SPDY   There's no such thing as NPN on TLS 1.3-only hosts
+ ALPN/HTTP2 h2, http/1.1 (offered)
+
+ Testing cipher categories 
+
+ NULL ciphers (no encryption)                      not offered (OK)
+ Anonymous NULL Ciphers (no authentication)        not offered (OK)
+ Export ciphers (w/o ADH+NULL)                     not offered (OK)
+ LOW: 64 Bit + DES, RC[2,4], MD5 (w/o export)      not offered (OK)
+ Triple DES Ciphers / IDEA                         not offered
+ Obsoleted CBC ciphers (AES, ARIA etc.)            not offered
+ Strong encryption (AEAD ciphers) with no FS       not offered
+ Forward Secrecy strong encryption (AEAD ciphers)  offered (OK)
+
+
+ Testing server's cipher preferences 
+
+Hexcode  Cipher Suite Name (OpenSSL)       KeyExch.   Encryption  Bits     Cipher Suite Name (IANA/RFC)
+-----------------------------------------------------------------------------------------------------------------------------
+SSLv2
+ - 
+SSLv3
+ - 
+TLSv1
+ - 
+TLSv1.1
+ - 
+TLSv1.2
+ - 
+TLSv1.3 (listed by strength)
+ x1302   TLS_AES_256_GCM_SHA384            ECDH/MLKEM AESGCM      256      TLS_AES_256_GCM_SHA384                             
+ x1303   TLS_CHACHA20_POLY1305_SHA256      ECDH/MLKEM ChaCha20    256      TLS_CHACHA20_POLY1305_SHA256                       
+ x1301   TLS_AES_128_GCM_SHA256            ECDH/MLKEM AESGCM      128      TLS_AES_128_GCM_SHA256                             
+
+ Has server cipher order?     no (TLS 1.3 only)
+ (limited sense as client will pick)
+
+ Testing server defaults (Server Hello) 
+
+ TLS extensions (standard)    "server name/#0" "compress_certificate/#27"
+                              "supported versions/#43" "key share/#51"
+ Session Ticket RFC 5077 hint no -- no lifetime advertised
+ SSL Session ID support       no
+ Session Resumption           Tickets no, ID: no
+ TLS clock skew               Random values, no fingerprinting possible 
+ Certificate Compression      0002/Brotli
+ Client Authentication        none
+
+  Server Certificate #1
+   Signature Algorithm          SHA256 with RSA
+   Server key size              RSA 2048 bits (exponent is 65537)
+   Server key usage             Digital Signature, Key Encipherment
+   Server extended key usage    TLS Web Server Authentication
+   Serial                       B1CCEDD95BD017A413C88DB5AAD32AD4 (OK: length 16)
+   Fingerprints                 SHA1 2DAAB2B0A0DFAD5C3D2D354C59C6E37503758ADD
+                                SHA256 09555AEDC33A6CA3A7FEEAD09687D279EC44E1FA8C58FBB552D8DBBDDE169B2A
+   Common Name (CN)             mshshuvo.com  (request w/o SNI didn't succeed)
+   subjectAltName (SAN)         mshshuvo.com www.mshshuvo.com
+                                *.www.mshshuvo.com 
+   Trust (hostname)             Ok via SAN and CN (SNI mandatory)
+   Chain of trust               Ok   
+   EV cert (experimental)       no 
+   Certificate Validity (UTC)   89 >= 60 days (2026-11-01 01:27 --> 2027-01-30 02:25)
+   ETS/"eTLS", visibility info  not present
+   Certificate Revocation List  http://c.pki.goog/wr1/bH_7IsHNcaQ.crl
+   OCSP URI                     --
+   OCSP stapling                not offered
+   OCSP must staple extension   --
+   DNS CAA RR (experimental)    not offered
+   Certificate Transparency     yes (certificate extension)
+   Certificates provided        3
+   Issuer                       WR1 (Google Trust Services from US)
+   Intermediate cert validity   #1: ok > 40 days (2029-02-20 14:00). WR1 <-- GTS Root R1
+                                #2: ok > 40 days (2028-01-28 00:00). GTS Root R1 <-- GlobalSign Root CA
+   Intermediate Bad OCSP (exp.) Ok
+
+  Server Certificate #2
+   Signature Algorithm          ECDSA with SHA256
+   Server key size              EC 256 bits (curve P-256)
+   Server key usage             Digital Signature
+   Server extended key usage    TLS Web Server Authentication
+   Serial                       B7E503A712A28AAF0EDB8C20A19CD1C9 (OK: length 16)
+   Fingerprints                 SHA1 0C8EDB24E75B103214D95A8493CF6A7BF043E13A
+                                SHA256 F18FE6A2976F77A9506074A328A2013FDC970D3C9532CE11A7FC8D1526657CCF
+   Common Name (CN)             mshshuvo.com  (request w/o SNI didn't succeed, usual for EC certificates)
+   subjectAltName (SAN)         mshshuvo.com www.mshshuvo.com
+                                *.www.mshshuvo.com 
+   Trust (hostname)             Ok via SAN and CN (SNI mandatory)
+   Chain of trust               Ok   
+   EV cert (experimental)       no 
+   Certificate Validity (UTC)   89 >= 60 days (2026-11-01 01:27 --> 2027-01-30 02:27)
+   ETS/"eTLS", visibility info  not present
+   Certificate Revocation List  http://c.pki.goog/we1/x6Eg-8TSwUw.crl
+   OCSP URI                     --
+   OCSP stapling                not offered
+   OCSP must staple extension   --
+   DNS CAA RR (experimental)    not offered
+   Certificate Transparency     yes (certificate extension)
+   Certificates provided        3
+   Issuer                       WE1 (Google Trust Services from US)
+   Intermediate cert validity   #1: ok > 40 days (2029-02-20 14:00). WE1 <-- GTS Root R4
+                                #2: ok > 40 days (2028-01-28 00:00). GTS Root R4 <-- GlobalSign Root CA
+   Intermediate Bad OCSP (exp.) Ok
+
+
+ Testing HTTP header response @ "/" 
+
+ HTTP Status Code             200 OK
+ HTTP clock skew              0 sec from localtime
+ Strict Transport Security    730 days=63072000 s, includeSubDomains
+ Public Key Pinning           --
+ Server banner                cloudflare
+ Application banner           --
+ Cookie(s)                    (none issued at "/")
+ Security headers             X-Frame-Options: DENY
+                              X-Content-Type-Options: nosniff
+                              Content-Security-Policy: default-src 'self';
+                                script-src 'self'
+                                https://challenges.cloudflare.com; frame-src
+                                https://challenges.cloudflare.com; style-src
+                                'self'; img-src 'self' data:; font-src 'self';
+                                connect-src 'self'; form-action 'self';
+                                frame-ancestors 'none'; base-uri 'self';
+                                object-src 'none'; upgrade-insecure-requests
+                              Permissions-Policy: camera=(), microphone=(),
+                                geolocation=(), payment=(), usb=()
+                              Cross-Origin-Opener-Policy: same-origin
+                              Cross-Origin-Resource-Policy: same-origin
+                              Referrer-Policy: strict-origin-when-cross-origin
+                              Cache-Control: public, max-age=0, must-revalidate
+ Reverse Proxy banner         --
+
+
+
+ Done 2026-11-01 15:48:03 [  45s] -->> 104.21.92.71:443 (mshshuvo.com) <<--
+
+-----------------------------------------------------
+Done testing now all IP addresses (on port 443): 172.67.188.158 104.21.92.71
+

@@ -1,0 +1,40 @@
+=== mshshuvo.com NS
+ariadne.ns.cloudflare.com.
+mcgrory.ns.cloudflare.com.
+=== mshshuvo.com A
+104.21.92.71
+172.67.188.158
+=== mshshuvo.com AAAA
+2606:4700:3031::ac43:bc9e
+2606:4700:3033::6815:5c47
+=== mshshuvo.com MX
+13 route2.mx.cloudflare.net.
+84 route3.mx.cloudflare.net.
+88 route1.mx.cloudflare.net.
+=== mshshuvo.com TXT
+"google-site-verification=WPKC0B5X7xSPYt_dtTbEXpc2XahPQHMl5gHAKcI1NSE"
+"v=spf1 include:_spf.mx.cloudflare.net ~all"
+=== mshshuvo.com CAA
+=== mshshuvo.com SOA
+ariadne.ns.cloudflare.com. dns.cloudflare.com. 2419033107 10000 2400 604800 1800
+=== mshshuvo.com DS
+2371 13 2 F8F95B9F97F493D30A6304D05ED2CB875089A3B70557789F3CB3FE49 F65B3574
+=== mshshuvo.com DNSKEY
+257 3 13 mdsswUyr3DPW132mOi8V9xESWE8jTo0dxCjjnopKl+GqJxpVXckHAeF+ KkxLbxILfDLUT0rAK9iUzy1L53eKGQ==
+256 3 13 oJMRESz5E4gYzS/q6XDrvU1qMPYIjCWzJaOau8XNEZeqCYKD5ar0IRd8 KqXXFJkqmVfRvMGPmM1x8fGAa2XhSA==
+=== _dmarc.mshshuvo.com TXT
+"v=DMARC1; p=quarantine; adkim=r; aspf=r"
+=== cf2024-1._domainkey.mshshuvo.com TXT
+"v=DKIM1; h=sha256; k=rsa; p=MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAiweykoi
+=== www.mshshuvo.com A/AAAA/CNAME
+104.21.92.71
+172.67.188.158
+2606:4700:3031::ac43:bc9e
+2606:4700:3033::6815:5c47
+=== DNSSEC validation (AD flag via 1.1.1.1)
+;; flags: qr rd ra ad; QUERY: 1, ANSWER: 3, AUTHORITY: 0, ADDITIONAL: 1
+; EDNS: version: 0, flags: do; udp: 1232
+mshshuvo.com.		300	IN	RRSIG	A 13 2 300 20261102164408 20261031144408 34505 mshshuvo.com. LTZ1UZi5fY03Dw4To1jIivOuSXlxExF1hzYQAv2ngrsmlr3ZNXJaH0oJ 65O7A2OBuAkT2p1I9zOVKLl3s2veDQ==
+=== mshshuvo.mshshuvo.workers.dev
+104.21.24.217
+172.67.220.217

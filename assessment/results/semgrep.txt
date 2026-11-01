@@ -1,0 +1,3 @@
+findings: 0
+errors: 0
+rules run: 63 files scanned
