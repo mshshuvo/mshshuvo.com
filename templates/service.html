@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% from "_icons.html" import icon %}
+{% block title %}{{ s.seo_title }} · {{ site.name }}{% endblock %}
+{% block description %}{{ s.meta }}{% endblock %}
+{% block structured_data %}<script type="application/ld+json">{{ {"@context": "https://schema.org", "@graph": [service_ld(s), person_ld(),
+  breadcrumb_ld(("Services", "/services"), (s.name, "/services/" ~ s.slug))]}|ldjson }}</script>{% endblock %}
+{% block content %}
+<section class="page-head">
+  <div class="wrap">
+    <p class="eyebrow mono"><a class="crumb" href="{{ url_for('services') }}">Services</a> / {{ s.name }}</p>
+    <h1>{{ s.seo_title }}</h1>
+    <p class="lead">{{ s.intro }}</p>
+    <div class="cta">
+      <a class="btn" href="{{ url_for('contact') }}">Discuss your needs {{ icon('arrow') }}</a>
+    </div>
+  </div>
+</section>
+<section class="section section--tight">
+  <div class="wrap case">
+    <div class="case__body">
+      <h2>What's included</h2>
+      <ul class="case__list">{% for i in s.included %}<li>{{ i }}</li>{% endfor %}</ul>
+      <h2>The outcome</h2>
+      <p>{{ s.outcome }}</p>
+    </div>
+    <aside class="profile case__facts" aria-label="Credentials">
+      <ul class="profile__list">
+        <li><span class="mono">Based in</span><strong>{{ site.location }}</strong></li>
+        <li><span class="mono">Works with</span><strong>Organisations across Canada and internationally</strong></li>
+        <li><span class="mono">Credentials</span><strong>{{ site.creds|join(' · ') }}</strong></li>
+      </ul>
+    </aside>
+  </div>
+</section>
+{% if projects %}
+<section class="section">
+  <div class="wrap">
+    <div class="section__head"><h2>Relevant experience</h2>
+      <a class="link" href="{{ url_for('projects') }}">All projects {{ icon('arrow') }}</a></div>
+    <div class="cards">{% for p in projects %}{% include "partials/project_card.html" %}{% endfor %}</div>
+  </div>
+</section>
+{% endif %}
+{% if posts %}
+<section class="section">
+  <div class="wrap">
+    <div class="section__head"><h2>Related insights</h2>
+      <a class="link" href="{{ url_for('insights') }}">All articles {{ icon('arrow') }}</a></div>
+    <div class="posts posts--teaser">{% for post in posts %}{% include "partials/post_card.html" %}{% endfor %}</div>
+  </div>
+</section>
+{% endif %}
+<section class="section">
+  <div class="wrap">
+    <h2>Other services</h2>
+    <ul class="service-links">{% for o in others %}<li><a href="{{ url_for('service_detail', slug=o.slug) }}">{{ o.name }}</a></li>{% endfor %}</ul>
+  </div>
+</section>
+{% endblock %}

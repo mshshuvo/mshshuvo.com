@@ -349,32 +349,151 @@ SERVICE = [
 ]
 
 # ---------------------------------------------------------------- services
-SERVICES = [
-    {"icon": "compass", "name": "Cyber strategy & programme leadership",
-     "blurb": "National and enterprise cyber strategies, roadmaps and multi-year security programmes, from business case to delivery.",
-     "outcome": "A strategy leadership can fund, and a programme that lands."},
-    {"icon": "siren", "name": "Incident response & CIRT/SOC design",
-     "blurb": "Response capability, playbooks, early warning and tabletop exercises, from someone who helped build a national CIRT.",
-     "outcome": "A team that knows what to do in the first hour."},
-    {"icon": "shield", "name": "GRC, audit & privacy",
-     "blurb": "ISO 27001 and 27701 readiness and internal audits, NIST CSF and ITSG-33 alignment, policy sets.",
-     "outcome": "Evidence-ready controls, and no surprises at certification."},
-    {"icon": "gauge", "name": "IT, third-party & infrastructure risk",
-     "blurb": "Enterprise, vendor and critical-infrastructure risk assessments in language leadership can act on.",
-     "outcome": "A risk register and treatment plan tied to business impact."},
-    {"icon": "target", "name": "Offensive security & VAPT",
-     "blurb": "Scoping and managing penetration tests and vulnerability programmes, through to remediation.",
-     "outcome": "Real exposure found and fixed, not just reported."},
-    {"icon": "chip", "name": "AI governance",
-     "blurb": "ISO 42001 AI management systems, AI risk assessment and responsible-AI policy, aligned with NIST AI RMF and the EU AI Act.",
-     "outcome": "AI use you can explain to regulators and customers."},
-    {"icon": "bank", "name": "Financial crime & fraud controls",
-     "blurb": "AML/KYC and fraud-prevention control reviews against FINTRAC expectations.",
-     "outcome": "Control gaps mapped to regulatory requirements."},
-    {"icon": "users", "name": "Training & capacity building",
-     "blurb": "Security training for executives, technical teams and law enforcement; curriculum and lab design.",
-     "outcome": "People who can run what gets built."},
-]
+SERVICES = [{'icon': 'compass',
+  'name': 'Cyber strategy & programme leadership',
+  'blurb': 'National and enterprise cyber strategies, roadmaps and multi-year security programmes, from '
+           'business case to delivery.',
+  'outcome': 'A strategy leadership can fund, and a programme that lands.',
+  'slug': 'cyber-strategy',
+  'seo_title': 'Cybersecurity Strategy & Programme Leadership Consultant',
+  'meta': "Cybersecurity strategy, roadmaps and programme leadership from the co-author of Bangladesh's "
+          'national cybersecurity strategy. Based in Ottawa, working across Canada.',
+  'intro': "Strategy work that ends in a funded programme, not a slide deck. I co-led Bangladesh's national "
+           'cybersecurity strategy and risk framework with the University of Oxford GCSCC, and spent five '
+           'years building the government CIRT that put it into practice.',
+  'included': ['Current-state and maturity assessment against NIST CSF 2.0 or ISO/IEC 27001',
+               'Cyber strategy and multi-year roadmap tied to business and regulatory priorities',
+               'Business case, budget and governance structure for the programme',
+               'Programme set-up: PMO, milestones, KPIs and board reporting',
+               'Policy and standards framework to support the strategy'],
+  'projects': ['national-strategy', 'national-cirt', 'threat-landscape'],
+  'insight_tags': ['Governance & Risk', 'AI Governance']},
+ {'icon': 'siren',
+  'name': 'Incident response & CIRT/SOC design',
+  'blurb': 'Response capability, playbooks, early warning and tabletop exercises, from someone who helped '
+           'build a national CIRT.',
+  'outcome': 'A team that knows what to do in the first hour.',
+  'slug': 'incident-response',
+  'seo_title': 'Incident Response, CIRT & SOC Design Consultant',
+  'meta': 'Incident response plans, playbooks, tabletop exercises and CIRT/SOC design from someone who '
+          "helped build Bangladesh's first national government CIRT.",
+  'intro': "Response capability built by someone who has run one. I helped build Bangladesh's first "
+           'government CIRT, deployed early-warning sensors across critical infrastructure and set up a '
+           'national cyber helpline.',
+  'included': ['Incident response plan, roles and escalation paths',
+               'Playbooks for ransomware, phishing, data breach and insider threats',
+               'Tabletop exercises for executives and technical teams',
+               'CIRT/SOC operating model, tooling and SIEM use cases',
+               'Post-incident reviews and lessons learned'],
+  'projects': ['national-cirt', 'cyber-sensors', 'cyber-helpline', 'forensics-lab'],
+  'insight_tags': ['Security Operations']},
+ {'icon': 'shield',
+  'name': 'GRC, audit & privacy',
+  'blurb': 'ISO 27001 and 27701 readiness and internal audits, NIST CSF and ITSG-33 alignment, policy sets.',
+  'outcome': 'Evidence-ready controls, and no surprises at certification.',
+  'slug': 'iso-27001-grc-audit',
+  'seo_title': 'ISO 27001 Lead Auditor & GRC Consultant',
+  'meta': 'ISO/IEC 27001 and 27701 readiness, internal audits and GRC programmes from a PECB ISO 27001 '
+          'Senior Lead Auditor. NIST CSF and ITSG-33 alignment. Ottawa, Canada.',
+  'intro': 'Readiness and audit work from an ISO/IEC 27001 Senior Lead Auditor who has audited critical '
+           'infrastructure and Tier-IV data centres. The aim is controls that produce evidence on their own, '
+           'so certification holds no surprises.',
+  'included': ['ISO/IEC 27001 and 27701 gap assessment and readiness roadmap',
+               'Scope, Statement of Applicability and risk treatment plan',
+               'Policy set and control design that fits how you actually work',
+               'Internal audit and management review before certification',
+               'Mapping to NIST CSF 2.0, ITSG-33, SOC 2 and PCI DSS'],
+  'projects': ['tier4-audit', 'national-vapt', 'national-cirt'],
+  'insight_tags': ['Governance & Risk']},
+ {'icon': 'gauge',
+  'name': 'IT, third-party & infrastructure risk',
+  'blurb': 'Enterprise, vendor and critical-infrastructure risk assessments in language leadership can act '
+           'on.',
+  'outcome': 'A risk register and treatment plan tied to business impact.',
+  'slug': 'cyber-risk-assessment',
+  'seo_title': 'Cyber Risk Assessment & Third-Party Risk Consultant',
+  'meta': 'Enterprise, third-party and critical-infrastructure cyber risk assessments written for '
+          'leadership: risk registers and treatment plans tied to business impact.',
+  'intro': 'Risk assessments that leadership can act on. I developed national critical information '
+           'infrastructure assessment methods and ran IT risk programmes for government agencies.',
+  'included': ['Enterprise IT and cyber risk assessment',
+               'Third-party and vendor risk reviews, including OSFI B-10 style due diligence',
+               'Critical infrastructure and OT risk assessment',
+               'Risk register, appetite statements and treatment plans',
+               'Board-level risk reporting'],
+  'projects': ['tier4-audit', 'national-strategy', 'national-vapt'],
+  'insight_tags': ['Governance & Risk', 'Identity & Fraud']},
+ {'icon': 'target',
+  'name': 'Offensive security & VAPT',
+  'blurb': 'Scoping and managing penetration tests and vulnerability programmes, through to remediation.',
+  'outcome': 'Real exposure found and fixed, not just reported.',
+  'slug': 'penetration-testing-vapt',
+  'seo_title': 'Penetration Testing & VAPT Programme Management',
+  'meta': 'Scoping and managing penetration tests and vulnerability assessment programmes, from central-bank '
+          'payment systems to national VAPT, through to verified remediation.',
+  'intro': 'Testing that ends with exposure fixed, not just reported. I managed vulnerability assessment and '
+           "penetration testing of the Bangladesh central bank's payment system and a national VAPT "
+           'programme for government.',
+  'included': ['Scoping and rules of engagement for penetration tests',
+               'Vendor selection and test management',
+               'Vulnerability management programme design',
+               'Remediation tracking and retesting',
+               'Executive and technical reporting'],
+  'projects': ['bach-vapt', 'national-vapt'],
+  'insight_tags': ['Security Operations']},
+ {'icon': 'chip',
+  'name': 'AI governance',
+  'blurb': 'ISO 42001 AI management systems, AI risk assessment and responsible-AI policy, aligned with NIST '
+           'AI RMF and the EU AI Act.',
+  'outcome': 'AI use you can explain to regulators and customers.',
+  'slug': 'ai-governance-iso-42001',
+  'seo_title': 'AI Governance & ISO 42001 Consultant',
+  'meta': 'ISO/IEC 42001 AI management systems, AI risk assessment and responsible-AI policy aligned with '
+          'NIST AI RMF and the EU AI Act, from an ISO 42001 AI Lead Auditor.',
+  'intro': 'AI use you can explain to regulators, customers and your board. I am an ISO/IEC 42001 AI Lead '
+           'Auditor and have written on AI governance, AI-enabled attacks and AI risk.',
+  'included': ['ISO/IEC 42001 gap assessment and AI management system design',
+               'AI inventory, risk and impact assessment',
+               'Responsible-AI policy and acceptable-use rules',
+               'Alignment with NIST AI RMF and the EU AI Act',
+               'Controls for AI tools in meetings, data and development'],
+  'projects': ['phishing-ml'],
+  'insight_tags': ['AI Governance', 'AI Security']},
+ {'icon': 'bank',
+  'name': 'Financial crime & fraud controls',
+  'blurb': 'AML/KYC and fraud-prevention control reviews against FINTRAC expectations.',
+  'outcome': 'Control gaps mapped to regulatory requirements.',
+  'slug': 'aml-kyc-fraud-controls',
+  'seo_title': 'AML/KYC & Fraud Controls Review',
+  'meta': 'AML/KYC and fraud-prevention control reviews against FINTRAC expectations, including identity '
+          'verification in an age of leaked IDs and deepfakes.',
+  'intro': 'Financial-crime controls reviewed by someone who sees them through a security lens: identity '
+           'verification, account takeover and fraud, mapped against FINTRAC expectations.',
+  'included': ['KYC and identity verification process review',
+               'Fraud and account-takeover control assessment',
+               'Mapping of control gaps to FINTRAC requirements',
+               'Vendor review for identity and KYC providers',
+               'Staff procedures for deepfake and social-engineering fraud'],
+  'projects': ['bach-vapt'],
+  'insight_tags': ['Identity & Fraud']},
+ {'icon': 'users',
+  'name': 'Training & capacity building',
+  'blurb': 'Security training for executives, technical teams and law enforcement; curriculum and lab '
+           'design.',
+  'outcome': 'People who can run what gets built.',
+  'slug': 'cybersecurity-training',
+  'seo_title': 'Cybersecurity Training & Capacity Building',
+  'meta': 'Cybersecurity training for executives, technical teams and law enforcement, plus curriculum and '
+          'lab design, from national programmes to university courses.',
+  'intro': 'Training that leaves teams able to run what was built. I have delivered national training '
+           'programmes in Bangladesh and designed a cybersecurity lab for a university course.',
+  'included': ['Executive and board cyber briefings',
+               'Technical training for SOC, IR and audit teams',
+               'Security awareness programmes',
+               'Curriculum and hands-on lab design',
+               'Train-the-trainer programmes'],
+  'projects': ['training', 'national-cirt'],
+  'insight_tags': ['Awareness']}]
 
 # ISO 27001 readiness check: each answer is No (0) / Partly (1) / Yes (2).
 QUIZ = [

@@ -14,15 +14,18 @@ from email.utils import format_datetime
 from html import escape  # writes the RSS feed; nothing is parsed
 from pathlib import Path
 
-from app import POSTS, PROJECTS, SECURITY_HEADERS, SITE, app
+from app import POSTS, PROJECTS, SECURITY_HEADERS, SERVICES, SITE, app
 
 ROOT = Path(__file__).parent
 DIST = ROOT / "dist"
 SITE_URL = "https://mshshuvo.com"
+# IndexNow (Bing, Yandex, Seznam...): public by design, proves we own the host. Not a secret.
+INDEXNOW_KEY = "53de5a436f6b78ef495a04f085b56ab9"  # gitleaks:allow (public verification key)
 
 PAGES = ["/", "/projects", "/experience", "/publications", "/recommendations",
          "/services", "/assessment", "/contact", "/insights"] + \
-        [f"/projects/{p['slug']}" for p in PROJECTS] + [f"/insights/{p['slug']}" for p in POSTS]
+        [f"/projects/{p['slug']}" for p in PROJECTS] + [f"/insights/{p['slug']}" for p in POSTS] + \
+        [f"/services/{s['slug']}" for s in SERVICES]
 
 
 def rss_feed() -> str:
@@ -87,6 +90,8 @@ def main() -> None:
 
     (DIST / "insights").mkdir(exist_ok=True)
     (DIST / "insights" / "feed.xml").write_text(rss_feed(), encoding="utf-8")
+
+    (DIST / f"{INDEXNOW_KEY}.txt").write_text(INDEXNOW_KEY)
 
     (DIST / "robots.txt").write_text(f"User-agent: *\nAllow: /\nSitemap: {SITE_URL}/sitemap.xml\n")
     lastmod = {f"/insights/{p['slug']}": p["date"].isoformat() for p in POSTS}

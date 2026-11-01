@@ -1,6 +1,13 @@
 {% extends "base.html" %}
 {% from "_icons.html" import icon %}
-{% block title %}Services · {{ site.name }}{% endblock %}
+{% block title %}Cybersecurity, GRC & AI Governance Consulting Services · {{ site.name }}{% endblock %}
+{% block description %}Cybersecurity consulting from {{ site.name }} in Ottawa: ISO 27001 and GRC, AI governance (ISO 42001), incident response, cyber risk assessment, VAPT, AML/KYC controls and training.{% endblock %}
+{% block structured_data %}<script type="application/ld+json">{{ {"@context": "https://schema.org", "@graph": [person_ld(),
+  {"@type": "ProfessionalService", "@id": site_url ~ "/services#service", "name": site.name ~ " · Cybersecurity & GRC Advisory", "url": site_url ~ "/services",
+   "description": "Cybersecurity strategy, GRC and ISO 27001, AI governance (ISO 42001), incident response, risk assessment, VAPT, AML/KYC controls and training.",
+   "founder": {"@id": site_url ~ "/#person"}, "areaServed": ["Canada", "Bangladesh"],
+   "address": {"@type": "PostalAddress", "addressLocality": "Ottawa", "addressRegion": "ON", "addressCountry": "CA"},
+   "hasOfferCatalog": {"@type": "OfferCatalog", "name": "Services", "itemListElement": services|map("service_ld_offer")|list}}]}|ldjson }}</script>{% endblock %}
 {% block content %}
 <section class="page-head">
   <div class="wrap">
@@ -12,9 +19,9 @@
 <section class="section section--tight">
   <div class="wrap cards cards--wide">
     {% for s in services %}
-    <article class="card">
+    <article class="card project">
       <div class="card__icon">{{ icon(s.icon) }}</div>
-      <h3>{{ s.name }}</h3>
+      <h3><a class="project__link" href="{{ url_for('service_detail', slug=s.slug) }}">{{ s.name }}</a></h3>
       <p>{{ s.blurb }}</p>
       <p class="card__outcome"><span class="mono">outcome</span>{{ s.outcome }}</p>
     </article>

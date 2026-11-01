@@ -360,6 +360,17 @@ details[open] .tl__more::after { content: "hide −"; }
 .pager__link .mono { font: 500 .75rem var(--font-mono); color: var(--color-secondary); text-transform: uppercase; letter-spacing: .08em; }
 .pager__link--next { text-align: right; grid-column: 2; }
 
+/* ---------- service pages ---------- */
+.service-links { list-style: none; padding: 0; margin: 0; display: flex; flex-wrap: wrap; gap: var(--s1); }
+.service-links a { display: inline-block; padding: var(--s1) var(--s2); border: 1px solid var(--color-control-border); border-radius: var(--radius-sm); color: var(--color-text); text-decoration: none; font-size: .9375rem; transition: background-color var(--ease); }
+.service-links a:hover { background: var(--color-surface-hover); }
+.related-services { margin-top: var(--s5); padding: var(--s3); background: var(--color-surface); border: 1px solid var(--color-border); border-left: 3px solid var(--color-primary); border-radius: var(--radius); }
+.related-services .mono { color: var(--color-muted); font-size: .75rem; text-transform: uppercase; letter-spacing: .08em; margin: 0 0 var(--s1); }
+.related-services ul { list-style: none; margin: 0; padding: 0; }
+.related-services li + li { margin-top: var(--s1); }
+.related-services a { display: inline-flex; align-items: center; gap: 6px; font-weight: 600; text-decoration: none; }
+.related-services .icon { width: 16px; height: 16px; }
+
 /* ---------- responsive ---------- */
 @media (max-width: 960px) {
   .hero { padding-top: var(--s8); }

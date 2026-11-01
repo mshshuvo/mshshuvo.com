@@ -63,6 +63,27 @@ class SanitiserTests(unittest.TestCase):
             self.assertIn(good, html)
 
 
+class StructuredDataTests(unittest.TestCase):
+    def test_ldjson_cannot_close_script(self):
+        import app
+        out = str(app.ldjson({"x": "</script><script>alert(1)</script>&"}))
+        self.assertNotIn("<", out)
+        self.assertNotIn(">", out)
+        self.assertNotIn("&", out)
+
+    def test_every_page_has_valid_ld_json(self):
+        import json
+        import re
+        import app
+        client = app.app.test_client()
+        for path in ["/", "/services", "/services/ai-governance-iso-42001", "/insights",
+                     "/insights/the-ai-paradox", "/experience", "/projects/national-cirt"]:
+            html = client.get(path).get_data(as_text=True)
+            blocks = re.findall(r'<script type="application/ld\+json">(.*?)</script>', html, re.S)
+            self.assertEqual(len(blocks), 1, path)
+            self.assertIn("@graph", json.loads(blocks[0]))
+
+
 class LoaderTests(unittest.TestCase):
     def setUp(self):
         self.tmp = tempfile.TemporaryDirectory()
