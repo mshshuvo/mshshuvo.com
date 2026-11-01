@@ -16,7 +16,7 @@ SITE = {
     "email": "mshshuvo@gmail.com",
     "linkedin": "https://www.linkedin.com/in/mshshuvo/",
     # Cloudflare Turnstile site key (public). Empty = contact page shows email buttons instead.
-    "turnstile_sitekey": "",
+    "turnstile_sitekey": "0x4AAAAAAFur_A35mfi5lTXU",
     "github": "https://github.com/mshshuvo/Cyber-Projects",
     "linkedin_recs": "https://www.linkedin.com/in/mshshuvo/details/recommendations/",
     "creds": ["C|CISO", "ISO 27001 Senior Lead Auditor", "ISO 42001 AI Lead Auditor", "CEH", "ACE"],
