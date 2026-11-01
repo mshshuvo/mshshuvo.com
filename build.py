@@ -20,6 +20,8 @@ ROOT = Path(__file__).parent
 DIST = ROOT / "dist"
 SITE_URL = "https://mshshuvo.com"
 # IndexNow (Bing, Yandex, Seznam...): public by design, proves we own the host. Not a secret.
+# Bing Webmaster Tools ownership file (public by design, not a secret).
+BING_SITE_AUTH = "EDD4DB453EB168ED05257A3F0C13D1F5"  # gitleaks:allow
 INDEXNOW_KEY = "53de5a436f6b78ef495a04f085b56ab9"  # gitleaks:allow (public verification key)
 
 PAGES = ["/", "/projects", "/experience", "/publications", "/recommendations",
@@ -92,6 +94,8 @@ def main() -> None:
     (DIST / "insights" / "feed.xml").write_text(rss_feed(), encoding="utf-8")
 
     (DIST / f"{INDEXNOW_KEY}.txt").write_text(INDEXNOW_KEY)
+    (DIST / "BingSiteAuth.xml").write_text(
+        f'<?xml version="1.0"?>\n<users>\n\t<user>{BING_SITE_AUTH}</user>\n</users>\n')
 
     (DIST / "robots.txt").write_text(f"User-agent: *\nAllow: /\nSitemap: {SITE_URL}/sitemap.xml\n")
     lastmod = {f"/insights/{p['slug']}": p["date"].isoformat() for p in POSTS}
