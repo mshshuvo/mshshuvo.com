@@ -21,8 +21,8 @@
   },
   // TURNSTILE_SECRET is set with `wrangler secret put`, never committed.
   "observability": { "enabled": true },
-  // Keep the default *.workers.dev URL on until the custom domain works, then set both to false
-  // so the site is only reachable through mshshuvo.com (and Cloudflare's WAF rules).
-  "workers_dev": true,
+  // Custom domains mshshuvo.com and www.mshshuvo.com are live, so the default *.workers.dev
+  // URL is off: the site is only reachable through the zone's WAF, bot and rate-limit rules.
+  "workers_dev": false,
   "preview_urls": false
 }
