@@ -1,0 +1,1253 @@
+=== GET /
+$ curl https://mshshuvo.com/
+exit=0
+HTTP/2 200 
+content-type: text/html
+cache-control: public, max-age=0, must-revalidate
+strict-transport-security: max-age=63072000; includeSubDomains
+content-security-policy: default-src 'self'; script-src 'self' https://challenges.cloudflare.com; frame-src https://challenges.cloudflare.com; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self'; form-action 'self'; frame-ancestors 'none'; base-uri 'self'; object-src 'none'; upgrade-insecure-requests
+cross-origin-opener-policy: same-origin
+cross-origin-resource-policy: same-origin
+permissions-policy: camera=(), microphone=(), geolocation=(), payment=(), usb=()
+referrer-policy: strict-origin-when-cross-origin
+x-content-type-options: nosniff
+x-frame-options: DENY
+server: cloudflare
+--- body (first 300 bytes, control chars stripped)
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Md Sabbir Hossain · Cybersecurity Leader · GRC &amp; AI Governance</title>
+  <meta name="description" content="Strategy, governance and resilience from s
+=== GET /projects
+$ curl https://mshshuvo.com/projects
+exit=0
+HTTP/2 200 
+content-type: text/html
+cache-control: public, max-age=0, must-revalidate
+strict-transport-security: max-age=63072000; includeSubDomains
+content-security-policy: default-src 'self'; script-src 'self' https://challenges.cloudflare.com; frame-src https://challenges.cloudflare.com; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self'; form-action 'self'; frame-ancestors 'none'; base-uri 'self'; object-src 'none'; upgrade-insecure-requests
+cross-origin-opener-policy: same-origin
+cross-origin-resource-policy: same-origin
+permissions-policy: camera=(), microphone=(), geolocation=(), payment=(), usb=()
+referrer-policy: strict-origin-when-cross-origin
+x-content-type-options: nosniff
+x-frame-options: DENY
+server: cloudflare
+--- body (first 300 bytes, control chars stripped)
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Projects · Md Sabbir Hossain</title>
+  <meta name="description" content="Strategy, governance and resilience from someone who has built national cyber def
+=== GET /projects/national-cirt
+$ curl https://mshshuvo.com/projects/national-cirt
+exit=0
+HTTP/2 200 
+content-type: text/html
+cache-control: public, max-age=0, must-revalidate
+strict-transport-security: max-age=63072000; includeSubDomains
+content-security-policy: default-src 'self'; script-src 'self' https://challenges.cloudflare.com; frame-src https://challenges.cloudflare.com; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self'; form-action 'self'; frame-ancestors 'none'; base-uri 'self'; object-src 'none'; upgrade-insecure-requests
+cross-origin-opener-policy: same-origin
+cross-origin-resource-policy: same-origin
+permissions-policy: camera=(), microphone=(), geolocation=(), payment=(), usb=()
+referrer-policy: strict-origin-when-cross-origin
+x-content-type-options: nosniff
+x-frame-options: DENY
+server: cloudflare
+--- body (first 300 bytes, control chars stripped)
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Bangladesh&#39;s first government CIRT · Md Sabbir Hossain</title>
+  <meta name="description" content="Strategy, governance and resilience from someone wh
+=== GET /contact
+$ curl https://mshshuvo.com/contact
+exit=0
+HTTP/2 200 
+content-type: text/html
+cache-control: public, max-age=0, must-revalidate
+strict-transport-security: max-age=63072000; includeSubDomains
+content-security-policy: default-src 'self'; script-src 'self' https://challenges.cloudflare.com; frame-src https://challenges.cloudflare.com; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self'; form-action 'self'; frame-ancestors 'none'; base-uri 'self'; object-src 'none'; upgrade-insecure-requests
+cross-origin-opener-policy: same-origin
+cross-origin-resource-policy: same-origin
+permissions-policy: camera=(), microphone=(), geolocation=(), payment=(), usb=()
+referrer-policy: strict-origin-when-cross-origin
+x-content-type-options: nosniff
+x-frame-options: DENY
+server: cloudflare
+--- body (first 300 bytes, control chars stripped)
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Contact · Md Sabbir Hossain</title>
+  <meta name="description" content="Strategy, governance and resilience from someone who has built national cyber defe
+=== GET /assessment
+$ curl https://mshshuvo.com/assessment
+exit=0
+HTTP/2 200 
+content-type: text/html
+cache-control: public, max-age=0, must-revalidate
+strict-transport-security: max-age=63072000; includeSubDomains
+content-security-policy: default-src 'self'; script-src 'self' https://challenges.cloudflare.com; frame-src https://challenges.cloudflare.com; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self'; form-action 'self'; frame-ancestors 'none'; base-uri 'self'; object-src 'none'; upgrade-insecure-requests
+cross-origin-opener-policy: same-origin
+cross-origin-resource-policy: same-origin
+permissions-policy: camera=(), microphone=(), geolocation=(), payment=(), usb=()
+referrer-policy: strict-origin-when-cross-origin
+x-content-type-options: nosniff
+x-frame-options: DENY
+server: cloudflare
+--- body (first 300 bytes, control chars stripped)
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ISO 27001 readiness check · Md Sabbir Hossain</title>
+  <meta name="description" content="Strategy, governance and resilience from someone who has built n
+=== GET /index.html
+$ curl https://mshshuvo.com/index.html
+exit=0
+HTTP/2 307 
+content-length: 0
+location: /
+strict-transport-security: max-age=63072000; includeSubDomains
+content-security-policy: default-src 'self'; script-src 'self' https://challenges.cloudflare.com; frame-src https://challenges.cloudflare.com; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self'; form-action 'self'; frame-ancestors 'none'; base-uri 'self'; object-src 'none'; upgrade-insecure-requests
+cross-origin-opener-policy: same-origin
+cross-origin-resource-policy: same-origin
+permissions-policy: camera=(), microphone=(), geolocation=(), payment=(), usb=()
+referrer-policy: strict-origin-when-cross-origin
+x-content-type-options: nosniff
+x-frame-options: DENY
+server: cloudflare
+--- body (first 300 bytes, control chars stripped)
+
+=== GET /404.html
+$ curl https://mshshuvo.com/404.html
+exit=0
+HTTP/2 307 
+content-length: 0
+location: /404
+strict-transport-security: max-age=63072000; includeSubDomains
+content-security-policy: default-src 'self'; script-src 'self' https://challenges.cloudflare.com; frame-src https://challenges.cloudflare.com; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self'; form-action 'self'; frame-ancestors 'none'; base-uri 'self'; object-src 'none'; upgrade-insecure-requests
+cross-origin-opener-policy: same-origin
+cross-origin-resource-policy: same-origin
+permissions-policy: camera=(), microphone=(), geolocation=(), payment=(), usb=()
+referrer-policy: strict-origin-when-cross-origin
+x-content-type-options: nosniff
+x-frame-options: DENY
+server: cloudflare
+--- body (first 300 bytes, control chars stripped)
+
+=== GET /.well-known/security.txt
+$ curl https://mshshuvo.com/.well-known/security.txt
+exit=0
+HTTP/2 200 
+content-type: text/plain
+content-length: 220
+cache-control: public, max-age=0, must-revalidate
+strict-transport-security: max-age=63072000; includeSubDomains
+content-security-policy: default-src 'self'; script-src 'self' https://challenges.cloudflare.com; frame-src https://challenges.cloudflare.com; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self'; form-action 'self'; frame-ancestors 'none'; base-uri 'self'; object-src 'none'; upgrade-insecure-requests
+cross-origin-opener-policy: same-origin
+cross-origin-resource-policy: same-origin
+permissions-policy: camera=(), microphone=(), geolocation=(), payment=(), usb=()
+referrer-policy: strict-origin-when-cross-origin
+x-content-type-options: nosniff
+x-frame-options: DENY
+server: cloudflare
+--- body (first 300 bytes, control chars stripped)
+Contact: https://mshshuvo.com/contact
+Policy: https://github.com/mshshuvo/mshshuvo.com/blob/main/SECURITY.md
+Expires: 2027-09-27T00:00:00Z
+Preferred-Languages: en
+Canonical: https://mshshuvo.com/.well-known/security.txt
+
+=== GET /robots.txt
+$ curl https://mshshuvo.com/robots.txt
+exit=0
+HTTP/2 200 
+content-type: text/plain
+content-length: 65
+cache-control: public, max-age=0, must-revalidate
+strict-transport-security: max-age=63072000; includeSubDomains
+content-security-policy: default-src 'self'; script-src 'self' https://challenges.cloudflare.com; frame-src https://challenges.cloudflare.com; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self'; form-action 'self'; frame-ancestors 'none'; base-uri 'self'; object-src 'none'; upgrade-insecure-requests
+cross-origin-opener-policy: same-origin
+cross-origin-resource-policy: same-origin
+permissions-policy: camera=(), microphone=(), geolocation=(), payment=(), usb=()
+referrer-policy: strict-origin-when-cross-origin
+x-content-type-options: nosniff
+x-frame-options: DENY
+server: cloudflare
+--- body (first 300 bytes, control chars stripped)
+User-agent: *
+Allow: /
+Sitemap: https://mshshuvo.com/sitemap.xml
+
+=== GET /sitemap.xml
+$ curl https://mshshuvo.com/sitemap.xml
+exit=0
+HTTP/2 200 
+content-type: application/xml
+content-length: 1366
+cache-control: public, max-age=0, must-revalidate
+strict-transport-security: max-age=63072000; includeSubDomains
+content-security-policy: default-src 'self'; script-src 'self' https://challenges.cloudflare.com; frame-src https://challenges.cloudflare.com; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self'; form-action 'self'; frame-ancestors 'none'; base-uri 'self'; object-src 'none'; upgrade-insecure-requests
+cross-origin-opener-policy: same-origin
+cross-origin-resource-policy: same-origin
+permissions-policy: camera=(), microphone=(), geolocation=(), payment=(), usb=()
+referrer-policy: strict-origin-when-cross-origin
+x-content-type-options: nosniff
+x-frame-options: DENY
+server: cloudflare
+--- body (first 300 bytes, control chars stripped)
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url><loc>https://mshshuvo.com</loc></url>
+  <url><loc>https://mshshuvo.com/projects</loc></url>
+  <url><loc>https://mshshuvo.com/experience</loc></url>
+  <url><loc>https://mshshuvo.com/publications
+=== GET /static/js/site.js
+$ curl https://mshshuvo.com/static/js/site.js
+exit=0
+HTTP/2 200 
+content-type: text/javascript
+content-length: 6310
+cache-control: public, max-age=604800
+strict-transport-security: max-age=63072000; includeSubDomains
+content-security-policy: default-src 'self'; script-src 'self' https://challenges.cloudflare.com; frame-src https://challenges.cloudflare.com; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self'; form-action 'self'; frame-ancestors 'none'; base-uri 'self'; object-src 'none'; upgrade-insecure-requests
+cross-origin-opener-policy: same-origin
+cross-origin-resource-policy: same-origin
+permissions-policy: camera=(), microphone=(), geolocation=(), payment=(), usb=()
+referrer-policy: strict-origin-when-cross-origin
+x-content-type-options: nosniff
+x-frame-options: DENY
+server: cloudflare
+--- body (first 300 bytes, control chars stripped)
+// mshshuvo.com: all interactivity, client-side. No third-party scripts.
+// Content still reads correctly without JavaScript.
+"use strict";
+
+document.addEventListener("DOMContentLoaded", () => {
+  initMenu();
+  initProjectFilter();
+  initReadinessCheck();
+  initContactForm();
+});
+
+// ---------------
+=== HTTP apex redirect
+$ curl http://mshshuvo.com/
+exit=0
+HTTP/1.1 301 Moved Permanently
+Content-Type: text/html; charset=UTF-8
+Location: https://mshshuvo.com/
+Server: cloudflare
+--- body (first 300 bytes, control chars stripped)
+<html>
+<head><title>301 Moved Permanently</title></head>
+<body>
+<center><h1>301 Moved Permanently</h1></center>
+<hr><center>cloudflare</center>
+</body>
+</html>
+
+=== HTTP www redirect
+$ curl http://www.mshshuvo.com/
+exit=0
+HTTP/1.1 301 Moved Permanently
+Content-Type: text/html; charset=UTF-8
+Location: https://www.mshshuvo.com/
+Server: cloudflare
+--- body (first 300 bytes, control chars stripped)
+<html>
+<head><title>301 Moved Permanently</title></head>
+<body>
+<center><h1>301 Moved Permanently</h1></center>
+<hr><center>cloudflare</center>
+</body>
+</html>
+
+=== HTTPS www
+$ curl https://www.mshshuvo.com/
+exit=0
+HTTP/2 200 
+content-type: text/html
+cache-control: public, max-age=0, must-revalidate
+strict-transport-security: max-age=63072000; includeSubDomains
+content-security-policy: default-src 'self'; script-src 'self' https://challenges.cloudflare.com; frame-src https://challenges.cloudflare.com; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self'; form-action 'self'; frame-ancestors 'none'; base-uri 'self'; object-src 'none'; upgrade-insecure-requests
+cross-origin-opener-policy: same-origin
+cross-origin-resource-policy: same-origin
+permissions-policy: camera=(), microphone=(), geolocation=(), payment=(), usb=()
+referrer-policy: strict-origin-when-cross-origin
+x-content-type-options: nosniff
+x-frame-options: DENY
+server: cloudflare
+--- body (first 300 bytes, control chars stripped)
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Md Sabbir Hossain · Cybersecurity Leader · GRC &amp; AI Governance</title>
+  <meta name="description" content="Strategy, governance and resilience from s
+=== workers.dev disabled
+$ curl https://mshshuvo.mshshuvo.workers.dev/
+exit=0
+HTTP/2 404 
+content-type: text/plain; charset=UTF-8
+content-length: 17
+cache-control: private, max-age=0, no-store, no-cache, must-revalidate, post-check=0, pre-check=0
+referrer-policy: same-origin
+x-frame-options: SAMEORIGIN
+server: cloudflare
+--- body (first 300 bytes, control chars stripped)
+error code: 1042
+
+=== Exposure /.env
+$ curl https://mshshuvo.com/.env
+exit=0
+HTTP/2 404 
+content-length: 0
+location: /404
+strict-transport-security: max-age=63072000; includeSubDomains
+content-security-policy: default-src 'self'; script-src 'self' https://challenges.cloudflare.com; frame-src https://challenges.cloudflare.com; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self'; form-action 'self'; frame-ancestors 'none'; base-uri 'self'; object-src 'none'; upgrade-insecure-requests
+cross-origin-opener-policy: same-origin
+cross-origin-resource-policy: same-origin
+permissions-policy: camera=(), microphone=(), geolocation=(), payment=(), usb=()
+referrer-policy: strict-origin-when-cross-origin
+x-content-type-options: nosniff
+x-frame-options: DENY
+server: cloudflare
+--- body (first 300 bytes, control chars stripped)
+
+=== Exposure /.git/HEAD
+$ curl https://mshshuvo.com/.git/HEAD
+exit=0
+HTTP/2 404 
+content-length: 0
+location: /404
+strict-transport-security: max-age=63072000; includeSubDomains
+content-security-policy: default-src 'self'; script-src 'self' https://challenges.cloudflare.com; frame-src https://challenges.cloudflare.com; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self'; form-action 'self'; frame-ancestors 'none'; base-uri 'self'; object-src 'none'; upgrade-insecure-requests
+cross-origin-opener-policy: same-origin
+cross-origin-resource-policy: same-origin
+permissions-policy: camera=(), microphone=(), geolocation=(), payment=(), usb=()
+referrer-policy: strict-origin-when-cross-origin
+x-content-type-options: nosniff
+x-frame-options: DENY
+server: cloudflare
+--- body (first 300 bytes, control chars stripped)
+
+=== Exposure /.git/config
+$ curl https://mshshuvo.com/.git/config
+exit=0
+HTTP/2 404 
+content-length: 0
+location: /404
+strict-transport-security: max-age=63072000; includeSubDomains
+content-security-policy: default-src 'self'; script-src 'self' https://challenges.cloudflare.com; frame-src https://challenges.cloudflare.com; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self'; form-action 'self'; frame-ancestors 'none'; base-uri 'self'; object-src 'none'; upgrade-insecure-requests
+cross-origin-opener-policy: same-origin
+cross-origin-resource-policy: same-origin
+permissions-policy: camera=(), microphone=(), geolocation=(), payment=(), usb=()
+referrer-policy: strict-origin-when-cross-origin
+x-content-type-options: nosniff
+x-frame-options: DENY
+server: cloudflare
+--- body (first 300 bytes, control chars stripped)
+
+=== Exposure /.dev.vars
+$ curl https://mshshuvo.com/.dev.vars
+exit=0
+HTTP/2 404 
+content-length: 0
+location: /404
+strict-transport-security: max-age=63072000; includeSubDomains
+content-security-policy: default-src 'self'; script-src 'self' https://challenges.cloudflare.com; frame-src https://challenges.cloudflare.com; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self'; form-action 'self'; frame-ancestors 'none'; base-uri 'self'; object-src 'none'; upgrade-insecure-requests
+cross-origin-opener-policy: same-origin
+cross-origin-resource-policy: same-origin
+permissions-policy: camera=(), microphone=(), geolocation=(), payment=(), usb=()
+referrer-policy: strict-origin-when-cross-origin
+x-content-type-options: nosniff
+x-frame-options: DENY
+server: cloudflare
+--- body (first 300 bytes, control chars stripped)
+
+=== Exposure /wrangler.jsonc
+$ curl https://mshshuvo.com/wrangler.jsonc
+exit=0
+HTTP/2 404 
+content-length: 0
+location: /404
+strict-transport-security: max-age=63072000; includeSubDomains
+content-security-policy: default-src 'self'; script-src 'self' https://challenges.cloudflare.com; frame-src https://challenges.cloudflare.com; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self'; form-action 'self'; frame-ancestors 'none'; base-uri 'self'; object-src 'none'; upgrade-insecure-requests
+cross-origin-opener-policy: same-origin
+cross-origin-resource-policy: same-origin
+permissions-policy: camera=(), microphone=(), geolocation=(), payment=(), usb=()
+referrer-policy: strict-origin-when-cross-origin
+x-content-type-options: nosniff
+x-frame-options: DENY
+server: cloudflare
+--- body (first 300 bytes, control chars stripped)
+
+=== Exposure /package.json
+$ curl https://mshshuvo.com/package.json
+exit=0
+HTTP/2 404 
+content-length: 0
+location: /404
+strict-transport-security: max-age=63072000; includeSubDomains
+content-security-policy: default-src 'self'; script-src 'self' https://challenges.cloudflare.com; frame-src https://challenges.cloudflare.com; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self'; form-action 'self'; frame-ancestors 'none'; base-uri 'self'; object-src 'none'; upgrade-insecure-requests
+cross-origin-opener-policy: same-origin
+cross-origin-resource-policy: same-origin
+permissions-policy: camera=(), microphone=(), geolocation=(), payment=(), usb=()
+referrer-policy: strict-origin-when-cross-origin
+x-content-type-options: nosniff
+x-frame-options: DENY
+server: cloudflare
+--- body (first 300 bytes, control chars stripped)
+
+=== Exposure /package-lock.json
+$ curl https://mshshuvo.com/package-lock.json
+exit=0
+HTTP/2 404 
+content-length: 0
+location: /404
+strict-transport-security: max-age=63072000; includeSubDomains
+content-security-policy: default-src 'self'; script-src 'self' https://challenges.cloudflare.com; frame-src https://challenges.cloudflare.com; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self'; form-action 'self'; frame-ancestors 'none'; base-uri 'self'; object-src 'none'; upgrade-insecure-requests
+cross-origin-opener-policy: same-origin
+cross-origin-resource-policy: same-origin
+permissions-policy: camera=(), microphone=(), geolocation=(), payment=(), usb=()
+referrer-policy: strict-origin-when-cross-origin
+x-content-type-options: nosniff
+x-frame-options: DENY
+server: cloudflare
+--- body (first 300 bytes, control chars stripped)
+
+=== Exposure /content.py
+$ curl https://mshshuvo.com/content.py
+exit=0
+HTTP/2 404 
+content-length: 0
+location: /404
+strict-transport-security: max-age=63072000; includeSubDomains
+content-security-policy: default-src 'self'; script-src 'self' https://challenges.cloudflare.com; frame-src https://challenges.cloudflare.com; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self'; form-action 'self'; frame-ancestors 'none'; base-uri 'self'; object-src 'none'; upgrade-insecure-requests
+cross-origin-opener-policy: same-origin
+cross-origin-resource-policy: same-origin
+permissions-policy: camera=(), microphone=(), geolocation=(), payment=(), usb=()
+referrer-policy: strict-origin-when-cross-origin
+x-content-type-options: nosniff
+x-frame-options: DENY
+server: cloudflare
+--- body (first 300 bytes, control chars stripped)
+
+=== Exposure /app.py
+$ curl https://mshshuvo.com/app.py
+exit=0
+HTTP/2 404 
+content-length: 0
+location: /404
+strict-transport-security: max-age=63072000; includeSubDomains
+content-security-policy: default-src 'self'; script-src 'self' https://challenges.cloudflare.com; frame-src https://challenges.cloudflare.com; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self'; form-action 'self'; frame-ancestors 'none'; base-uri 'self'; object-src 'none'; upgrade-insecure-requests
+cross-origin-opener-policy: same-origin
+cross-origin-resource-policy: same-origin
+permissions-policy: camera=(), microphone=(), geolocation=(), payment=(), usb=()
+referrer-policy: strict-origin-when-cross-origin
+x-content-type-options: nosniff
+x-frame-options: DENY
+server: cloudflare
+--- body (first 300 bytes, control chars stripped)
+
+=== Exposure /build.py
+$ curl https://mshshuvo.com/build.py
+exit=0
+HTTP/2 404 
+content-length: 0
+location: /404
+strict-transport-security: max-age=63072000; includeSubDomains
+content-security-policy: default-src 'self'; script-src 'self' https://challenges.cloudflare.com; frame-src https://challenges.cloudflare.com; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self'; form-action 'self'; frame-ancestors 'none'; base-uri 'self'; object-src 'none'; upgrade-insecure-requests
+cross-origin-opener-policy: same-origin
+cross-origin-resource-policy: same-origin
+permissions-policy: camera=(), microphone=(), geolocation=(), payment=(), usb=()
+referrer-policy: strict-origin-when-cross-origin
+x-content-type-options: nosniff
+x-frame-options: DENY
+server: cloudflare
+--- body (first 300 bytes, control chars stripped)
+
+=== Exposure /requirements.txt
+$ curl https://mshshuvo.com/requirements.txt
+exit=0
+HTTP/2 404 
+content-length: 0
+location: /404
+strict-transport-security: max-age=63072000; includeSubDomains
+content-security-policy: default-src 'self'; script-src 'self' https://challenges.cloudflare.com; frame-src https://challenges.cloudflare.com; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self'; form-action 'self'; frame-ancestors 'none'; base-uri 'self'; object-src 'none'; upgrade-insecure-requests
+cross-origin-opener-policy: same-origin
+cross-origin-resource-policy: same-origin
+permissions-policy: camera=(), microphone=(), geolocation=(), payment=(), usb=()
+referrer-policy: strict-origin-when-cross-origin
+x-content-type-options: nosniff
+x-frame-options: DENY
+server: cloudflare
+--- body (first 300 bytes, control chars stripped)
+
+=== Exposure /worker/index.js
+$ curl https://mshshuvo.com/worker/index.js
+exit=0
+HTTP/2 404 
+content-length: 0
+location: /404
+strict-transport-security: max-age=63072000; includeSubDomains
+content-security-policy: default-src 'self'; script-src 'self' https://challenges.cloudflare.com; frame-src https://challenges.cloudflare.com; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self'; form-action 'self'; frame-ancestors 'none'; base-uri 'self'; object-src 'none'; upgrade-insecure-requests
+cross-origin-opener-policy: same-origin
+cross-origin-resource-policy: same-origin
+permissions-policy: camera=(), microphone=(), geolocation=(), payment=(), usb=()
+referrer-policy: strict-origin-when-cross-origin
+x-content-type-options: nosniff
+x-frame-options: DENY
+server: cloudflare
+--- body (first 300 bytes, control chars stripped)
+
+=== Exposure /worker/site_headers.json
+$ curl https://mshshuvo.com/worker/site_headers.json
+exit=0
+HTTP/2 404 
+content-length: 0
+location: /404
+strict-transport-security: max-age=63072000; includeSubDomains
+content-security-policy: default-src 'self'; script-src 'self' https://challenges.cloudflare.com; frame-src https://challenges.cloudflare.com; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self'; form-action 'self'; frame-ancestors 'none'; base-uri 'self'; object-src 'none'; upgrade-insecure-requests
+cross-origin-opener-policy: same-origin
+cross-origin-resource-policy: same-origin
+permissions-policy: camera=(), microphone=(), geolocation=(), payment=(), usb=()
+referrer-policy: strict-origin-when-cross-origin
+x-content-type-options: nosniff
+x-frame-options: DENY
+server: cloudflare
+--- body (first 300 bytes, control chars stripped)
+
+=== Exposure /_headers
+$ curl https://mshshuvo.com/_headers
+exit=0
+HTTP/2 404 
+content-length: 0
+location: /404
+strict-transport-security: max-age=63072000; includeSubDomains
+content-security-policy: default-src 'self'; script-src 'self' https://challenges.cloudflare.com; frame-src https://challenges.cloudflare.com; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self'; form-action 'self'; frame-ancestors 'none'; base-uri 'self'; object-src 'none'; upgrade-insecure-requests
+cross-origin-opener-policy: same-origin
+cross-origin-resource-policy: same-origin
+permissions-policy: camera=(), microphone=(), geolocation=(), payment=(), usb=()
+referrer-policy: strict-origin-when-cross-origin
+x-content-type-options: nosniff
+x-frame-options: DENY
+server: cloudflare
+--- body (first 300 bytes, control chars stripped)
+
+=== Exposure /.github/workflows/ci.yml
+$ curl https://mshshuvo.com/.github/workflows/ci.yml
+exit=0
+HTTP/2 404 
+content-length: 0
+location: /404
+strict-transport-security: max-age=63072000; includeSubDomains
+content-security-policy: default-src 'self'; script-src 'self' https://challenges.cloudflare.com; frame-src https://challenges.cloudflare.com; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self'; form-action 'self'; frame-ancestors 'none'; base-uri 'self'; object-src 'none'; upgrade-insecure-requests
+cross-origin-opener-policy: same-origin
+cross-origin-resource-policy: same-origin
+permissions-policy: camera=(), microphone=(), geolocation=(), payment=(), usb=()
+referrer-policy: strict-origin-when-cross-origin
+x-content-type-options: nosniff
+x-frame-options: DENY
+server: cloudflare
+--- body (first 300 bytes, control chars stripped)
+
+=== Exposure /node_modules/
+$ curl https://mshshuvo.com/node_modules/
+exit=0
+HTTP/2 404 
+content-length: 0
+location: /404
+strict-transport-security: max-age=63072000; includeSubDomains
+content-security-policy: default-src 'self'; script-src 'self' https://challenges.cloudflare.com; frame-src https://challenges.cloudflare.com; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self'; form-action 'self'; frame-ancestors 'none'; base-uri 'self'; object-src 'none'; upgrade-insecure-requests
+cross-origin-opener-policy: same-origin
+cross-origin-resource-policy: same-origin
+permissions-policy: camera=(), microphone=(), geolocation=(), payment=(), usb=()
+referrer-policy: strict-origin-when-cross-origin
+x-content-type-options: nosniff
+x-frame-options: DENY
+server: cloudflare
+--- body (first 300 bytes, control chars stripped)
+
+=== Exposure /dist/
+$ curl https://mshshuvo.com/dist/
+exit=0
+HTTP/2 404 
+content-length: 0
+location: /404
+strict-transport-security: max-age=63072000; includeSubDomains
+content-security-policy: default-src 'self'; script-src 'self' https://challenges.cloudflare.com; frame-src https://challenges.cloudflare.com; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self'; form-action 'self'; frame-ancestors 'none'; base-uri 'self'; object-src 'none'; upgrade-insecure-requests
+cross-origin-opener-policy: same-origin
+cross-origin-resource-policy: same-origin
+permissions-policy: camera=(), microphone=(), geolocation=(), payment=(), usb=()
+referrer-policy: strict-origin-when-cross-origin
+x-content-type-options: nosniff
+x-frame-options: DENY
+server: cloudflare
+--- body (first 300 bytes, control chars stripped)
+
+=== Exposure /static/
+$ curl https://mshshuvo.com/static/
+exit=0
+HTTP/2 404 
+content-length: 0
+location: /404
+strict-transport-security: max-age=63072000; includeSubDomains
+content-security-policy: default-src 'self'; script-src 'self' https://challenges.cloudflare.com; frame-src https://challenges.cloudflare.com; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self'; form-action 'self'; frame-ancestors 'none'; base-uri 'self'; object-src 'none'; upgrade-insecure-requests
+cross-origin-opener-policy: same-origin
+cross-origin-resource-policy: same-origin
+permissions-policy: camera=(), microphone=(), geolocation=(), payment=(), usb=()
+referrer-policy: strict-origin-when-cross-origin
+x-content-type-options: nosniff
+x-frame-options: DENY
+server: cloudflare
+--- body (first 300 bytes, control chars stripped)
+
+=== Exposure /static/js/
+$ curl https://mshshuvo.com/static/js/
+exit=0
+HTTP/2 404 
+content-length: 0
+location: /404
+strict-transport-security: max-age=63072000; includeSubDomains
+content-security-policy: default-src 'self'; script-src 'self' https://challenges.cloudflare.com; frame-src https://challenges.cloudflare.com; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self'; form-action 'self'; frame-ancestors 'none'; base-uri 'self'; object-src 'none'; upgrade-insecure-requests
+cross-origin-opener-policy: same-origin
+cross-origin-resource-policy: same-origin
+permissions-policy: camera=(), microphone=(), geolocation=(), payment=(), usb=()
+referrer-policy: strict-origin-when-cross-origin
+x-content-type-options: nosniff
+x-frame-options: DENY
+server: cloudflare
+--- body (first 300 bytes, control chars stripped)
+
+=== Exposure /templates/base.html
+$ curl https://mshshuvo.com/templates/base.html
+exit=0
+HTTP/2 404 
+content-length: 0
+location: /404
+strict-transport-security: max-age=63072000; includeSubDomains
+content-security-policy: default-src 'self'; script-src 'self' https://challenges.cloudflare.com; frame-src https://challenges.cloudflare.com; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self'; form-action 'self'; frame-ancestors 'none'; base-uri 'self'; object-src 'none'; upgrade-insecure-requests
+cross-origin-opener-policy: same-origin
+cross-origin-resource-policy: same-origin
+permissions-policy: camera=(), microphone=(), geolocation=(), payment=(), usb=()
+referrer-policy: strict-origin-when-cross-origin
+x-content-type-options: nosniff
+x-frame-options: DENY
+server: cloudflare
+--- body (first 300 bytes, control chars stripped)
+
+=== Exposure /.DS_Store
+$ curl https://mshshuvo.com/.DS_Store
+exit=0
+HTTP/2 404 
+content-length: 0
+location: /404
+strict-transport-security: max-age=63072000; includeSubDomains
+content-security-policy: default-src 'self'; script-src 'self' https://challenges.cloudflare.com; frame-src https://challenges.cloudflare.com; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self'; form-action 'self'; frame-ancestors 'none'; base-uri 'self'; object-src 'none'; upgrade-insecure-requests
+cross-origin-opener-policy: same-origin
+cross-origin-resource-policy: same-origin
+permissions-policy: camera=(), microphone=(), geolocation=(), payment=(), usb=()
+referrer-policy: strict-origin-when-cross-origin
+x-content-type-options: nosniff
+x-frame-options: DENY
+server: cloudflare
+--- body (first 300 bytes, control chars stripped)
+
+=== Exposure /backup.zip
+$ curl https://mshshuvo.com/backup.zip
+exit=0
+HTTP/2 404 
+content-length: 0
+location: /404
+strict-transport-security: max-age=63072000; includeSubDomains
+content-security-policy: default-src 'self'; script-src 'self' https://challenges.cloudflare.com; frame-src https://challenges.cloudflare.com; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self'; form-action 'self'; frame-ancestors 'none'; base-uri 'self'; object-src 'none'; upgrade-insecure-requests
+cross-origin-opener-policy: same-origin
+cross-origin-resource-policy: same-origin
+permissions-policy: camera=(), microphone=(), geolocation=(), payment=(), usb=()
+referrer-policy: strict-origin-when-cross-origin
+x-content-type-options: nosniff
+x-frame-options: DENY
+server: cloudflare
+--- body (first 300 bytes, control chars stripped)
+
+=== Exposure /admin
+$ curl https://mshshuvo.com/admin
+exit=0
+HTTP/2 404 
+content-length: 0
+location: /404
+strict-transport-security: max-age=63072000; includeSubDomains
+content-security-policy: default-src 'self'; script-src 'self' https://challenges.cloudflare.com; frame-src https://challenges.cloudflare.com; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self'; form-action 'self'; frame-ancestors 'none'; base-uri 'self'; object-src 'none'; upgrade-insecure-requests
+cross-origin-opener-policy: same-origin
+cross-origin-resource-policy: same-origin
+permissions-policy: camera=(), microphone=(), geolocation=(), payment=(), usb=()
+referrer-policy: strict-origin-when-cross-origin
+x-content-type-options: nosniff
+x-frame-options: DENY
+server: cloudflare
+--- body (first 300 bytes, control chars stripped)
+
+=== Exposure /wp-admin/
+$ curl https://mshshuvo.com/wp-admin/
+exit=0
+HTTP/2 404 
+content-length: 0
+location: /404
+strict-transport-security: max-age=63072000; includeSubDomains
+content-security-policy: default-src 'self'; script-src 'self' https://challenges.cloudflare.com; frame-src https://challenges.cloudflare.com; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self'; form-action 'self'; frame-ancestors 'none'; base-uri 'self'; object-src 'none'; upgrade-insecure-requests
+cross-origin-opener-policy: same-origin
+cross-origin-resource-policy: same-origin
+permissions-policy: camera=(), microphone=(), geolocation=(), payment=(), usb=()
+referrer-policy: strict-origin-when-cross-origin
+x-content-type-options: nosniff
+x-frame-options: DENY
+server: cloudflare
+--- body (first 300 bytes, control chars stripped)
+
+=== Exposure /server-status
+$ curl https://mshshuvo.com/server-status
+exit=0
+HTTP/2 404 
+content-length: 0
+location: /404
+strict-transport-security: max-age=63072000; includeSubDomains
+content-security-policy: default-src 'self'; script-src 'self' https://challenges.cloudflare.com; frame-src https://challenges.cloudflare.com; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self'; form-action 'self'; frame-ancestors 'none'; base-uri 'self'; object-src 'none'; upgrade-insecure-requests
+cross-origin-opener-policy: same-origin
+cross-origin-resource-policy: same-origin
+permissions-policy: camera=(), microphone=(), geolocation=(), payment=(), usb=()
+referrer-policy: strict-origin-when-cross-origin
+x-content-type-options: nosniff
+x-frame-options: DENY
+server: cloudflare
+--- body (first 300 bytes, control chars stripped)
+
+=== Exposure /debug
+$ curl https://mshshuvo.com/debug
+exit=0
+HTTP/2 404 
+content-length: 0
+location: /404
+strict-transport-security: max-age=63072000; includeSubDomains
+content-security-policy: default-src 'self'; script-src 'self' https://challenges.cloudflare.com; frame-src https://challenges.cloudflare.com; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self'; form-action 'self'; frame-ancestors 'none'; base-uri 'self'; object-src 'none'; upgrade-insecure-requests
+cross-origin-opener-policy: same-origin
+cross-origin-resource-policy: same-origin
+permissions-policy: camera=(), microphone=(), geolocation=(), payment=(), usb=()
+referrer-policy: strict-origin-when-cross-origin
+x-content-type-options: nosniff
+x-frame-options: DENY
+server: cloudflare
+--- body (first 300 bytes, control chars stripped)
+
+=== Exposure /console
+$ curl https://mshshuvo.com/console
+exit=0
+HTTP/2 404 
+content-length: 0
+location: /404
+strict-transport-security: max-age=63072000; includeSubDomains
+content-security-policy: default-src 'self'; script-src 'self' https://challenges.cloudflare.com; frame-src https://challenges.cloudflare.com; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self'; form-action 'self'; frame-ancestors 'none'; base-uri 'self'; object-src 'none'; upgrade-insecure-requests
+cross-origin-opener-policy: same-origin
+cross-origin-resource-policy: same-origin
+permissions-policy: camera=(), microphone=(), geolocation=(), payment=(), usb=()
+referrer-policy: strict-origin-when-cross-origin
+x-content-type-options: nosniff
+x-frame-options: DENY
+server: cloudflare
+--- body (first 300 bytes, control chars stripped)
+
+=== Exposure /.well-known/
+$ curl https://mshshuvo.com/.well-known/
+exit=0
+HTTP/2 404 
+content-length: 0
+location: /404
+strict-transport-security: max-age=63072000; includeSubDomains
+content-security-policy: default-src 'self'; script-src 'self' https://challenges.cloudflare.com; frame-src https://challenges.cloudflare.com; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self'; form-action 'self'; frame-ancestors 'none'; base-uri 'self'; object-src 'none'; upgrade-insecure-requests
+cross-origin-opener-policy: same-origin
+cross-origin-resource-policy: same-origin
+permissions-policy: camera=(), microphone=(), geolocation=(), payment=(), usb=()
+referrer-policy: strict-origin-when-cross-origin
+x-content-type-options: nosniff
+x-frame-options: DENY
+server: cloudflare
+--- body (first 300 bytes, control chars stripped)
+
+=== Traversal /static/..%2f..%2fapp.py
+$ curl --path-as-is https://mshshuvo.com/static/..%2f..%2fapp.py
+exit=0
+HTTP/2 400 
+server: cloudflare
+content-type: text/html
+content-length: 155
+--- body (first 300 bytes, control chars stripped)
+<html>
+<head><title>400 Bad Request</title></head>
+<body>
+<center><h1>400 Bad Request</h1></center>
+<hr><center>cloudflare</center>
+</body>
+</html>
+
+=== Traversal /static/%2e%2e/%2e%2e/wrangler.jsonc
+$ curl --path-as-is https://mshshuvo.com/static/%2e%2e/%2e%2e/wrangler.jsonc
+exit=0
+HTTP/2 400 
+server: cloudflare
+content-type: text/html
+content-length: 155
+--- body (first 300 bytes, control chars stripped)
+<html>
+<head><title>400 Bad Request</title></head>
+<body>
+<center><h1>400 Bad Request</h1></center>
+<hr><center>cloudflare</center>
+</body>
+</html>
+
+=== Traversal /static/..;/app.py
+$ curl --path-as-is https://mshshuvo.com/static/..;/app.py
+exit=0
+HTTP/2 404 
+content-length: 0
+location: /404
+strict-transport-security: max-age=63072000; includeSubDomains
+content-security-policy: default-src 'self'; script-src 'self' https://challenges.cloudflare.com; frame-src https://challenges.cloudflare.com; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self'; form-action 'self'; frame-ancestors 'none'; base-uri 'self'; object-src 'none'; upgrade-insecure-requests
+cross-origin-opener-policy: same-origin
+cross-origin-resource-policy: same-origin
+permissions-policy: camera=(), microphone=(), geolocation=(), payment=(), usb=()
+referrer-policy: strict-origin-when-cross-origin
+x-content-type-options: nosniff
+x-frame-options: DENY
+server: cloudflare
+--- body (first 300 bytes, control chars stripped)
+
+=== Traversal /%2e%2e/%2e%2e/etc/passwd
+$ curl --path-as-is https://mshshuvo.com/%2e%2e/%2e%2e/etc/passwd
+exit=0
+HTTP/2 400 
+server: cloudflare
+content-type: text/html
+content-length: 155
+--- body (first 300 bytes, control chars stripped)
+<html>
+<head><title>400 Bad Request</title></head>
+<body>
+<center><h1>400 Bad Request</h1></center>
+<hr><center>cloudflare</center>
+</body>
+</html>
+
+=== Traversal /static//..//..//content.py
+$ curl --path-as-is https://mshshuvo.com/static//..//..//content.py
+exit=0
+HTTP/2 400 
+server: cloudflare
+content-type: text/html
+content-length: 155
+--- body (first 300 bytes, control chars stripped)
+<html>
+<head><title>400 Bad Request</title></head>
+<body>
+<center><h1>400 Bad Request</h1></center>
+<hr><center>cloudflare</center>
+</body>
+</html>
+
+=== Reflection ?tag=
+$ curl https://mshshuvo.com/projects?tag=%3Cscript%3Ealert(1)%3C%2Fscript%3E
+exit=0
+HTTP/2 200 
+content-type: text/html
+cache-control: public, max-age=0, must-revalidate
+strict-transport-security: max-age=63072000; includeSubDomains
+content-security-policy: default-src 'self'; script-src 'self' https://challenges.cloudflare.com; frame-src https://challenges.cloudflare.com; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self'; form-action 'self'; frame-ancestors 'none'; base-uri 'self'; object-src 'none'; upgrade-insecure-requests
+cross-origin-opener-policy: same-origin
+cross-origin-resource-policy: same-origin
+permissions-policy: camera=(), microphone=(), geolocation=(), payment=(), usb=()
+referrer-policy: strict-origin-when-cross-origin
+x-content-type-options: nosniff
+x-frame-options: DENY
+server: cloudflare
+--- body (first 300 bytes, control chars stripped)
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Projects · Md Sabbir Hossain</title>
+  <meta name="description" content="Strategy, governance and resilience from someone who has built national cyber def
+=== Reflection 404 path
+$ curl https://mshshuvo.com/%3Cscript%3Ealert(1)%3C%2Fscript%3E
+exit=0
+HTTP/2 404 
+content-length: 0
+location: /404
+strict-transport-security: max-age=63072000; includeSubDomains
+content-security-policy: default-src 'self'; script-src 'self' https://challenges.cloudflare.com; frame-src https://challenges.cloudflare.com; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self'; form-action 'self'; frame-ancestors 'none'; base-uri 'self'; object-src 'none'; upgrade-insecure-requests
+cross-origin-opener-policy: same-origin
+cross-origin-resource-policy: same-origin
+permissions-policy: camera=(), microphone=(), geolocation=(), payment=(), usb=()
+referrer-policy: strict-origin-when-cross-origin
+x-content-type-options: nosniff
+x-frame-options: DENY
+server: cloudflare
+--- body (first 300 bytes, control chars stripped)
+
+=== CORS GET from foreign origin
+$ curl -H Origin: https://evil.example https://mshshuvo.com/
+exit=0
+HTTP/2 200 
+content-type: text/html
+cache-control: public, max-age=0, must-revalidate
+strict-transport-security: max-age=63072000; includeSubDomains
+content-security-policy: default-src 'self'; script-src 'self' https://challenges.cloudflare.com; frame-src https://challenges.cloudflare.com; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self'; form-action 'self'; frame-ancestors 'none'; base-uri 'self'; object-src 'none'; upgrade-insecure-requests
+cross-origin-opener-policy: same-origin
+cross-origin-resource-policy: same-origin
+permissions-policy: camera=(), microphone=(), geolocation=(), payment=(), usb=()
+referrer-policy: strict-origin-when-cross-origin
+x-content-type-options: nosniff
+x-frame-options: DENY
+server: cloudflare
+--- body (first 300 bytes, control chars stripped)
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Md Sabbir Hossain · Cybersecurity Leader · GRC &amp; AI Governance</title>
+  <meta name="description" content="Strategy, governance and resilience from s
+=== CORS preflight API
+$ curl -X OPTIONS -H Origin: https://evil.example -H Access-Control-Request-Method: POST https://mshshuvo.com/api/contact
+exit=0
+HTTP/2 405 
+content-type: application/json; charset=utf-8
+content-length: 48
+cache-control: no-store
+strict-transport-security: max-age=63072000; includeSubDomains
+content-security-policy: default-src 'none'; frame-ancestors 'none'
+referrer-policy: strict-origin-when-cross-origin
+x-content-type-options: nosniff
+x-frame-options: DENY
+server: cloudflare
+--- body (first 300 bytes, control chars stripped)
+{"success":false,"message":"Method not allowed"}
+=== TRACE /
+$ curl -X TRACE https://mshshuvo.com/
+exit=0
+HTTP/2 405 
+server: cloudflare
+content-type: text/html
+content-length: 155
+--- body (first 300 bytes, control chars stripped)
+<html>
+<head><title>405 Not Allowed</title></head>
+<body>
+<center><h1>405 Not Allowed</h1></center>
+<hr><center>cloudflare</center>
+</body>
+</html>
+
+=== PUT /
+$ curl -X PUT --data x https://mshshuvo.com/
+exit=0
+HTTP/2 405 
+content-length: 0
+strict-transport-security: max-age=63072000; includeSubDomains
+content-security-policy: default-src 'self'; script-src 'self' https://challenges.cloudflare.com; frame-src https://challenges.cloudflare.com; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self'; form-action 'self'; frame-ancestors 'none'; base-uri 'self'; object-src 'none'; upgrade-insecure-requests
+cross-origin-opener-policy: same-origin
+cross-origin-resource-policy: same-origin
+permissions-policy: camera=(), microphone=(), geolocation=(), payment=(), usb=()
+referrer-policy: strict-origin-when-cross-origin
+x-content-type-options: nosniff
+x-frame-options: DENY
+server: cloudflare
+--- body (first 300 bytes, control chars stripped)
+
+=== Host header injection
+$ curl -H Host: evil.example https://mshshuvo.com/
+exit=0
+HTTP/2 403 
+server: cloudflare
+content-type: text/html
+content-length: 151
+--- body (first 300 bytes, control chars stripped)
+<html>
+<head><title>403 Forbidden</title></head>
+<body>
+<center><h1>403 Forbidden</h1></center>
+<hr><center>cloudflare</center>
+</body>
+</html>
+
+=== X-Forwarded-Host injection
+$ curl -H X-Forwarded-Host: evil.example https://mshshuvo.com/contact
+exit=0
+HTTP/2 200 
+content-type: text/html
+cache-control: public, max-age=0, must-revalidate
+strict-transport-security: max-age=63072000; includeSubDomains
+content-security-policy: default-src 'self'; script-src 'self' https://challenges.cloudflare.com; frame-src https://challenges.cloudflare.com; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self'; form-action 'self'; frame-ancestors 'none'; base-uri 'self'; object-src 'none'; upgrade-insecure-requests
+cross-origin-opener-policy: same-origin
+cross-origin-resource-policy: same-origin
+permissions-policy: camera=(), microphone=(), geolocation=(), payment=(), usb=()
+referrer-policy: strict-origin-when-cross-origin
+x-content-type-options: nosniff
+x-frame-options: DENY
+server: cloudflare
+--- body (first 300 bytes, control chars stripped)
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Contact · Md Sabbir Hossain</title>
+  <meta name="description" content="Strategy, governance and resilience from someone who has built national cyber defe
+=== API GET
+$ curl https://mshshuvo.com/api/contact
+exit=0
+HTTP/2 405 
+content-type: application/json; charset=utf-8
+content-length: 48
+cache-control: no-store
+strict-transport-security: max-age=63072000; includeSubDomains
+content-security-policy: default-src 'none'; frame-ancestors 'none'
+referrer-policy: strict-origin-when-cross-origin
+x-content-type-options: nosniff
+x-frame-options: DENY
+server: cloudflare
+--- body (first 300 bytes, control chars stripped)
+{"success":false,"message":"Method not allowed"}
+=== API POST no Origin
+$ curl -X POST -H Content-Type: application/json --data {} https://mshshuvo.com/api/contact
+exit=0
+HTTP/2 403 
+content-type: application/json; charset=utf-8
+content-length: 39
+cache-control: no-store
+strict-transport-security: max-age=63072000; includeSubDomains
+content-security-policy: default-src 'none'; frame-ancestors 'none'
+referrer-policy: strict-origin-when-cross-origin
+x-content-type-options: nosniff
+x-frame-options: DENY
+server: cloudflare
+--- body (first 300 bytes, control chars stripped)
+{"success":false,"message":"Forbidden"}
+=== API POST foreign Origin
+$ curl -X POST -H Content-Type: application/json -H Origin: https://evil.example --data {} https://mshshuvo.com/api/contact
+exit=0
+HTTP/2 403 
+content-type: application/json; charset=utf-8
+content-length: 39
+cache-control: no-store
+strict-transport-security: max-age=63072000; includeSubDomains
+content-security-policy: default-src 'none'; frame-ancestors 'none'
+referrer-policy: strict-origin-when-cross-origin
+x-content-type-options: nosniff
+x-frame-options: DENY
+server: cloudflare
+--- body (first 300 bytes, control chars stripped)
+{"success":false,"message":"Forbidden"}
+=== API POST text/plain
+$ curl -X POST -H Content-Type: text/plain -H Origin: https://mshshuvo.com --data {} https://mshshuvo.com/api/contact
+exit=0
+HTTP/2 415 
+content-type: application/json; charset=utf-8
+content-length: 54
+cache-control: no-store
+strict-transport-security: max-age=63072000; includeSubDomains
+content-security-policy: default-src 'none'; frame-ancestors 'none'
+referrer-policy: strict-origin-when-cross-origin
+x-content-type-options: nosniff
+x-frame-options: DENY
+server: cloudflare
+--- body (first 300 bytes, control chars stripped)
+{"success":false,"message":"Unsupported content type"}
+=== API POST form-encoded (CSRF shape)
+$ curl -X POST -H Content-Type: application/x-www-form-urlencoded -H Origin: https://mshshuvo.com --data name=a https://mshshuvo.com/api/contact
+exit=0
+HTTP/2 415 
+content-type: application/json; charset=utf-8
+content-length: 54
+cache-control: no-store
+strict-transport-security: max-age=63072000; includeSubDomains
+content-security-policy: default-src 'none'; frame-ancestors 'none'
+referrer-policy: strict-origin-when-cross-origin
+x-content-type-options: nosniff
+x-frame-options: DENY
+server: cloudflare
+--- body (first 300 bytes, control chars stripped)
+{"success":false,"message":"Unsupported content type"}
+=== API POST malformed JSON
+$ curl -X POST -H Content-Type: application/json -H Origin: https://mshshuvo.com --data {bad https://mshshuvo.com/api/contact
+exit=0
+HTTP/2 400 
+content-type: application/json; charset=utf-8
+content-length: 45
+cache-control: no-store
+strict-transport-security: max-age=63072000; includeSubDomains
+content-security-policy: default-src 'none'; frame-ancestors 'none'
+referrer-policy: strict-origin-when-cross-origin
+x-content-type-options: nosniff
+x-frame-options: DENY
+server: cloudflare
+--- body (first 300 bytes, control chars stripped)
+{"success":false,"message":"Invalid request"}
+=== API POST JSON null
+$ curl -X POST -H Content-Type: application/json -H Origin: https://mshshuvo.com --data null https://mshshuvo.com/api/contact
+exit=0
+HTTP/2 500 
+content-type: text/plain; charset=UTF-8
+content-length: 17
+cache-control: private, max-age=0, no-store, no-cache, must-revalidate, post-check=0, pre-check=0
+referrer-policy: same-origin
+x-frame-options: SAMEORIGIN
+server: cloudflare
+--- body (first 300 bytes, control chars stripped)
+error code: 1101
+
+=== API POST JSON array
+$ curl -X POST -H Content-Type: application/json -H Origin: https://mshshuvo.com --data [] https://mshshuvo.com/api/contact
+exit=0
+HTTP/2 403 
+content-type: application/json; charset=utf-8
+content-length: 80
+cache-control: no-store
+strict-transport-security: max-age=63072000; includeSubDomains
+content-security-policy: default-src 'none'; frame-ancestors 'none'
+referrer-policy: strict-origin-when-cross-origin
+x-content-type-options: nosniff
+x-frame-options: DENY
+server: cloudflare
+--- body (first 300 bytes, control chars stripped)
+{"success":false,"message":"Verification failed. Please refresh and try again."}
+=== API POST empty object (no token)
+$ curl -X POST -H Content-Type: application/json -H Origin: https://mshshuvo.com --data {} https://mshshuvo.com/api/contact
+exit=0
+HTTP/2 403 
+content-type: application/json; charset=utf-8
+content-length: 80
+cache-control: no-store
+strict-transport-security: max-age=63072000; includeSubDomains
+content-security-policy: default-src 'none'; frame-ancestors 'none'
+referrer-policy: strict-origin-when-cross-origin
+x-content-type-options: nosniff
+x-frame-options: DENY
+server: cloudflare
+--- body (first 300 bytes, control chars stripped)
+{"success":false,"message":"Verification failed. Please refresh and try again."}
+=== API POST forged token
+$ curl -X POST -H Content-Type: application/json -H Origin: https://mshshuvo.com --data {"name":"Test","email":"t@example.com","message":"assessment test only","cf-turnstile-response":"forged-token"} https://mshshuvo.com/api/contact
+exit=0
+HTTP/2 403 
+content-type: application/json; charset=utf-8
+content-length: 80
+cache-control: no-store
+strict-transport-security: max-age=63072000; includeSubDomains
+content-security-policy: default-src 'none'; frame-ancestors 'none'
+referrer-policy: strict-origin-when-cross-origin
+x-content-type-options: nosniff
+x-frame-options: DENY
+server: cloudflare
+--- body (first 300 bytes, control chars stripped)
+{"success":false,"message":"Verification failed. Please refresh and try again."}
+=== API POST header-injection payload, forged token
+$ curl -X POST -H Content-Type: application/json -H Origin: https://mshshuvo.com --data {"name":"A\r\nBcc: x@example.com","email":"t@example.com","message":"assessment test only","cf-turnstile-response":"forged"} https://mshshuvo.com/api/contact
+exit=0
+HTTP/2 403 
+content-type: application/json; charset=utf-8
+content-length: 80
+cache-control: no-store
+strict-transport-security: max-age=63072000; includeSubDomains
+content-security-policy: default-src 'none'; frame-ancestors 'none'
+referrer-policy: strict-origin-when-cross-origin
+x-content-type-options: nosniff
+x-frame-options: DENY
+server: cloudflare
+--- body (first 300 bytes, control chars stripped)
+{"success":false,"message":"Verification failed. Please refresh and try again."}
+=== API POST honeypot set
+$ curl -X POST -H Content-Type: application/json -H Origin: https://mshshuvo.com --data {"botcheck":"on"} https://mshshuvo.com/api/contact
+exit=0
+HTTP/2 200 
+content-type: application/json; charset=utf-8
+content-length: 16
+cache-control: no-store
+strict-transport-security: max-age=63072000; includeSubDomains
+content-security-policy: default-src 'none'; frame-ancestors 'none'
+referrer-policy: strict-origin-when-cross-origin
+x-content-type-options: nosniff
+x-frame-options: DENY
+server: cloudflare
+--- body (first 300 bytes, control chars stripped)
+{"success":true}
+=== API POST declared oversize
+$ curl -X POST -H Content-Type: application/json -H Origin: https://mshshuvo.com -H Content-Length: 20000 --data {} https://mshshuvo.com/api/contact
+exit=0
+HTTP/2 400 
+server: cloudflare
+content-type: text/html
+content-length: 155
+--- body (first 300 bytes, control chars stripped)
+<html>
+<head><title>400 Bad Request</title></head>
+<body>
+<center><h1>400 Bad Request</h1></center>
+<hr><center>cloudflare</center>
+</body>
+</html>
+
+=== API POST actual 20KB body
+$ curl -X POST -H Content-Type: application/json -H Origin: https://mshshuvo.com --data-binary @/tmp/big.json https://mshshuvo.com/api/contact
+exit=0
+HTTP/2 413 
+content-type: application/json; charset=utf-8
+content-length: 47
+cache-control: no-store
+strict-transport-security: max-age=63072000; includeSubDomains
+content-security-policy: default-src 'none'; frame-ancestors 'none'
+referrer-policy: strict-origin-when-cross-origin
+x-content-type-options: nosniff
+x-frame-options: DENY
+server: cloudflare
+--- body (first 300 bytes, control chars stripped)
+{"success":false,"message":"Message too large"}
+=== API POST chunked 20KB body
+$ curl -X POST -H Content-Type: application/json -H Origin: https://mshshuvo.com -H Transfer-Encoding: chunked --data-binary @/tmp/big.json https://mshshuvo.com/api/contact
+exit=0
+HTTP/2 413 
+content-type: application/json; charset=utf-8
+content-length: 47
+cache-control: no-store
+strict-transport-security: max-age=63072000; includeSubDomains
+content-security-policy: default-src 'none'; frame-ancestors 'none'
+referrer-policy: strict-origin-when-cross-origin
+x-content-type-options: nosniff
+x-frame-options: DENY
+server: cloudflare
+--- body (first 300 bytes, control chars stripped)
+{"success":false,"message":"Message too large"}
+=== RATE LIMIT BURST
+request 1 -> 403
+request 2 -> 403
+request 3 -> 429
+request 4 -> 429
+request 5 -> 429
+request 6 -> 429
+request 7 -> 429
+request 8 -> 429
+=== DONE

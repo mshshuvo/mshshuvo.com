@@ -1,0 +1,32 @@
+=== mshshuvo.com NS
+ariadne.ns.cloudflare.com.
+mcgrory.ns.cloudflare.com.
+=== mshshuvo.com A
+172.67.188.158
+104.21.92.71
+=== mshshuvo.com AAAA
+2606:4700:3033::6815:5c47
+2606:4700:3031::ac43:bc9e
+=== mshshuvo.com MX
+=== mshshuvo.com TXT
+=== mshshuvo.com CAA
+=== mshshuvo.com SOA
+ariadne.ns.cloudflare.com. dns.cloudflare.com. 2418985768 10000 2400 604800 1800
+=== mshshuvo.com DS
+2371 13 2 F8F95B9F97F493D30A6304D05ED2CB875089A3B70557789F3CB3FE49 F65B3574
+=== mshshuvo.com DNSKEY
+257 3 13 mdsswUyr3DPW132mOi8V9xESWE8jTo0dxCjjnopKl+GqJxpVXckHAeF+ KkxLbxILfDLUT0rAK9iUzy1L53eKGQ==
+256 3 13 oJMRESz5E4gYzS/q6XDrvU1qMPYIjCWzJaOau8XNEZeqCYKD5ar0IRd8 KqXXFJkqmVfRvMGPmM1x8fGAa2XhSA==
+=== _dmarc.mshshuvo.com TXT
+=== www.mshshuvo.com A/AAAA/CNAME
+172.67.188.158
+104.21.92.71
+2606:4700:3033::6815:5c47
+2606:4700:3031::ac43:bc9e
+=== DNSSEC validation (AD flag via 1.1.1.1)
+;; flags: qr rd ra ad; QUERY: 1, ANSWER: 3, AUTHORITY: 0, ADDITIONAL: 1
+; EDNS: version: 0, flags: do; udp: 1232
+mshshuvo.com.		300	IN	RRSIG	A 13 2 300 20261102035729 20261031015729 34505 mshshuvo.com. oIgv/jKfCWcyN/62ViMRY3Tzai415Fgp9ZZezuvkvYZm3zXh2A7ZTigg nexdgANSUTkVC2/KVgwapc6BxWkTuQ==
+=== mshshuvo.mshshuvo.workers.dev
+172.67.220.217
+104.21.24.217
