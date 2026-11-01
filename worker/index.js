@@ -26,6 +26,60 @@ const MAX_BODY_BYTES = 16 * 1024;
 const EMAIL_RE = /^[A-Za-z0-9.!#$%&'*+\/=?^_`{|}~-]+@[A-Za-z0-9](?:[A-Za-z0-9-]{0,61}[A-Za-z0-9])?(?:\.[A-Za-z0-9](?:[A-Za-z0-9-]{0,61}[A-Za-z0-9])?)+$/;
 const TOPICS = new Set(["Job opportunity", "Consulting engagement", "Speaking or training", "Something else"]);
 
+function describe(err) {
+  return `${err && err.code ? err.code + ": " : ""}${String(err && err.message || err)}`.slice(0, 300);
+}
+
+// RFC 2047 encoded-word for header text that may contain non-ASCII characters.
+function encodeHeader(value) {
+  return /^[\x20-\x7e]*$/.test(value) ? value
+    : `=?UTF-8?B?${btoa(String.fromCharCode(...new TextEncoder().encode(value)))}?=`;
+}
+
+// Plain-text MIME message for the classic Email Routing send path.
+export function buildMime({ to, from, replyTo, subject, text }, now = new Date(), id = crypto.randomUUID()) {
+  const bytes = new TextEncoder().encode(text);
+  let bin = "";
+  for (const b of bytes) bin += String.fromCharCode(b);
+  const body = btoa(bin).replace(/.{1,76}/g, "$&\r\n");
+  const domain = from.split("@")[1];
+  return [
+    `From: mshshuvo.com contact form <${from}>`,
+    `To: <${to}>`,
+    `Reply-To: <${replyTo}>`,
+    `Subject: ${encodeHeader(subject)}`,
+    `Date: ${now.toUTCString()}`,
+    `Message-ID: <${id}@${domain}>`,
+    "MIME-Version: 1.0",
+    "Content-Type: text/plain; charset=utf-8",
+    "Content-Transfer-Encoding: base64",
+    "",
+    body,
+  ].join("\r\n");
+}
+
+// Send through the send_email binding. The structured API needs the domain onboarded to
+// Email Service; if that is refused, fall back to the classic Email Routing path
+// (raw MIME to a verified destination address), which is free on every plan.
+async function sendMail(env, mail) {
+  try {
+    return await env.EMAIL.send(mail);
+  } catch (first) {
+    let EmailMessage;
+    try {
+      ({ EmailMessage } = await import("cloudflare:email"));
+    } catch {
+      throw first;
+    }
+    try {
+      return await env.EMAIL.send(new EmailMessage(mail.from, mail.to, buildMime(mail)));
+    } catch (second) {
+      first.fallback = second;
+      throw first;
+    }
+  }
+}
+
 function json(status, body) {
   return new Response(JSON.stringify(body), {
     status,
@@ -150,16 +204,17 @@ async function handleContact(request, env) {
     log("contact_misconfigured", request);
     return json(503, { success: false, message: "Could not send right now." });
   }
+  const mail = {
+    to: env.CONTACT_TO,
+    from: env.CONTACT_FROM,
+    replyTo: email,
+    subject: `[mshshuvo.com] ${topic} from ${name}`,
+    text: `Name: ${name}\nEmail: ${email}\nTopic: ${topic}\n\n${message}\n\n--\nSent from the contact form on mshshuvo.com`,
+  };
   try {
-    await env.EMAIL.send({
-      to: env.CONTACT_TO,
-      from: env.CONTACT_FROM,
-      replyTo: email,
-      subject: `[mshshuvo.com] ${topic} from ${name}`,
-      text: `Name: ${name}\nEmail: ${email}\nTopic: ${topic}\n\n${message}\n\n--\nSent from the contact form on mshshuvo.com`,
-    });
+    await sendMail(env, mail);
   } catch (err) {
-    log("contact_send_failed", request, { error: String(err).slice(0, 300) });
+    log("contact_send_failed", request, { error: describe(err), fallbackError: err.fallback ? describe(err.fallback) : undefined });
     return json(502, { success: false, message: "Could not send right now." });
   }
   log("contact_sent", request, { topic });
