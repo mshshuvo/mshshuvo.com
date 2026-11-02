@@ -5,7 +5,6 @@ tags: [AI Security, Identity & Fraud, Security Operations]
 summary: Most threat lists stop at the threat. This one pairs each AI-driven attack with the first control I'd check, plus a yes/no question so you can score yourself.
 cover: ai-driven-threats-2027-cover
 cover_alt: "8 AI-driven threats for 2027. One control that stops each."
-draft: true
 ---
 
 Every year brings another "top threats" list. Most of them name the problem and stop there, which leaves you with a vague sense of worry and nothing to do on Monday morning.
