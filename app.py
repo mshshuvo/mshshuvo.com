@@ -21,6 +21,7 @@ from content import (ARTICLES, CERT_VERIFY, SKILLS, ROLES_FIT, FRAMEWORKS, CERTI
 from assessments import ASSESSMENTS, BANDS
 from assessments import BY_SLUG as ASSESSMENTS_BY_SLUG
 from insights import all_tags, load_posts
+import skillmap
 
 PROJECTS_BY_SLUG = {p["slug"]: p for p in PROJECTS}
 SERVICES_BY_SLUG = {s["slug"]: s for s in SERVICES}
@@ -182,7 +183,7 @@ def recommendations():
 @app.get("/experience")
 def experience():
     return render_template("experience.html", items=EXPERIENCE, certs=CERTIFICATIONS,
-                           education=EDUCATION, service=SERVICE, skills=SKILLS, roles=ROLES_FIT,
+                           education=EDUCATION, service=SERVICE, skillmap=skillmap.build(), roles=ROLES_FIT,
                            frameworks=FRAMEWORKS)
 
 

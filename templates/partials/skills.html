@@ -1,46 +1,100 @@
 {% from "_icons.html" import icon %}
 {# Skills at a glance: plain-language clusters with duration and evidence. No proficiency scores. #}
-{% macro proof_href(u) -%}
-{%- if u.startswith('cert:') %}{{ verify[u[5:]].url }}{% else %}{{ u }}{% endif -%}
+
+{% macro proof_link(p, cls='') -%}
+{%- if p.verified -%}
+<a class="sm-verify {{ cls }}" href="{{ p.href }}" target="_blank" rel="noopener">{{ icon('verified') }}<span>{{ p.label }}</span><span class="sm-verify__via">verify on {{ p.via }} ↗</span></a>
+{%- else -%}
+<a class="sm-proof {{ cls }}" href="{{ p.href }}"><span>{{ p.label }}</span>{{ icon('arrow') }}</a>
+{%- endif -%}
 {%- endmacro %}
 
-{% macro skills_full(skills, roles, frameworks) %}
-<section class="section section--tight skills" id="skills" aria-labelledby="skills-h">
+{% macro skills_full(m, roles, frameworks) %}
+<section class="section section--tight skillmap" id="skills" aria-labelledby="skills-h">
   <div class="wrap">
-    <div class="section__head section__head--stack">
-      <p class="eyebrow mono">Skills at a glance</p>
-      <h2 id="skills-h">What I do, in plain language</h2>
-      <p class="lead">Nine areas, how long I have worked in each, and where to see the proof.</p>
-    </div>
+    <p class="eyebrow mono">Skills at a glance</p>
+    <h2 id="skills-h" class="sm-h">What I do, and how to check it</h2>
+    <p class="sm-sub">Nine skills in three groups. Every claim links to something you can open and check.</p>
+    <ul class="sm-legend" aria-label="How to read the skill map">
+      {% for g, label, means in m.groups %}<li><i class="sm-dot sm-dot--{{ g }}"></i><b>{{ label }}</b> {{ means }}</li>{% endfor %}
+      <li>Bigger circle = <b>more years</b></li>
+      <li>{{ icon('verified') }} Green = <b>verified by the issuer</b></li>
+    </ul>
 
-    <div class="roles" aria-label="Roles I fit">
-      <p class="mono roles__label">Roles I fit</p>
-      <ul class="roles__list">{% for r in roles %}<li>{{ r }}</li>{% endfor %}</ul>
-    </div>
-
-    <ul class="skill-grid">
-      {% for s in skills %}
-      <li class="skill">
-        <div class="skill__top">
-          <span class="skill__icon">{{ icon(s.icon) }}</span>
-          <span class="skill__years mono"><strong>{{ year - s.since }}+</strong> yrs</span>
-        </div>
-        <h3 class="skill__name">{{ s.name }}</h3>
-        <p class="skill__plain">{{ s.plain }}</p>
-        <ul class="chips chips--small skill__kw">{% for k in s.keywords %}<li>{{ k }}</li>{% endfor %}</ul>
-        <ul class="skill__proof" aria-label="Proof">
-          {% for label, u in s.proof %}
-          <li><a href="{{ proof_href(u) }}"{% if u.startswith('cert:') %} rel="noopener" target="_blank"{% endif %}>{% if u.startswith('cert:') %}{{ icon('verified') }}{% else %}{{ icon('arrow') }}{% endif %}<span>{{ label }}</span></a></li>
+    <div class="sm-map" data-skillmap>
+      <div class="sm-wheel">
+        <svg viewBox="{{ m.viewbox }}" class="sm-svg" role="group" aria-label="Skill map. Circle size shows years of experience. Select a skill to see the proof.">
+          {% for sct in m.sectors %}<path class="sm-sector sm-sector--{{ sct.group }}" d="{{ sct.d }}"/>{% endfor %}
+          {% for sct in m.sectors %}<text class="sm-sector__label sm-sector__label--{{ sct.group }}" x="{{ sct.lx }}" y="{{ sct.ly }}" text-anchor="middle">{{ sct.label|upper }}</text>{% endfor %}
+          <circle class="sm-hub" cx="{{ m.cx }}" cy="{{ m.cy }}" r="{{ m.hub_r }}"/>
+          <text class="sm-hub__name" x="{{ m.cx }}" y="{{ m.cy - 6 }}" text-anchor="middle">Sabbir</text>
+          <text class="sm-hub__sub" x="{{ m.cx }}" y="{{ m.cy + 18 }}" text-anchor="middle">15+ years</text>
+          {% for n in m.nodes %}
+          <a href="#{{ n.id }}" class="sm-node sm-node--{{ n.group }}{% if n.id == m.default %} is-on{% endif %}" data-skill="{{ n.id }}" aria-label="{{ n.name }}, {{ n.years }}+ years. Show proof">
+            <circle class="sm-node__halo" cx="{{ n.x }}" cy="{{ n.y }}" r="{{ n.halo }}"/>
+            <circle class="sm-node__dot" cx="{{ n.x }}" cy="{{ n.y }}" r="{{ n.r }}"/>
+            <text class="sm-node__yrs" x="{{ n.x }}" y="{{ n.ty }}" text-anchor="middle">{{ n.years }}+</text>
+            <text class="sm-node__label" x="{{ n.x }}" y="{{ n.ly }}" text-anchor="middle"><tspan x="{{ n.x }}">{{ n.short[0] }}</tspan><tspan x="{{ n.x }}" dy="23">{{ n.short[1] }}</tspan></text>
+          </a>
           {% endfor %}
-        </ul>
+        </svg>
+        <p class="sm-hint">Tap or click any circle.</p>
+      </div>
+      <div class="sm-panels">
+        {% for n in m.nodes %}
+        <article class="sm-panel{% if n.id == m.default %} is-on{% endif %}" id="{{ n.id }}" aria-labelledby="{{ n.id }}-h">
+          <p class="sm-panel__group sm-panel__group--{{ n.group }} mono">{{ n.group_label }}</p>
+          <div class="sm-panel__top"><h3 id="{{ n.id }}-h">{{ n.name }}</h3><p class="sm-panel__yrs">{{ n.years }}+<small class="mono">yrs</small></p></div>
+          <p class="sm-panel__since">Doing this since {{ n.since }}</p>
+          <p class="sm-panel__plain">{{ n.plain }}</p>
+          <ul class="chips chips--small sm-kw">{% for k in n.keywords %}<li>{{ k }}</li>{% endfor %}</ul>
+          <p class="sm-panel__proof-h mono">Proof</p>
+          <div class="sm-proofs">{% for p in n.proof %}{{ proof_link(p) }}{% endfor %}</div>
+        </article>
+        {% endfor %}
+      </div>
+    </div>
+
+    <h3 class="sm-h3">Questions hiring managers ask</h3>
+    <p class="sm-sub">Green buttons open the issuer's own verification page.</p>
+    <ul class="sm-qa">
+      {% for qa in m.qa %}
+      <li class="sm-qa__item">
+        <div class="sm-qa__q"><span class="sm-yes">Yes</span><h4>{{ qa.q }}</h4></div>
+        <p>{{ qa.a }}</p>
+        <div class="sm-proofs">{% for p in qa.links %}{{ proof_link(p) }}{% endfor %}</div>
       </li>
       {% endfor %}
     </ul>
 
-    <div class="frameworks">
-      <p class="mono roles__label">Frameworks & regulations I work with</p>
-      <ul class="frameworks__list">{% for f in frameworks %}<li>{{ f }}</li>{% endfor %}</ul>
+    <h3 class="sm-h3">Years in each skill</h3>
+    <p class="sm-sub">Longer bar, more experience. Grey blocks along the top show the job behind each period.</p>
+    <div class="sm-tl">
+      <svg viewBox="0 0 {{ m.tl.w }} {{ m.tl.h }}" class="sm-tl__svg" role="img" aria-label="Years of experience in each skill, 2010 to today">
+        {% for gx in m.tl.grid %}<line class="sm-tl__grid" x1="{{ gx }}" x2="{{ gx }}" y1="36" y2="{{ m.tl.grid_bottom }}"/>{% endfor %}
+        {% for e in m.tl.eras %}<g><rect class="sm-tl__era" x="{{ e.x }}" y="4" width="{{ e.w }}" height="26" rx="4"/><text class="sm-tl__era-t" x="{{ e.x + 6 }}" y="21">{{ e.label }}</text></g>{% endfor %}
+        {% for b in m.tl.bars %}
+        <text class="sm-tl__name" x="0" y="{{ b.ty }}">{{ b.name }}</text>
+        <rect class="sm-tl__bar sm-tl__bar--{{ b.group }}" x="{{ b.x }}" y="{{ b.y }}" width="{{ b.w }}" height="18" rx="4"/>
+        <text class="sm-tl__yrs" x="{{ m.tl.years_x }}" y="{{ b.ty }}" text-anchor="end">{{ b.years }}+ yrs</text>
+        {% endfor %}
+        {% for t in m.tl.ticks %}<text class="sm-tl__tick" x="{{ t.x }}" y="{{ m.tl.axis_y }}" text-anchor="middle">{{ t.label }}</text>{% endfor %}
+      </svg>
     </div>
+
+    <h3 class="sm-h3">Check any certificate yourself</h3>
+    <p class="sm-sub">Each tile opens the issuer's page in a new tab.</p>
+    <ul class="sm-creds">
+      {% for c in m.creds %}
+      <li><a class="sm-cred" href="{{ c.url }}" target="_blank" rel="noopener">
+        <span class="sm-cred__code">{{ c.code }}</span><span class="sm-cred__name">{{ c.name }}</span>
+        <span class="sm-cred__by">Issued by {{ c.issuer }}</span>
+        <span class="sm-cred__check mono">{{ icon('verified') }}Check on {{ c.via }} ↗{% if c.id %} · ID {{ c.id }}{% endif %}</span></a></li>
+      {% endfor %}
+    </ul>
+
+    <div class="roles"><p class="mono roles__label">Roles I fit</p><ul class="roles__list">{% for r in roles %}<li>{{ r }}</li>{% endfor %}</ul></div>
+    <div class="frameworks"><p class="mono roles__label">Frameworks & regulations I work with</p><ul class="frameworks__list">{% for f in frameworks %}<li>{{ f }}</li>{% endfor %}</ul></div>
   </div>
 </section>
 {% endmacro %}

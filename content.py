@@ -348,42 +348,97 @@ ROLES_FIT = [
 ]
 
 SKILLS = [
-    {"name": "Cyber strategy & policy", "icon": "compass", "since": 2016,
+    {"name": "Cyber strategy & policy", "group": "lead", "short": ['Strategy', '& policy'], "icon": "compass", "since": 2016,
      "plain": "Turning cyber risk into a plan leadership can fund, and the policies to run it.",
      "keywords": ["Security strategy", "Roadmaps", "Policy writing", "Board reporting"],
      "proof": [("National cybersecurity strategy", "/projects/national-strategy"), ("Policies & publications", "/publications")]},
-    {"name": "Governance, risk & compliance (GRC)", "icon": "gauge", "since": 2016,
+    {"name": "Governance, risk & compliance (GRC)", "group": "lead", "short": ['Risk &', 'compliance'], "icon": "gauge", "since": 2016,
      "plain": "Knowing your risks, owning them, and proving it to regulators and boards.",
      "keywords": ["Risk assessment", "Risk registers", "Third-party risk", "Regulatory compliance"],
      "proof": [("23 critical infrastructures audited", "/projects/tier4-audit"), ("Risk assessment service", "/services/cyber-risk-assessment")]},
-    {"name": "Audit & certification", "icon": "check", "since": 2016,
+    {"name": "Audit & certification", "group": "assure", "short": ['Audit &', 'certification'], "icon": "check", "since": 2016,
      "plain": "Getting organisations certified, and keeping them audit-ready year after year.",
      "keywords": ["ISO 27001", "ISO 27701", "Internal audit", "Controls & evidence"],
      "proof": [("ISO 27001 Senior Lead Auditor (verify)", "cert:ISO/IEC 27001 Senior Lead Auditor (PECB)"), ("National IT audit programme", "/projects/national-vapt")]},
-    {"name": "AI governance & AI security", "icon": "chip", "since": 2020,
+    {"name": "AI governance & AI security", "group": "assure", "short": ['AI', 'governance'], "icon": "chip", "since": 2020,
      "plain": "Using AI safely, with rules that regulators, customers and auditors accept.",
      "keywords": ["ISO 42001", "NIST AI RMF", "EU AI Act", "AI risk assessment"],
      "proof": [("ISO 42001 AI Lead Auditor (verify)", "cert:ISO/IEC 42001:2023 AI Lead Auditor"), ("ML phishing research with IBM", "/projects/phishing-ml")]},
-    {"name": "Incident response & security operations", "icon": "siren", "since": 2016,
+    {"name": "Incident response & security operations", "group": "defend", "short": ['Incident', 'response'], "icon": "siren", "since": 2016,
      "plain": "Spotting attacks early and handling them calmly when they happen.",
      "keywords": ["Incident response", "CIRT / SOC", "SIEM & monitoring", "Playbooks & tabletops"],
      "proof": [("Bangladesh's first government CIRT", "/projects/national-cirt"), ("Early-warning sensors, 17 sites", "/projects/cyber-sensors")]},
-    {"name": "Security testing", "icon": "target", "since": 2016,
+    {"name": "Security testing", "group": "defend", "short": ['Security', 'testing'], "icon": "target", "since": 2016,
      "plain": "Finding weaknesses before attackers do, and making sure they get fixed.",
      "keywords": ["Penetration testing (VAPT)", "Vulnerability management", "Remediation tracking"],
      "proof": [("Central-bank payment system VAPT", "/projects/bach-vapt"), ("500+ critical vulnerabilities found", "/projects/national-vapt")]},
-    {"name": "Digital forensics & investigations", "icon": "shield", "since": 2010,
+    {"name": "Digital forensics & investigations", "group": "defend", "short": ['Digital', 'forensics'], "icon": "shield", "since": 2010,
      "plain": "Working out what happened after an incident, with evidence that holds up.",
      "keywords": ["Digital forensics", "Evidence handling", "Cybercrime investigation"],
      "proof": [("National digital forensics lab", "/projects/forensics-lab"), ("Forensic platforms for government", "/projects/security-intelligence")]},
-    {"name": "Fraud, AML & KYC", "icon": "bank", "since": 2024,
+    {"name": "Fraud, AML & KYC", "group": "assure", "short": ['Fraud,', 'AML & KYC'], "icon": "bank", "since": 2024,
      "plain": "Stopping fraud and meeting FINTRAC rules without slowing the business down.",
      "keywords": ["AML / KYC", "FINTRAC", "Fraud prevention", "Identity verification"],
      "proof": [("Fraud Prevention Specialist (verify)", "cert:Certified Online Fraud Prevention Specialist (COFPS)"), ("Article: KYC needs an upgrade", "/insights/japan-just-showed-us-why-kyc-needs-an-upgrade")]},
-    {"name": "Leadership, programmes & training", "icon": "users", "since": 2010,
+    {"name": "Leadership, programmes & training", "group": "lead", "short": ['Leadership', '& training'], "icon": "users", "since": 2010,
      "plain": "Leading teams, budgets and delivery, and training people to run what gets built.",
      "keywords": ["Programme management", "$10M+ budgets", "Stakeholder management", "Training & teaching"],
      "proof": [("What colleagues say", "/recommendations"), ("National training programmes", "/projects/training")]},
+]
+
+SKILL_GROUPS = [  # (key, label, what it means); order sets the position on the skill map
+    ("lead", "Lead", "sets direction"),
+    ("assure", "Assure", "proves it works"),
+    ("defend", "Defend", "stops attacks"),
+]
+
+# Plain questions recruiters ask, each answered with evidence. Links: "cert:<name>" opens CERT_VERIFY.
+SKILL_QA = [
+    ("Can he run an ISO 27001 audit or get us certified?",
+     "ISO 27001 Senior Lead Auditor. Audited 23 critical infrastructures for the national CERT.",
+     [("ISO 27001 Senior Lead Auditor", "cert:ISO/IEC 27001 Senior Lead Auditor (PECB)"), ("The 23-site audit", "/projects/tier4-audit")]),
+    ("Can he set up AI governance (ISO 42001, EU AI Act)?",
+     "ISO 42001 AI Lead Auditor, with 3 years of machine-learning security research with IBM.",
+     [("ISO 42001 AI Lead Auditor", "cert:ISO/IEC 42001:2023 AI Lead Auditor"), ("The IBM research", "/projects/phishing-ml")]),
+    ("Does he cover privacy (ISO 27701)?",
+     "Certified ISO 27701 Lead Auditor, the privacy extension to ISO 27001.",
+     [("ISO 27701 Lead Auditor", "cert:ISO/IEC 27701:2025 Lead Auditor")]),
+    ("Has he handled real cyber attacks at scale?",
+     "Core member of the team that built Bangladesh's first government CIRT. Nationwide attacks fell about 95%.",
+     [("The national CIRT", "/projects/national-cirt"), ("Sensors at 17 sites", "/projects/cyber-sensors")]),
+    ("Does he know Canadian financial rules (FINTRAC, AML/KYC)?",
+     "Works in AML/KYC and fraud prevention at a Canadian lender since December 2024.",
+     [("Fraud Prevention Specialist", "cert:Certified Online Fraud Prevention Specialist (COFPS)"), ("The role", "/experience#career")]),
+    ("Can he manage large programmes and budgets?",
+     "Delivered 8 national projects worth over $10M as Managing Director. Led an 8-person technical team.",
+     [("Google Project Management", "cert:Google Project Management"), ("All projects", "/projects")]),
+    ("Can he train our staff?",
+     "Taught a graduate security course at uOttawa and ran national training programmes.",
+     [("Cybersecurity Educator (CCEP)", "cert:Certified Cybersecurity Educator Professional (CCEP)"), ("Training programmes", "/projects/training")]),
+    ("Is he hands-on technically, or only strategy?",
+     "Both. Penetration testing of a central-bank payment system, digital forensics labs, SIEM and incident handling.",
+     [("Google Cybersecurity", "cert:Google Cybersecurity"), ("Payment-system VAPT", "/projects/bach-vapt")]),
+]
+
+# Credential tiles: (CERT_VERIFY key, short code, plain name, issuer)
+CRED_TILES = [
+    ("ISO/IEC 27001 Senior Lead Auditor (PECB)", "ISO 27001", "Senior Lead Auditor", "PECB"),
+    ("ISO/IEC 42001:2023 AI Lead Auditor", "ISO 42001", "AI Lead Auditor", "PECB"),
+    ("ISO/IEC 27701:2025 Lead Auditor", "ISO 27701", "Privacy Lead Auditor", "PECB"),
+    ("Certified Online Fraud Prevention Specialist (COFPS)", "COFPS", "Fraud Prevention Specialist", "Hack & Fix Academy"),
+    ("Certified Cybersecurity Educator Professional (CCEP)", "CCEP", "Cybersecurity Educator", "Red Team Leaders"),
+    ("Google Cybersecurity", "Google", "Cybersecurity Certificate", "Google"),
+    ("Google Project Management", "Google", "Project Management Certificate", "Google"),
+    ("Exam Development Volunteer", "ISC2", "Exam Development Volunteer", "ISC2"),
+]
+
+# Career periods shown behind the years timeline: (label, start, end) as decimal years
+CAREER_ERAS = [
+    ("Verint · Device Tech.", 2010.6, 2015.9),
+    ("NRD Bangladesh", 2016.0, 2019.7),
+    ("CIRT", 2019.7, 2020.7),
+    ("uOttawa · IBM", 2020.75, 2023.7),
+    ("goeasy", 2024.92, None),
 ]
 
 FRAMEWORKS = ["ISO 27001", "ISO 27701", "ISO 42001", "NIST CSF 2.0", "NIST AI RMF", "EU AI Act", "COBIT",
