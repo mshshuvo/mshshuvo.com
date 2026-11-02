@@ -8,6 +8,7 @@ document.addEventListener("DOMContentLoaded", () => {
   initReadinessCheck();
   initContactForm();
   initCopyButtons();
+  initSkillMap();
 });
 
 // ---------------------------------------------------------------- mobile menu
@@ -208,4 +209,24 @@ function prefillFromAssessment(form) {
   form.message.value = summary.slice(0, 3800);
   const topic = form.querySelector('input[name="topic"][value="Consulting engagement"]');
   if (topic) topic.checked = true;
+}
+
+/* Skill map: clicking a circle shows that skill's proof panel. Without JS every panel is listed. */
+function initSkillMap() {
+  const map = document.querySelector("[data-skillmap]");
+  if (!map) return;
+  const nodes = [...map.querySelectorAll("[data-skill]")];
+  const panels = [...map.querySelectorAll(".sm-panel")];
+  map.classList.add("is-js");
+  const show = (id, scroll) => {
+    nodes.forEach((n) => n.classList.toggle("is-on", n.dataset.skill === id));
+    panels.forEach((p) => p.classList.toggle("is-on", p.id === id));
+    const panel = document.getElementById(id);
+    if (scroll && panel && window.matchMedia("(max-width: 900px)").matches) {
+      panel.scrollIntoView({ behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth", block: "nearest" });
+    }
+  };
+  nodes.forEach((n) => n.addEventListener("click", (e) => { e.preventDefault(); show(n.dataset.skill, true); }));
+  const fromHash = location.hash.slice(1);
+  if (fromHash && panels.some((p) => p.id === fromHash)) show(fromHash, false);
 }
