@@ -2,6 +2,7 @@
 {% block title %}{{ site.name }} · Cybersecurity, GRC & AI Governance Leader · Ottawa{% endblock %}
 {% block description %}{{ site.name }} is an Ottawa-based cybersecurity leader: ISO 27001 Senior Lead Auditor, ISO 42001 AI Lead Auditor and C|CISO who built national cyber defence. GRC, AI governance, incident response and cyber strategy.{% endblock %}
 {% from "_icons.html" import icon %}
+{% from "_cert.html" import cert %}
 {% block structured_data %}<script type="application/ld+json">{{ {"@context": "https://schema.org", "@graph": [person_ld(),
   {"@type": "WebSite", "@id": site_url ~ "/#website", "url": site_url ~ "/", "name": site.name, "publisher": {"@id": site_url ~ "/#person"}, "inLanguage": "en"},
   {"@type": "ProfilePage", "url": site_url ~ "/", "name": site.name ~ " · " ~ site.title, "mainEntity": {"@id": site_url ~ "/#person"}}]}|ldjson }}</script>{% endblock %}
@@ -99,7 +100,7 @@
       {% for group, names in certs %}{% if group != 'In progress' %}
       <div class="cert-tile">
         <p class="mono certs__label">{{ group }}</p>
-        <p>{{ names|join(' · ') }}</p>
+        <p>{% for n in names %}{{ cert(n, verify) }}{% if not loop.last %} · {% endif %}{% endfor %}</p>
       </div>
       {% endif %}{% endfor %}
     </div>

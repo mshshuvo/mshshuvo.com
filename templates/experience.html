@@ -1,4 +1,6 @@
 {% extends "base.html" %}
+{% from "_cert.html" import cert %}
+{% from "_icons.html" import icon %}
 {% block title %}Experience & Certifications: C|CISO, ISO 27001, ISO 42001, CEH · {{ site.name }}{% endblock %}
 {% block description %}Career, education and certifications of {{ site.name }}: C|CISO, ISO/IEC 27001 Senior Lead Auditor, ISO/IEC 42001 AI Lead Auditor, ISO 27701, CEH and more.{% endblock %}
 {% block structured_data %}<script type="application/ld+json">{{ {"@context": "https://schema.org", "@graph": [person_ld(),
@@ -39,11 +41,12 @@
 <section class="section section--split" id="certifications">
   <div class="wrap">
     <h2>Certifications</h2>
+    <p class="certs__note">Credentials marked {{ icon('verified') }} link to the issuer's public verification page.</p>
     <div class="certs">
       {% for group, names in certs %}
       <div class="certs__group">
         <p class="mono certs__label">{{ group }}</p>
-        <ul class="chips chips--flush">{% for n in names %}<li>{{ n }}</li>{% endfor %}</ul>
+        <ul class="chips chips--flush">{% for n in names %}<li>{{ cert(n, verify) }}</li>{% endfor %}</ul>
       </div>
       {% endfor %}
     </div>
@@ -58,7 +61,7 @@
     </div>
     <div>
       <h2>Professional service</h2>
-      <ul class="plain">{% for t, d in service %}<li><strong>{{ t }}</strong><span>{{ d }}</span></li>{% endfor %}</ul>
+      <ul class="plain">{% for t, d in service %}<li><strong>{{ cert(t, verify) }}</strong><span>{{ d }}</span></li>{% endfor %}</ul>
     </div>
   </div>
 </section>

@@ -1,0 +1,9 @@
+{% from "_icons.html" import icon %}
+{# A certification name, linked to its public verification page when one exists. #}
+{% macro cert(name, verify) -%}
+{%- set v = verify.get(name) -%}
+{%- if v -%}
+<a class="cert-link" href="{{ v.url }}" rel="noopener" target="_blank"
+   title="Verify on {{ v.via }}{% if v.id %} (credential ID {{ v.id }}){% endif %}">{{ name }}{{ icon('verified') }}<span class="sr-only"> (verify on {{ v.via }})</span></a>
+{%- else -%}{{ name }}{%- endif -%}
+{%- endmacro %}
