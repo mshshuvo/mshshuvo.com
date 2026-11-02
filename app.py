@@ -16,7 +16,7 @@ from pathlib import Path
 from flask import Flask, abort, render_template
 from markupsafe import Markup
 
-from content import (ARTICLES, CERT_VERIFY, CERTIFICATIONS, EARLY_WRITING, EDUCATION, EXPERIENCE, POLICIES, PRESS,
+from content import (ARTICLES, CERT_VERIFY, SKILLS, ROLES_FIT, FRAMEWORKS, CERTIFICATIONS, EARLY_WRITING, EDUCATION, EXPERIENCE, POLICIES, PRESS,
                      PROJECT_TAGS, PROJECTS, RECOMMENDATIONS, SERVICE, SERVICES, SITE)
 from assessments import ASSESSMENTS, BANDS
 from assessments import BY_SLUG as ASSESSMENTS_BY_SLUG
@@ -133,7 +133,7 @@ def home():
     return render_template("home.html",
                            projects=[p for p in PROJECTS if p.get("featured")],
                            recs=[r for r in RECOMMENDATIONS if r.get("featured")],
-                           certs=CERTIFICATIONS, posts=POSTS[:3])
+                           certs=CERTIFICATIONS, posts=POSTS[:3], skills=SKILLS)
 
 
 @app.get("/projects")
@@ -182,7 +182,8 @@ def recommendations():
 @app.get("/experience")
 def experience():
     return render_template("experience.html", items=EXPERIENCE, certs=CERTIFICATIONS,
-                           education=EDUCATION, service=SERVICE)
+                           education=EDUCATION, service=SERVICE, skills=SKILLS, roles=ROLES_FIT,
+                           frameworks=FRAMEWORKS)
 
 
 @app.get("/services")

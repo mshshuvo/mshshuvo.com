@@ -1,0 +1,62 @@
+{% from "_icons.html" import icon %}
+{# Skills at a glance: plain-language clusters with duration and evidence. No proficiency scores. #}
+{% macro proof_href(u) -%}
+{%- if u.startswith('cert:') %}{{ verify[u[5:]].url }}{% else %}{{ u }}{% endif -%}
+{%- endmacro %}
+
+{% macro skills_full(skills, roles, frameworks) %}
+<section class="section section--tight skills" id="skills" aria-labelledby="skills-h">
+  <div class="wrap">
+    <div class="section__head section__head--stack">
+      <p class="eyebrow mono">Skills at a glance</p>
+      <h2 id="skills-h">What I do, in plain language</h2>
+      <p class="lead">Nine areas, how long I have worked in each, and where to see the proof.</p>
+    </div>
+
+    <div class="roles" aria-label="Roles I fit">
+      <p class="mono roles__label">Roles I fit</p>
+      <ul class="roles__list">{% for r in roles %}<li>{{ r }}</li>{% endfor %}</ul>
+    </div>
+
+    <ul class="skill-grid">
+      {% for s in skills %}
+      <li class="skill">
+        <div class="skill__top">
+          <span class="skill__icon">{{ icon(s.icon) }}</span>
+          <span class="skill__years mono"><strong>{{ year - s.since }}+</strong> yrs</span>
+        </div>
+        <h3 class="skill__name">{{ s.name }}</h3>
+        <p class="skill__plain">{{ s.plain }}</p>
+        <ul class="chips chips--small skill__kw">{% for k in s.keywords %}<li>{{ k }}</li>{% endfor %}</ul>
+        <ul class="skill__proof" aria-label="Proof">
+          {% for label, u in s.proof %}
+          <li><a href="{{ proof_href(u) }}"{% if u.startswith('cert:') %} rel="noopener" target="_blank"{% endif %}>{% if u.startswith('cert:') %}{{ icon('verified') }}{% else %}{{ icon('arrow') }}{% endif %}<span>{{ label }}</span></a></li>
+          {% endfor %}
+        </ul>
+      </li>
+      {% endfor %}
+    </ul>
+
+    <div class="frameworks">
+      <p class="mono roles__label">Frameworks & regulations I work with</p>
+      <ul class="frameworks__list">{% for f in frameworks %}<li>{{ f }}</li>{% endfor %}</ul>
+    </div>
+  </div>
+</section>
+{% endmacro %}
+
+{% macro skills_compact(skills) %}
+<section class="band skills-band" aria-labelledby="skills-band-h">
+  <div class="wrap">
+    <div class="section__head">
+      <h2 id="skills-band-h" class="mono band__label">Skills at a glance</h2>
+      <a class="link" href="{{ url_for('experience') }}#skills">See proof for each {{ icon('arrow') }}</a>
+    </div>
+    <ul class="skill-mini">
+      {% for s in skills %}
+      <li><span class="skill__icon">{{ icon(s.icon) }}</span><span class="skill-mini__name">{{ s.name }}</span><span class="mono skill-mini__yrs">{{ year - s.since }}+ yrs</span></li>
+      {% endfor %}
+    </ul>
+  </div>
+</section>
+{% endmacro %}
