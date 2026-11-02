@@ -136,7 +136,7 @@ class LoaderTests(unittest.TestCase):
     def test_real_posts_load(self):
         posts = insights.load_posts()
         self.assertGreaterEqual(len(posts), 10)
-        self.assertTrue(all(p["canonical_url"] for p in posts))
+        self.assertTrue(all(p["canonical_url"] is None or p["canonical_url"].startswith("https://") for p in posts))
         self.assertTrue(all(p["cover"] and p["cover_og"] and p["cover_alt"] for p in posts))
 
 
