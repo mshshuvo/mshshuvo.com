@@ -344,6 +344,7 @@ ROLES_FIT = [
     "Security Programme Manager",
     "AI Governance Lead",
     "Lead Auditor, ISO 27001 / 42001",
+    "Cybersecurity & GRC Consultant",
 ]
 
 SKILLS = [
