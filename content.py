@@ -334,6 +334,18 @@ CERTIFICATIONS = [
     ("In progress", ["CISSP (ISC2)", "CISM (ISACA)"]),
 ]
 
+# Public verification pages, taken from the "Show credential" links on LinkedIn.
+CERT_VERIFY = {
+    "ISO/IEC 27001 Senior Lead Auditor (PECB)": {"url": "https://www.credly.com/badges/38faefd6-efc2-49c6-85b3-f2efc0475a9f", "via": "Credly"},
+    "ISO/IEC 27701:2025 Lead Auditor": {"url": "https://www.credly.com/badges/3f3b02e5-f61d-4867-9c55-d72bdb15e599", "via": "Credly"},
+    "ISO/IEC 42001:2023 AI Lead Auditor": {"url": "https://www.credly.com/badges/ce7dd57c-1bdb-40e3-957e-2473525613dd", "via": "Credly"},
+    "Certified Online Fraud Prevention Specialist (COFPS)": {"url": "https://academy.hackandfix.com/cert-verify/", "via": "Hack & Fix", "id": "6144-4302-2798-3540"},
+    "Certified Cybersecurity Educator Professional (CCEP)": {"url": "https://courses.redteamleaders.com/exam-completion/c50ea715fb2fa694", "via": "Red Team Leaders"},
+    "Google Cybersecurity": {"url": "https://www.coursera.org/account/accomplishments/specialization/PNCE92FAQ6S4", "via": "Coursera"},
+    "Google Project Management": {"url": "https://www.coursera.org/account/accomplishments/specialization/XPWGKSW8UYK3", "via": "Coursera"},
+    "Exam Development Volunteer": {"url": "https://www.credly.com/badges/2386cddc-b78c-4c67-b926-cf4c54da8e11", "via": "Credly"},
+}
+
 EDUCATION = [
     ("Master's, Electrical & Computer Engineering", "University of Ottawa · 2023 · Dean's Scholarship; IBM CAS Fellowship"),
     ("Program on Cyber Security Studies (PCSS)", "George C. Marshall European Center for Security Studies, Germany"),

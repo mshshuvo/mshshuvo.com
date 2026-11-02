@@ -16,7 +16,7 @@ from pathlib import Path
 from flask import Flask, abort, render_template
 from markupsafe import Markup
 
-from content import (ARTICLES, CERTIFICATIONS, EARLY_WRITING, EDUCATION, EXPERIENCE, POLICIES, PRESS,
+from content import (ARTICLES, CERT_VERIFY, CERTIFICATIONS, EARLY_WRITING, EDUCATION, EXPERIENCE, POLICIES, PRESS,
                      PROJECT_TAGS, PROJECTS, RECOMMENDATIONS, SERVICE, SERVICES, SITE)
 from assessments import ASSESSMENTS, BANDS
 from assessments import BY_SLUG as ASSESSMENTS_BY_SLUG
@@ -89,10 +89,13 @@ def person_ld() -> dict:
         "knowsAbout": ["Cybersecurity", "Governance, risk and compliance (GRC)", "ISO/IEC 27001", "ISO/IEC 42001",
                        "AI governance", "NIST Cybersecurity Framework", "Incident response", "CIRT and SOC design",
                        "Penetration testing", "Digital forensics", "Cyber risk assessment", "AML/KYC"],
-        "hasCredential": [{"@type": "EducationalOccupationalCredential", "name": c}
-                          for c in ["EC-Council Certified CISO (C|CISO)", "ISO/IEC 27001 Senior Lead Auditor",
-                                    "ISO/IEC 42001 AI Lead Auditor", "ISO/IEC 27701 Lead Auditor",
-                                    "Certified Ethical Hacker (CEH)"]],
+        "hasCredential": [{"@type": "EducationalOccupationalCredential", "name": name,
+                           **({"url": CERT_VERIFY[key]["url"]} if key in CERT_VERIFY else {})}
+                          for name, key in [("EC-Council Certified CISO (C|CISO)", None),
+                                            ("ISO/IEC 27001 Senior Lead Auditor", "ISO/IEC 27001 Senior Lead Auditor (PECB)"),
+                                            ("ISO/IEC 42001 AI Lead Auditor", "ISO/IEC 42001:2023 AI Lead Auditor"),
+                                            ("ISO/IEC 27701 Lead Auditor", "ISO/IEC 27701:2025 Lead Auditor"),
+                                            ("Certified Ethical Hacker (CEH)", None)]],
     }
 
 
@@ -122,7 +125,7 @@ def breadcrumb_ld(*crumbs) -> dict:
 def inject_site():
     return {"site": SITE, "year": datetime.now().year, "turnstile_origin": TURNSTILE_ORIGIN, "asset": asset,
             "site_url": SITE_URL, "person_ld": person_ld, "breadcrumb_ld": breadcrumb_ld,
-            "service_ld": service_ld}
+            "service_ld": service_ld, "verify": CERT_VERIFY}
 
 
 @app.get("/")
