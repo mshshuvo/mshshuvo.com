@@ -334,6 +334,60 @@ CERTIFICATIONS = [
     ("In progress", ["CISSP (ISC2)", "CISM (ISACA)"]),
 ]
 
+# ---------------------------------------------------------------- skills at a glance
+# Written for non-specialist readers (HR, hiring managers). "since" is the first year of hands-on work in
+# that area, taken from EXPERIENCE and PROJECTS; it is shown as a duration, never as a proficiency score.
+ROLES_FIT = [
+    "CISO / Head of Information Security",
+    "Director, Cybersecurity & GRC",
+    "GRC or IT Risk Manager",
+    "Security Programme Manager",
+    "AI Governance Lead",
+    "Lead Auditor, ISO 27001 / 42001",
+]
+
+SKILLS = [
+    {"name": "Cyber strategy & policy", "icon": "compass", "since": 2016,
+     "plain": "Turning cyber risk into a plan leadership can fund, and the policies to run it.",
+     "keywords": ["Security strategy", "Roadmaps", "Policy writing", "Board reporting"],
+     "proof": [("National cybersecurity strategy", "/projects/national-strategy"), ("Policies & publications", "/publications")]},
+    {"name": "Governance, risk & compliance (GRC)", "icon": "gauge", "since": 2016,
+     "plain": "Knowing your risks, owning them, and proving it to regulators and boards.",
+     "keywords": ["Risk assessment", "Risk registers", "Third-party risk", "Regulatory compliance"],
+     "proof": [("23 critical infrastructures audited", "/projects/tier4-audit"), ("Risk assessment service", "/services/cyber-risk-assessment")]},
+    {"name": "Audit & certification", "icon": "check", "since": 2019,
+     "plain": "Getting organisations certified, and keeping them audit-ready year after year.",
+     "keywords": ["ISO 27001", "ISO 27701", "Internal audit", "Controls & evidence"],
+     "proof": [("ISO 27001 Senior Lead Auditor (verify)", "cert:ISO/IEC 27001 Senior Lead Auditor (PECB)"), ("National IT audit programme", "/projects/national-vapt")]},
+    {"name": "AI governance & AI security", "icon": "chip", "since": 2020,
+     "plain": "Using AI safely, with rules that regulators, customers and auditors accept.",
+     "keywords": ["ISO 42001", "NIST AI RMF", "EU AI Act", "AI risk assessment"],
+     "proof": [("ISO 42001 AI Lead Auditor (verify)", "cert:ISO/IEC 42001:2023 AI Lead Auditor"), ("ML phishing research with IBM", "/projects/phishing-ml")]},
+    {"name": "Incident response & security operations", "icon": "siren", "since": 2016,
+     "plain": "Spotting attacks early and handling them calmly when they happen.",
+     "keywords": ["Incident response", "CIRT / SOC", "SIEM & monitoring", "Playbooks & tabletops"],
+     "proof": [("Bangladesh's first government CIRT", "/projects/national-cirt"), ("Early-warning sensors, 17 sites", "/projects/cyber-sensors")]},
+    {"name": "Security testing", "icon": "target", "since": 2016,
+     "plain": "Finding weaknesses before attackers do, and making sure they get fixed.",
+     "keywords": ["Penetration testing (VAPT)", "Vulnerability management", "Remediation tracking"],
+     "proof": [("Central-bank payment system VAPT", "/projects/bach-vapt"), ("500+ critical vulnerabilities found", "/projects/national-vapt")]},
+    {"name": "Digital forensics & investigations", "icon": "shield", "since": 2010,
+     "plain": "Working out what happened after an incident, with evidence that holds up.",
+     "keywords": ["Digital forensics", "Evidence handling", "Cybercrime investigation"],
+     "proof": [("National digital forensics lab", "/projects/forensics-lab"), ("Forensic platforms for government", "/projects/security-intelligence")]},
+    {"name": "Fraud, AML & KYC", "icon": "bank", "since": 2024,
+     "plain": "Stopping fraud and meeting FINTRAC rules without slowing the business down.",
+     "keywords": ["AML / KYC", "FINTRAC", "Fraud prevention", "Identity verification"],
+     "proof": [("Fraud Prevention Specialist (verify)", "cert:Certified Online Fraud Prevention Specialist (COFPS)"), ("Article: KYC needs an upgrade", "/insights/japan-just-showed-us-why-kyc-needs-an-upgrade")]},
+    {"name": "Leadership, programmes & training", "icon": "users", "since": 2010,
+     "plain": "Leading teams, budgets and delivery, and training people to run what gets built.",
+     "keywords": ["Programme management", "$10M+ budgets", "Stakeholder management", "Training & teaching"],
+     "proof": [("What colleagues say", "/recommendations"), ("National training programmes", "/projects/training")]},
+]
+
+FRAMEWORKS = ["ISO 27001", "ISO 27701", "ISO 42001", "NIST CSF 2.0", "NIST AI RMF", "EU AI Act", "COBIT",
+              "ITIL", "PCI DSS", "ITSG-33", "FINTRAC", "OSFI B-10"]
+
 # Public verification pages, taken from the "Show credential" links on LinkedIn.
 CERT_VERIFY = {
     "ISO/IEC 27001 Senior Lead Auditor (PECB)": {"url": "https://www.credly.com/badges/38faefd6-efc2-49c6-85b3-f2efc0475a9f", "via": "Credly"},

@@ -6,6 +6,7 @@
 {% block structured_data %}<script type="application/ld+json">{{ {"@context": "https://schema.org", "@graph": [person_ld(),
   {"@type": "WebSite", "@id": site_url ~ "/#website", "url": site_url ~ "/", "name": site.name, "publisher": {"@id": site_url ~ "/#person"}, "inLanguage": "en"},
   {"@type": "ProfilePage", "url": site_url ~ "/", "name": site.name ~ " · " ~ site.title, "mainEntity": {"@id": site_url ~ "/#person"}}]}|ldjson }}</script>{% endblock %}
+{% from "partials/skills.html" import skills_compact with context %}
 {% block content %}
 <section class="hero">
   <div class="wrap hero__grid">
@@ -46,12 +47,7 @@
   </div>
 </section>
 
-<section class="band">
-  <div class="wrap">
-    <p class="mono band__label">Across the cyber domain</p>
-    <ul class="domains">{% for d in site.domains %}<li>{{ d }}</li>{% endfor %}</ul>
-  </div>
-</section>
+{{ skills_compact(skills) }}
 
 <section class="section">
   <div class="wrap">
