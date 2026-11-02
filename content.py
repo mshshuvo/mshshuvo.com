@@ -356,7 +356,7 @@ SKILLS = [
      "plain": "Knowing your risks, owning them, and proving it to regulators and boards.",
      "keywords": ["Risk assessment", "Risk registers", "Third-party risk", "Regulatory compliance"],
      "proof": [("23 critical infrastructures audited", "/projects/tier4-audit"), ("Risk assessment service", "/services/cyber-risk-assessment")]},
-    {"name": "Audit & certification", "icon": "check", "since": 2019,
+    {"name": "Audit & certification", "icon": "check", "since": 2016,
      "plain": "Getting organisations certified, and keeping them audit-ready year after year.",
      "keywords": ["ISO 27001", "ISO 27701", "Internal audit", "Controls & evidence"],
      "proof": [("ISO 27001 Senior Lead Auditor (verify)", "cert:ISO/IEC 27001 Senior Lead Auditor (PECB)"), ("National IT audit programme", "/projects/national-vapt")]},
