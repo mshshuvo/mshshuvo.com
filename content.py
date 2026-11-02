@@ -7,11 +7,11 @@ and his LinkedIn profile (experience, media, publications, recommendations), Oct
 SITE = {
     "name": "Md Sabbir Hossain",
     "title": "Cybersecurity Leader · GRC & AI Governance",
-    "tagline": "Strategy, governance and resilience from someone who has built national cyber defence.",
-    "intro": ("15+ years delivering national-scale cybersecurity across government, critical infrastructure "
-              "and financial services. Core member of the team that built Bangladesh's first government CIRT "
-              "after the 2016 Bangladesh Bank SWIFT heist, director of $10M+ national programmes, and "
-              "contributor to the country's national cybersecurity strategy."),
+    "tagline": "Strategy, governance and resilience for regulated organisations, proven at national scale.",
+    "intro": ("Cybersecurity, GRC and AI governance leader for regulated organisations, with 15+ years across "
+              "financial services, critical infrastructure and government. ISO 27001 Senior Lead Auditor and "
+              "ISO 42001 AI Lead Auditor. Previously a core member of the team that built Bangladesh's first "
+              "government CIRT, and contributor to its national cybersecurity strategy."),
     "location": "Ottawa, Canada",
     "linkedin": "https://www.linkedin.com/in/mshshuvo/",
     # Cloudflare Turnstile site key (public). Empty = contact page shows email buttons instead.
@@ -24,7 +24,7 @@ SITE = {
     "profile": [
         ("Based in", "Ottawa, Canada"),
         ("Delivered", "$10M+ national cyber programmes"),
-        ("Sectors", "Government · Critical infra · Finance"),
+        ("Sectors", "Finance · Critical infra · Government"),
         ("Advisory", "World Bank cybersecurity roster"),
     ],
     "stats": [
