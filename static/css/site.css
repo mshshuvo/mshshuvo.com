@@ -591,3 +591,23 @@ details[open] .tl__more::after { content: "hide −"; }
 }
 @media (max-width: 420px) { .sm-creds { grid-template-columns: minmax(0, 1fr); } .sm-panel { padding: 18px; } }
 @media (prefers-reduced-motion: reduce) { .sm-node__dot { transition: none; } }
+
+/* ---------- site security page ---------- */
+.sec-h { font-size: 1.4rem; margin-bottom: var(--s2); }
+.sec-grid { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--s2); }
+.sec-card { background: var(--color-surface); border: 1px solid var(--color-border); border-radius: var(--radius); padding: var(--s3); }
+.sec-card h3 { font-size: 1.05rem; margin: var(--s2) 0 6px; }
+.sec-card p { margin: 0; color: var(--color-text); font-size: .95rem; }
+.sec-card__icon { display: inline-grid; place-items: center; width: 40px; height: 40px; border-radius: 10px; background: rgba(20,184,166,.12); color: var(--color-secondary); }
+.sec-card__icon .icon { width: 22px; height: 22px; }
+.sec-list { margin: 0; padding-left: 1.2em; display: grid; gap: 8px; }
+.sec-list li::marker { color: var(--color-secondary); }
+.sec-note { margin-top: var(--s3); padding: 14px 16px; border-left: 3px solid var(--color-secondary); background: var(--color-surface); border-radius: 0 var(--radius-sm) var(--radius-sm) 0; color: var(--color-muted); }
+.sec-tools { list-style: none; margin: var(--s3) 0 0; padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+.sec-tool { display: flex; flex-direction: column; gap: 4px; height: 100%; padding: 16px 18px; text-decoration: none; background: var(--color-surface); border: 1px solid var(--color-border); border-radius: var(--radius); }
+.sec-tool:hover { border-color: var(--color-primary); }
+.sec-tool__name { color: var(--color-heading); font-weight: 700; }
+.sec-tool__what { color: var(--color-muted); font-size: .9rem; }
+.sec-tool__go { margin-top: auto; padding-top: 8px; color: var(--color-primary); font-size: .8rem; display: inline-flex; gap: 6px; align-items: center; }
+.sec-tool__go .icon { width: 14px; height: 14px; }
+@media (max-width: 640px) { .sec-grid, .sec-tools { grid-template-columns: minmax(0, 1fr); } }

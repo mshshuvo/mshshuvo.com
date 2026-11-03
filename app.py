@@ -215,6 +215,11 @@ def assessment_check(slug):
     return render_template("assessment_check.html", check=check, bands=BANDS, others=others, service=service)
 
 
+@app.get("/security")
+def site_security():
+    return render_template("site_security.html")
+
+
 @app.get("/contact")
 def contact():
     return render_template("contact.html")

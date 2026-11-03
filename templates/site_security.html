@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+{% from "_icons.html" import icon %}
+{% block title %}How this site protects you · {{ site.name }}{% endblock %}
+{% block description %}How mshshuvo.com protects visitors' privacy and data, how to check its security yourself with independent tools, and how to report a vulnerability.{% endblock %}
+{% block content %}
+{% set host = "mshshuvo.com" %}
+<section class="page-head">
+  <div class="wrap wrap--narrow">
+    <p class="eyebrow mono">Site security</p>
+    <h1>How this site protects you.</h1>
+    <p class="lead">I advise organisations on security, so this site follows the same rules. Here is what that means for you, and how to check it yourself.</p>
+  </div>
+</section>
+
+<section class="section section--tight">
+  <div class="wrap wrap--narrow">
+    <h2 class="sec-h">What it means for you</h2>
+    <ul class="sec-grid">
+      <li class="sec-card"><span class="sec-card__icon">{{ icon('shield') }}</span><h3>Private by default</h3>
+        <p>No advertising, no analytics trackers, no tracking cookies. The only outside service is a privacy-friendly spam check on the contact form.</p></li>
+      <li class="sec-card"><span class="sec-card__icon">{{ icon('check') }}</span><h3>Encrypted, always</h3>
+        <p>Every page loads over HTTPS with modern encryption. Older, weaker connection types are refused.</p></li>
+      <li class="sec-card"><span class="sec-card__icon">{{ icon('doc') }}</span><h3>Only the data needed</h3>
+        <p>Contact form messages go straight to my inbox and are not stored on the site. Readiness checks keep anonymous scores only, never names or email addresses.</p></li>
+      <li class="sec-card"><span class="sec-card__icon">{{ icon('verified') }}</span><h3>Email you can trust</h3>
+        <p>Email sent from this domain is signed and authenticated, so messages pretending to be from me are much easier for your mail provider to catch.</p></li>
+    </ul>
+  </div>
+</section>
+
+<section class="section section--tight">
+  <div class="wrap wrap--narrow">
+    <h2 class="sec-h">How it is looked after</h2>
+    <ul class="sec-list">
+      <li>Automated security checks run on every change before it goes live.</li>
+      <li>Third-party code is checked for known vulnerabilities on every change.</li>
+      <li>The site has had a full security assessment, and every finding was fixed and retested.</li>
+      <li>Security settings are reviewed whenever the site changes, not once a year.</li>
+    </ul>
+    <p class="sec-note">No website is ever completely secure. These are the habits I recommend to clients, applied here.</p>
+  </div>
+</section>
+
+<section class="section section--tight">
+  <div class="wrap wrap--narrow">
+    <h2 class="sec-h">Check it yourself</h2>
+    <p class="muted">These free, independent tools test the site live. The results are theirs, not mine.</p>
+    <ul class="sec-tools">
+      <li><a class="sec-tool" href="https://developer.mozilla.org/en-US/observatory/analyze?host={{ host }}" rel="noopener" target="_blank">
+        <span class="sec-tool__name">Mozilla Observatory</span><span class="sec-tool__what">Browser security settings</span><span class="sec-tool__go mono">Run test {{ icon('external') }}</span></a></li>
+      <li><a class="sec-tool" href="https://www.ssllabs.com/ssltest/analyze.html?d={{ host }}" rel="noopener" target="_blank">
+        <span class="sec-tool__name">Qualys SSL Labs</span><span class="sec-tool__what">Encryption strength</span><span class="sec-tool__go mono">Run test {{ icon('external') }}</span></a></li>
+      <li><a class="sec-tool" href="https://securityheaders.com/?q={{ host }}&amp;followRedirects=on" rel="noopener" target="_blank">
+        <span class="sec-tool__name">Security Headers</span><span class="sec-tool__what">Protective response headers</span><span class="sec-tool__go mono">Run test {{ icon('external') }}</span></a></li>
+      <li><a class="sec-tool" href="https://internet.nl/site/{{ host }}/" rel="noopener" target="_blank">
+        <span class="sec-tool__name">Internet.nl</span><span class="sec-tool__what">Modern web standards</span><span class="sec-tool__go mono">Run test {{ icon('external') }}</span></a></li>
+    </ul>
+  </div>
+</section>
+
+<section class="section section--tight">
+  <div class="wrap wrap--narrow">
+    <h2 class="sec-h">Found a problem?</h2>
+    <p>If you believe you have found a security issue on this site, please tell me through the <a class="link" href="{{ url_for('contact') }}">contact form</a>. I will acknowledge your report, keep you updated, and credit you if you would like.</p>
+    <p>Please test responsibly: do not access other people's data, overload the site, or send automated spam through its forms.</p>
+    <p class="muted">Machine-readable details are in <a class="link" href="/.well-known/security.txt">security.txt</a>, following the RFC 9116 standard.</p>
+  </div>
+</section>
+{% endblock %}
