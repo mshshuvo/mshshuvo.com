@@ -73,6 +73,7 @@ def main() -> None:
     (DIST / "404.html").write_bytes(resp.data)
 
     shutil.copytree(ROOT / "static", DIST / "static")
+    shutil.copy(ROOT / "static" / "favicon.ico", DIST / "favicon.ico")  # browsers ask for /favicon.ico
 
     # Response headers for static assets, and the same set for Worker-generated pages
     (ROOT / "worker" / "site_headers.json").write_text(json.dumps(SECURITY_HEADERS, indent=2) + "\n")
