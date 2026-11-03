@@ -3,7 +3,7 @@ title: "8 AI-Driven Threats for 2027, and the One Control That Stops Each"
 date: 2026-11-02
 tags: [AI Security, Identity & Fraud, Security Operations]
 summary: Most threat lists stop at the threat. This one pairs each AI-driven attack with the first control I'd check, plus a yes/no question so you can score yourself.
-cover: ai-driven-threats-2027-cover
+cover: ai-driven-threats-2027-v2-cover
 cover_alt: "8 AI-driven threats for 2027. One control that stops each."
 ---
 
@@ -83,7 +83,7 @@ The gap between a vulnerability being published and attackers using it keeps shr
 - **4 to 6:** exposed in places. Start with whichever "no" would hurt most if it happened tomorrow.
 - **0 to 3:** high risk. Backups, phishing-resistant MFA and approval rules first. They cover more of this list than anything else.
 
-![All eight threats and the control that stops each](/static/img/insights/ai-driven-threats-2027-summary.webp)
+![All eight threats and the control that stops each](/static/img/insights/ai-driven-threats-2027-v2-summary.webp)
 
 ## Want a fuller picture?
 

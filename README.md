@@ -1,6 +1,6 @@
 # mshshuvo.com
 
-Personal site of Md Sabbir Hossain. Python (Flask + Jinja) builds a fully static site that runs on a
+Personal site of Sabbir Hossain. Python (Flask + Jinja) builds a fully static site that runs on a
 **Cloudflare Worker with static assets (Free plan)**: no server, nothing sleeps, no monthly cost.
 A tiny Worker handles the contact form (Turnstile + Email Routing).
 

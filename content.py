@@ -5,7 +5,7 @@ and his LinkedIn profile (experience, media, publications, recommendations), Oct
 """
 
 SITE = {
-    "name": "Md Sabbir Hossain",
+    "name": "Sabbir Hossain",
     "title": "Cybersecurity Leader · GRC & AI Governance",
     "tagline": "Strategy, governance and resilience for regulated organisations, proven at national scale.",
     "intro": ("Cybersecurity, GRC and AI governance leader for regulated organisations, with 15+ years across "

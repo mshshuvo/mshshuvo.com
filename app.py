@@ -1,4 +1,4 @@
-"""mshshuvo.com — personal site for Md Sabbir Hossain (Ethan).
+"""mshshuvo.com — personal site for Sabbir Hossain (Ethan).
 
 Flask is used to *build* the site: `python build.py` renders every page to
 static HTML in dist/, which Cloudflare Pages serves. `python app.py` runs a
@@ -82,7 +82,7 @@ def ldjson(data) -> Markup:
 def person_ld() -> dict:
     return {
         "@type": "Person", "@id": f"{SITE_URL}/#person", "name": SITE["name"],
-        "alternateName": ["Sabbir Hossain", "mshshuvo"],
+        "alternateName": ["Sabbir", "Md Sabbir Hossain", "mshshuvo"],
         "jobTitle": "Cybersecurity Leader, GRC & AI Governance", "url": f"{SITE_URL}/",
         "address": {"@type": "PostalAddress", "addressLocality": "Ottawa", "addressRegion": "ON", "addressCountry": "CA"},
         "sameAs": [SITE["linkedin"], SITE["github"], "https://medium.com/@mshshuvo"],
