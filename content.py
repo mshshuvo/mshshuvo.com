@@ -23,13 +23,13 @@ SITE = {
                 "Digital forensics", "AI governance", "Financial crime"],
     "profile": [
         ("Based in", "Ottawa, Canada"),
-        ("Delivered", "$10M+ national cyber programmes"),
+        ("Delivered", "8 national cyber programmes"),
         ("Sectors", "Finance · Critical infra · Government"),
         ("Advisory", "World Bank cybersecurity roster"),
     ],
     "stats": [
         ("15+", "years in cybersecurity"),
-        ("$10M+", "national programmes delivered"),
+        ("8", "national cyber programmes delivered"),
         ("23", "critical infrastructures audited"),
         ("~95%", "drop in nationwide attacks"),
     ],
@@ -309,7 +309,7 @@ EXPERIENCE = [
      "tags": ["CIRT", "Audit", "Policy"]},
     {"period": "Jan 2016 – Sep 2019", "role": "Managing Director · Information Security Consultant", "org": "NRD Bangladesh Ltd. / Norway Registers Development AS",
      "summary": "Directed national-scale cybersecurity programmes for the Government of Bangladesh.",
-     "points": ["Led 8 national cybersecurity projects worth $10M+, including cyber sensors at 17 critical infrastructure sites.",
+     "points": ["Led 8 national cybersecurity projects, including cyber sensors at 17 critical infrastructure sites.",
                 "Delivered the national CIRT, its lab and the digital forensics lab.",
                 "Led the national cybersecurity strategy with Oxford's GCSCC; project-managed VAPT of Bangladesh Bank's BACH-II.",
                 "Ran the subsidiary's P&L, client acquisition and contract negotiation."],
@@ -382,7 +382,7 @@ SKILLS = [
      "proof": [("Fraud Prevention Specialist (verify)", "cert:Certified Online Fraud Prevention Specialist (COFPS)"), ("Article: KYC needs an upgrade", "/insights/japan-just-showed-us-why-kyc-needs-an-upgrade")]},
     {"name": "Leadership, programmes & training", "group": "lead", "short": ['Leadership', '& training'], "icon": "users", "since": 2010,
      "plain": "Leading teams, budgets and delivery, and training people to run what gets built.",
-     "keywords": ["Programme management", "$10M+ budgets", "Stakeholder management", "Training & teaching"],
+     "keywords": ["Programme management", "Multi-million budgets", "Stakeholder management", "Training & teaching"],
      "proof": [("What colleagues say", "/recommendations"), ("National training programmes", "/projects/training")]},
 ]
 
@@ -410,7 +410,7 @@ SKILL_QA = [
      "Works in AML/KYC and fraud prevention at a Canadian lender since December 2024.",
      [("Fraud Prevention Specialist", "cert:Certified Online Fraud Prevention Specialist (COFPS)"), ("The role", "/experience#career")]),
     ("Can he manage large programmes and budgets?",
-     "Delivered 8 national projects worth over $10M as Managing Director. Led an 8-person technical team.",
+     "Delivered 8 national cybersecurity projects as Managing Director. Led an 8-person technical team.",
      [("Google Project Management", "cert:Google Project Management"), ("All projects", "/projects")]),
     ("Can he train our staff?",
      "Taught a graduate security course at uOttawa and ran national training programmes.",
