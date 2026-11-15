@@ -9,6 +9,7 @@ document.addEventListener("DOMContentLoaded", () => {
   initContactForm();
   initCopyButtons();
   initSkillMap();
+  countVisit();
 });
 
 // ---------------------------------------------------------------- mobile menu
@@ -229,4 +230,22 @@ function initSkillMap() {
   nodes.forEach((n) => n.addEventListener("click", (e) => { e.preventDefault(); show(n.dataset.skill, true); }));
   const fromHash = location.hash.slice(1);
   if (fromHash && panels.some((p) => p.id === fromHash)) show(fromHash, false);
+}
+
+/* Anonymous visit counter: one page view per load, plus whether it starts a browser session.
+   Sends only the page path and the referring site's hostname. No cookies or identifiers;
+   respects Global Privacy Control and Do Not Track, and skips automated browsers. */
+function countVisit() {
+  try {
+    if (navigator.webdriver || navigator.globalPrivacyControl || navigator.doNotTrack === "1") return;
+    if (!/^https:\/\/(www\.)?mshshuvo\.com$/.test(location.origin)) return;
+    let ref = "";
+    try { const r = new URL(document.referrer); if (r.hostname !== location.hostname) ref = r.hostname; } catch (e) { /* no referrer */ }
+    let session = 0;
+    try {
+      if (!sessionStorage.getItem("mshshuvo:visit")) { sessionStorage.setItem("mshshuvo:visit", "1"); session = 1; }
+    } catch (e) { /* storage blocked */ }
+    fetch("/api/visit", { method: "POST", keepalive: true, headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ p: location.pathname, r: ref, s: session }) }).catch(() => {});
+  } catch (e) { /* never break the page */ }
 }

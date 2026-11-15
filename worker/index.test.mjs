@@ -214,3 +214,57 @@ test("digest text never contains HTML or more than counts", () => {
   assert.match(text, /Countries: CA/);
   assert.doesNotMatch(text, /</);
 });
+
+// ---------------------------------------------------------------- anonymous visit counter
+import { parseVisit, buildVisitDigest } from "./index.js";
+
+function vreq(body, { origin = ORIGIN, ua = "Mozilla/5.0 (Windows NT 10.0) Chrome/130", country = "CA" } = {}) {
+  const r = new Request("https://mshshuvo.com/api/visit", {
+    method: "POST", headers: { Origin: origin, "Content-Type": "application/json", "User-Agent": ua },
+    body: typeof body === "string" ? body : JSON.stringify(body),
+  });
+  Object.defineProperty(r, "cf", { value: { country } });
+  return r;
+}
+
+test("visit validation keeps only a clean path, referrer host and session flag", () => {
+  assert.deepEqual(parseVisit({ p: "/Experience/", r: "www.LinkedIn.com", s: 1 }), { path: "/experience", ref: "linkedin.com", session: 1 });
+  assert.deepEqual(parseVisit({ p: "/insights/x.html", r: "mshshuvo.com" }), { path: "/insights/x", ref: "", session: 0 });
+  assert.deepEqual(parseVisit({ p: "/", r: "<script>" }), { path: "/", ref: "", session: 0 });
+  for (const bad of [null, [], { p: "experience" }, { p: "/a?b=c" }, { p: "/" + "a".repeat(200) }, { p: "/<x>" }]) {
+    assert.equal(parseVisit(bad), null);
+  }
+});
+
+test("visit API refuses cross-origin and junk, ignores bots, and counts real views", async () => {
+  const { env, obj } = statsEnv();
+  assert.equal((await worker.fetch(vreq({ p: "/" }, { origin: "https://evil.example" }), env)).status, 403);
+  assert.equal((await worker.fetch(vreq("{bad"), env)).status, 400);
+  assert.equal((await worker.fetch(vreq({ p: "/", pad: "x".repeat(600) }), env)).status, 413);
+  assert.equal((await worker.fetch(vreq({ p: "/" }, { ua: "Googlebot/2.1" }), env)).status, 204);
+  assert.equal((await worker.fetch(vreq({ p: "/", r: "linkedin.com", s: 1 }), env)).status, 204);
+  await worker.fetch(vreq({ p: "/experience" }), env);
+  await worker.fetch(vreq({ p: "/", s: 1 }, { country: "BD" }), env);
+  const rows = obj.sql.exec("SELECT country, path, ref, views, sessions FROM visits ORDER BY country, path").toArray();
+  assert.deepEqual(rows.map((r) => [r.country, r.path, r.ref, r.views, r.sessions]),
+    [["BD", "/", "", 1, 1], ["CA", "/", "linkedin.com", 1, 1], ["CA", "/experience", "", 1, 0]]);
+});
+
+test("daily email includes visitors, even with no readiness checks, and reports each hour once", async () => {
+  const { env, sent, obj } = statsEnv();
+  const hourAgo = Math.floor(Date.now() / 3600000) * 3600000 - 3600000;
+  obj.sql.exec("INSERT INTO visits VALUES (?, 'CA', '/', 'linkedin.com', 5, 3)", hourAgo);
+  obj.sql.exec("INSERT INTO visits VALUES (?, 'BD', '/experience', '', 2, 1)", hourAgo);
+  assert.equal(await runDigest(env), true);
+  assert.match(sent[0].subject, /^\[mshshuvo\.com\] 7 page views$/);
+  assert.match(sent[0].text, /7 page views in 4 visits/);
+  assert.match(sent[0].text, /Countries: CA 5, BD 2/);
+  assert.match(sent[0].text, /Came from: linkedin\.com 5/);
+  assert.equal(await runDigest(env), false, "same hours are not reported twice");
+});
+
+test("visitor digest is plain text", () => {
+  const t = buildVisitDigest([{ country: "CA", path: "/", ref: "", views: 1, sessions: 1 }], [], 0, 3600000);
+  assert.match(t, /1 page view in 1 visit/);
+  assert.doesNotMatch(t, /</);
+});
