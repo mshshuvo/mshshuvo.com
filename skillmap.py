@@ -6,7 +6,7 @@ positions are SVG attributes, never style="" attributes.
 import math
 from datetime import date
 
-from content import CAREER_ERAS, CERT_VERIFY, CRED_TILES, SKILL_GROUPS, SKILL_QA, SKILLS
+from content import MAX_YEARS_SHOWN, CAREER_ERAS, CERT_VERIFY, CRED_TILES, SKILL_GROUPS, SKILL_QA, SKILLS
 
 # skill wheel
 CX, CY, ORBIT, HUB_R, SECTOR_IN, SECTOR_OUT = 380, 340, 222, 70, 96, 300
@@ -53,7 +53,7 @@ def build(year: int | None = None) -> dict:
     nodes = []
     for k, s in enumerate(skills):
         x, y = _pt(ORBIT, -130 + k * 40)
-        years = year - s["since"]
+        years = min(year - s["since"], MAX_YEARS_SHOWN)
         r = 18 + years * 1.9
         nodes.append({
             "id": f"skill-{k}", "name": s["name"], "group": s["group"], "group_label": labels[s["group"]][0],

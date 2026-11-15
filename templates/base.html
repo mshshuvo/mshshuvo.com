@@ -3,19 +3,24 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>{% block title %}{{ site.name }} · {{ site.title }}{% endblock %}</title>
+  {% set page_title %}{% block title %}{{ site.name }} · {{ site.title }}{% endblock %}{% endset %}
+  {% set page_title = page_title|seo_title %}
+  <title>{{ page_title }}</title>
   {% set page_desc %}{% block description %}{{ site.tagline }}{% endblock %}{% endset %}
   {% set page_url = "https://mshshuvo.com" ~ (request.path if request.path != "/" else "") %}
   <meta name="description" content="{{ page_desc|trim }}">
   {% if request.endpoint %}<link rel="canonical" href="{{ page_url }}">{% endif %}
   <meta property="og:site_name" content="{{ site.name }}">
-  <meta property="og:title" content="{{ self.title()|trim }}">
+  <meta property="og:title" content="{{ page_title }}">
   <meta property="og:description" content="{{ page_desc|trim }}">
   <meta property="og:url" content="{{ page_url }}">
   <meta property="og:type" content="{% block og_type %}website{% endblock %}">
   {% set og_image %}{% block og_image %}{% endblock %}{% endset %}
-  {% if og_image|trim %}<meta property="og:image" content="{{ og_image|trim }}">
-  <meta name="twitter:card" content="summary_large_image">{% else %}<meta name="twitter:card" content="summary">{% endif %}
+  <meta property="og:image" content="{{ og_image|trim or 'https://mshshuvo.com' ~ asset('img/brand/og-default.jpg') }}">
+  {% if not og_image|trim %}<meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="{{ site.name }}: cybersecurity, GRC and AI governance leader, Ottawa">{% endif %}
+  <meta name="twitter:card" content="summary_large_image">
   <link rel="alternate" type="application/rss+xml" title="Insights · {{ site.name }}" href="/insights/feed.xml">
   <link rel="preload" href="{{ url_for('static', filename='fonts/inter-latin-400-normal.woff2') }}" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="{{ url_for('static', filename='fonts/manrope-latin-800-normal.woff2') }}" as="font" type="font/woff2" crossorigin>
@@ -44,6 +49,7 @@
         <a href="{{ url_for('insights') }}" {% if ep in ('insights', 'insight_detail') %}aria-current="page"{% endif %}>Insights</a>
         <a href="{{ url_for('toolkit') }}" {% if ep in ('toolkit', 'toolkit_tool') %}aria-current="page"{% endif %}>Toolkit</a>
         <a href="{{ url_for('publications') }}" {% if ep == 'publications' %}aria-current="page"{% endif %}>Publications</a>
+        <a href="{{ url_for('recommendations') }}" {% if ep == 'recommendations' %}aria-current="page"{% endif %}>Recommendations</a>
         <a href="{{ url_for('services') }}" {% if ep in ('services', 'assessment') %}aria-current="page"{% endif %}>Services</a>
         <a class="btn btn--small" href="{{ url_for('contact') }}">Get in touch</a>
       </nav>

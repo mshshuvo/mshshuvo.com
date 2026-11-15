@@ -337,6 +337,9 @@ CERTIFICATIONS = [
 # ---------------------------------------------------------------- skills at a glance
 # Written for non-specialist readers (HR, hiring managers). "since" is the first year of hands-on work in
 # that area, taken from EXPERIENCE and PROJECTS; it is shown as a duration, never as a proficiency score.
+# Years shown per skill never exceed the headline figure ("15+ years"), so the two always agree.
+MAX_YEARS_SHOWN = 15
+
 ROLES_FIT = [
     "CISO / Head of Information Security",
     "Director, Cybersecurity & GRC",

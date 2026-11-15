@@ -16,7 +16,7 @@ from pathlib import Path
 from flask import Flask, Response, abort, render_template
 from markupsafe import Markup
 
-from content import (ARTICLES, CERT_VERIFY, SKILLS, ROLES_FIT, FRAMEWORKS, CERTIFICATIONS, EARLY_WRITING, EDUCATION, EXPERIENCE, POLICIES, PRESS,
+from content import (MAX_YEARS_SHOWN, ARTICLES, CERT_VERIFY, SKILLS, ROLES_FIT, FRAMEWORKS, CERTIFICATIONS, EARLY_WRITING, EDUCATION, EXPERIENCE, POLICIES, PRESS,
                      PROJECT_TAGS, PROJECTS, RECOMMENDATIONS, SERVICE, SERVICES, SITE)
 from assessments import ASSESSMENTS, BANDS
 from assessments import BY_SLUG as ASSESSMENTS_BY_SLUG
@@ -70,6 +70,18 @@ def asset(filename: str) -> str:
     return f"/static/{filename}?v={digest}"
 
 
+@app.template_filter("seo_title")
+def seo_title(title) -> Markup:
+    """Keep titles within what Google shows (about 60 characters): drop the name suffix when it does not fit.
+    The captured title block is already HTML-escaped, so it is returned as Markup and never escaped twice."""
+    import html as _html
+    title = " ".join(str(title).split())
+    suffix = f" · {SITE['name']}"
+    if len(_html.unescape(title)) > 60 and title.endswith(suffix):
+        title = title[: -len(suffix)]
+    return Markup(title)
+
+
 @app.template_filter("ldjson")
 def ldjson(data) -> Markup:
     """Serialise schema.org data for a <script type="application/ld+json"> block.
@@ -84,7 +96,8 @@ def person_ld() -> dict:
     return {
         "@type": "Person", "@id": f"{SITE_URL}/#person", "name": SITE["name"],
         "alternateName": ["Sabbir", "Md Sabbir Hossain", "mshshuvo"],
-        "jobTitle": "Cybersecurity Leader, GRC & AI Governance", "url": f"{SITE_URL}/",
+        "jobTitle": "Cybersecurity Leader, GRC & AI Governance",
+        "seeks": {"@type": "Demand", "name": "Senior cybersecurity, GRC, IT risk and AI governance roles in Canada"}, "url": f"{SITE_URL}/",
         "address": {"@type": "PostalAddress", "addressLocality": "Ottawa", "addressRegion": "ON", "addressCountry": "CA"},
         "sameAs": [SITE["linkedin"], SITE["github"], "https://medium.com/@mshshuvo"],
         "alumniOf": {"@type": "CollegeOrUniversity", "name": "University of Ottawa"},
@@ -125,7 +138,7 @@ def breadcrumb_ld(*crumbs) -> dict:
 
 @app.context_processor
 def inject_site():
-    return {"site": SITE, "year": datetime.now().year, "turnstile_origin": TURNSTILE_ORIGIN, "asset": asset,
+    return {"site": SITE, "year": datetime.now().year, "max_years": MAX_YEARS_SHOWN, "turnstile_origin": TURNSTILE_ORIGIN, "asset": asset,
             "site_url": SITE_URL, "person_ld": person_ld, "breadcrumb_ld": breadcrumb_ld,
             "service_ld": service_ld, "verify": CERT_VERIFY}
 

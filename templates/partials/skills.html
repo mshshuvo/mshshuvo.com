@@ -108,7 +108,7 @@
     </div>
     <ul class="skill-mini">
       {% for s in skills %}
-      <li><span class="skill__icon">{{ icon(s.icon) }}</span><span class="skill-mini__name">{{ s.name }}</span><span class="mono skill-mini__yrs">{{ year - s.since }}+ yrs</span></li>
+      <li><span class="skill__icon">{{ icon(s.icon) }}</span><span class="skill-mini__name">{{ s.name }}</span><span class="mono skill-mini__yrs">{{ [year - s.since, max_years]|min }}+ yrs</span></li>
       {% endfor %}
     </ul>
   </div>
