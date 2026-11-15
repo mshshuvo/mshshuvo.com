@@ -620,3 +620,15 @@ details[open] .tl__more::after { content: "hide −"; }
 .sec-tool__go { margin-top: auto; padding-top: 8px; color: var(--color-primary); font-size: .8rem; display: inline-flex; gap: 6px; align-items: center; }
 .sec-tool__go .icon { width: 14px; height: 14px; }
 @media (max-width: 640px) { .sec-grid, .sec-tools { grid-template-columns: minmax(0, 1fr); } }
+
+/* Seven menu links: keep the name and button on one line, tighten spacing on mid-width screens */
+.brand__name, .nav__links a.btn { white-space: nowrap; }
+@media (max-width: 1180px) and (min-width: 901px) {
+  .nav__links { gap: var(--s2); }
+  .nav__links a { font-size: .875rem; }
+}
+@media (max-width: 1000px) and (min-width: 901px) {
+  .nav__links { gap: 12px; }
+  .nav__links a { font-size: .8125rem; }
+  .brand__name { display: none; }
+}

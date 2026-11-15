@@ -83,7 +83,7 @@ def main() -> None:
     lines = ["/*"] + [f"  {k}: {v}" for k, v in SECURITY_HEADERS.items()]
     lines += ["", "/static/*", "  Cache-Control: public, max-age=604800", ""]
     # Toolkit downloads are self-contained files with inline code, so they are only ever saved, never shown.
-    lines += ["/downloads/*", "  Content-Disposition: attachment", ""]
+    lines += ["/downloads/*", "  Content-Disposition: attachment", "  X-Robots-Tag: noindex", ""]
     (DIST / "_headers").write_text("\n".join(lines))
 
     downloads = DIST / "downloads"
