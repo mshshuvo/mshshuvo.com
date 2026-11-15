@@ -50,6 +50,19 @@ Reuse existing tags where possible so the topic filter stays short. Images hoste
 and raw HTML such as scripts or iframes are stripped on purpose: every post is sanitised against an
 allowlist, and the site only loads images from itself.
 
+## Toolkit (free interactive tools)
+
+`/toolkit` lists tools that run entirely in the visitor's browser. Each tool is three static files, so
+the Content Security Policy needs no exceptions:
+
+- `templates/toolkit/<slug>.html`: plain HTML markup (no template logic, no inline styles or scripts)
+- `static/toolkit/<slug>.js`: behaviour; sizes are set through `data-w` / `data-h`, not style attributes
+- `static/toolkit/toolkit.css` and `tk-common.js`: shared styles and helpers
+
+To add a tool, create those files and add an entry to `TOOLS` in `toolkit.py`. The build also writes a
+self-contained copy of each tool to `/downloads/<slug>.html` (served as a download only), carrying the
+author credit and making no network requests. `tests/test_toolkit.py` enforces all of this.
+
 ## Run locally
 
 ```bash

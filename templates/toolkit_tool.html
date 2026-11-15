@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% from "_icons.html" import icon %}
+{% block title %}{{ tool.seo_title }} · {{ site.name }}{% endblock %}
+{% block description %}{{ tool.meta }}{% endblock %}
+{% block head %}<link rel="stylesheet" href="{{ asset('toolkit/toolkit.css') }}">
+  <script src="{{ asset('toolkit/tk-common.js') }}" defer></script>
+  <script src="{{ asset('toolkit/' ~ tool.slug ~ '.js') }}" defer></script>{% endblock %}
+{% block structured_data %}<script type="application/ld+json">{{ {"@context": "https://schema.org", "@graph": [
+  breadcrumb_ld(("Toolkit", "/toolkit"), (tool.name, "/toolkit/" ~ tool.slug)),
+  {"@type": "WebApplication", "name": tool.name, "url": site_url ~ "/toolkit/" ~ tool.slug, "description": tool.meta,
+   "applicationCategory": "BusinessApplication", "operatingSystem": "Any (web browser)", "isAccessibleForFree": true,
+   "offers": {"@type": "Offer", "price": "0", "priceCurrency": "CAD"}, "author": {"@id": site_url ~ "/#person"}}]}|ldjson }}</script>{% endblock %}
+{% block content %}
+<section class="page-head">
+  <div class="wrap">
+    <p class="eyebrow mono"><a class="crumb" href="{{ url_for('toolkit') }}">Toolkit</a> / {{ tool.name }}</p>
+    <h1>{{ tool.title }}</h1>
+    <p class="lead">{{ tool.lead }}</p>
+  </div>
+</section>
+<section class="section section--tight">
+  <div class="wrap">
+    {% include "toolkit/" ~ tool.slug ~ ".html" %}
+  </div>
+</section>
+<section class="section section--tight tk-noprint">
+  <div class="wrap callout">
+    <div>
+      <h2>Take it with you</h2>
+      <p>Download the whole tool as one file. It opens in any browser and works offline. {{ tool.privacy }}</p>
+    </div>
+    <a class="btn" href="/downloads/{{ tool.slug }}.html" download="{{ tool.slug }}.html">Download the tool</a>
+  </div>
+  <div class="wrap">
+    <ul class="chips chips--small">{% for f in tool.facts %}<li>{{ f }}</li>{% endfor %}</ul>
+    <p class="fineprint">Built by {{ site.name }}. {{ licence }} Need help putting it to work?
+      <a href="{{ url_for('contact') }}">Get in touch</a>{% if others %} or try another tool:
+      {% for o in others %}<a href="{{ url_for('toolkit_tool', slug=o.slug) }}">{{ o.name }}</a>{{ ", " if not loop.last else "." }}{% endfor %}{% else %}.{% endif %}</p>
+  </div>
+</section>
+{% endblock %}
