@@ -1,0 +1,104 @@
+<div class="tk" id="tk-sampling">
+  <ol class="tk-steps tk-noprint"><li>How many to test</li><li>Which items</li><li>What the results mean</li></ol>
+  <noscript><p class="tk-card">This tool needs JavaScript. It runs entirely in your browser and sends nothing anywhere.</p></noscript>
+
+  <div class="tk-card">
+    <div class="tk-card__head">
+      <div><h2>1. How many items to test</h2><p class="tk-sub">Pick the assurance you need. The sample size follows from it.</p></div>
+      <div class="tk-seg" role="group" aria-label="Sizing method">
+        <button type="button" id="as-m-stat" aria-pressed="true">Statistical</button>
+        <button type="button" id="as-m-freq" aria-pressed="false">By control frequency</button>
+      </div>
+    </div>
+    <div class="tk-grid2 tk-grid2--top">
+      <div>
+        <div class="tk-form" id="as-stat">
+          <label class="tk-half">Confidence
+            <select id="as-conf"><option value="0.9">90%</option><option value="0.95" selected>95%</option><option value="0.99">99%</option></select></label>
+          <label class="tk-half">Population size (optional)<input id="as-pop" type="number" min="1" max="1000000" placeholder="Leave empty if large"></label>
+          <label class="tk-half">Tolerable exception rate %<input id="as-tol" type="number" min="0.1" max="50" step="0.1" value="10"></label>
+          <label class="tk-half">Expected exception rate %<input id="as-exp" type="number" min="0" max="49" step="0.1" value="1"></label>
+        </div>
+        <div class="tk-form" id="as-freq" hidden>
+          <label class="tk-half">How often the control runs
+            <select id="as-frequency"><option value="annual">Annual</option><option value="semi-annual">Semi-annual</option><option value="quarterly">Quarterly</option>
+              <option value="monthly" selected>Monthly</option><option value="weekly">Weekly</option><option value="daily">Daily</option><option value="multiple-daily">Many times a day</option></select></label>
+          <label class="tk-half">Risk of failure
+            <select id="as-risk"><option value="lower">Lower</option><option value="moderate" selected>Moderate</option><option value="higher">Higher</option></select></label>
+          <label class="tk-half">Occurrences in the period (optional)<input id="as-fpop" type="number" min="1" max="1000000" placeholder="Typical if empty"></label>
+        </div>
+        <p class="tk-msg" id="as-size-note"></p>
+      </div>
+      <div>
+        <p class="tk-big tk-num" id="as-n">0</p>
+        <p id="as-n-text"></p>
+        <div class="tk-tags" id="as-n-tags"></div>
+        <div class="tk-bars tk-bars--wide" id="as-compare"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="tk-card">
+    <div class="tk-card__head">
+      <div><h2>2. Which items to test</h2><p class="tk-sub">The selection is random but repeatable: the same seed and population always give the same items.</p></div>
+      <div class="tk-actions tk-noprint">
+        <label class="tk-btn tk-btn--ghost" for="as-file">Load a CSV file</label>
+        <input class="tk-file" type="file" id="as-file" accept=".csv,.txt,text/csv,text/plain">
+        <button type="button" class="tk-btn tk-btn--ghost" id="as-paste-open">Paste a list</button>
+        <button type="button" class="tk-btn tk-btn--ghost" id="as-sample">Use sample data</button>
+      </div>
+    </div>
+    <div id="as-paste" hidden>
+      <div class="tk-form">
+        <label class="tk-wide">Item IDs, one per line, or CSV text with a header row<textarea id="as-paste-text" rows="5" spellcheck="false"></textarea></label>
+        <div class="tk-actions tk-wide"><button type="button" class="tk-btn" id="as-paste-use">Use this list</button>
+          <button type="button" class="tk-btn tk-btn--ghost" id="as-paste-cancel">Cancel</button></div>
+      </div>
+    </div>
+    <div class="tk-form">
+      <label>ID column<select id="as-idcol"></select></label>
+      <label>Spread across groups (optional)<select id="as-groupcol"></select></label>
+      <label>Date column (optional)<select id="as-datecol"></select></label>
+      <label>Seed<input id="as-seed" maxlength="64" spellcheck="false"></label>
+      <label>Period from<input id="as-from" type="date"></label>
+      <label>Period to<input id="as-to" type="date"></label>
+      <div class="tk-actions tk-half tk-noprint"><button type="button" class="tk-btn tk-btn--ghost" id="as-newseed">New random seed</button></div>
+    </div>
+    <p class="tk-msg" id="as-pop-msg" aria-live="polite"></p>
+    <div class="tk-tags" id="as-pop-tags"></div>
+    <div class="tk-grid2 tk-grid2--top">
+      <div>
+        <h3 class="tk-sub">Population checks</h3>
+        <div class="tk-stack" id="as-issues"></div>
+        <h3 class="tk-sub" id="as-alloc-h">Sample by group</h3>
+        <div class="tk-bars" id="as-alloc"></div>
+      </div>
+      <div>
+        <h3 class="tk-sub" id="as-sel-h">Selected items</h3>
+        <div class="tk-scroll"><table class="tk-table tk-table--tight"><thead><tr><th>#</th><th>Item</th><th>Group</th></tr></thead><tbody id="as-selected"></tbody></table></div>
+      </div>
+    </div>
+    <div class="tk-actions tk-noprint">
+      <button type="button" class="tk-btn" id="as-dl-tracker">Download sample tracker (CSV)</button>
+      <button type="button" class="tk-btn tk-btn--ghost" id="as-dl-record">Download draw record (JSON)</button>
+      <button type="button" class="tk-btn tk-btn--ghost" id="as-copy">Copy item list</button>
+      <span class="tk-msg" id="as-dl-msg" aria-live="polite"></span>
+    </div>
+  </div>
+
+  <div class="tk-card tk-verdict" id="as-verdict">
+    <div class="tk-card__head"><div><h2>3. What the results mean</h2><p class="tk-sub">Enter where testing stands. The conclusion updates as you go.</p></div></div>
+    <div class="tk-grid2 tk-grid2--top">
+      <div class="tk-form">
+        <label class="tk-half">Items tested so far<input id="as-tested" type="number" min="0"></label>
+        <label class="tk-half">Exceptions found<input id="as-exc" type="number" min="0"></label>
+      </div>
+      <div>
+        <p class="tk-kpi__val" id="as-conclusion"></p>
+        <p id="as-why"></p>
+        <div class="tk-bars tk-bars--wide" id="as-meter"></div>
+      </div>
+    </div>
+  </div>
+  <div class="tk-actions tk-noprint"><button type="button" class="tk-btn tk-btn--ghost" id="as-print">Print or save as PDF</button></div>
+</div>

@@ -224,7 +224,7 @@ def toolkit():
 @app.get("/toolkit/<slug>")
 def toolkit_tool(slug):
     tool = tk.BY_SLUG.get(slug) or abort(404)
-    return render_template("toolkit_tool.html", tool=tool, licence=tk.LICENCE,
+    return render_template("toolkit_tool.html", tool=tool, licence=tk.LICENCE, scripts=tk.script_files(tool),
                            others=[t for t in tk.TOOLS if t is not tool])
 
 

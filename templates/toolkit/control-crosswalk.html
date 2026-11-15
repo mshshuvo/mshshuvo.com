@@ -1,0 +1,86 @@
+<div class="tk" id="tk-crosswalk">
+  <div class="tk-row">
+    <p class="tk-meta" id="cw-meta"></p>
+    <nav class="tk-tabs tk-noprint" aria-label="Views">
+      <a href="#coverage" id="tab-coverage">Coverage</a>
+      <a href="#controls" id="tab-controls">Controls</a>
+      <a href="#translate" id="tab-translate">Translate</a>
+      <a href="#what-if" id="tab-what-if">What if</a>
+    </nav>
+  </div>
+  <noscript><p class="tk-card">This tool needs JavaScript. It runs entirely in your browser and sends nothing anywhere.</p></noscript>
+  <div class="tk-card tk-headline"><p id="cw-headline"></p><p class="tk-foot" id="cw-headfoot"></p></div>
+  <div class="tk-card tk-verdict tk-verdict--wait" id="cw-whatif-banner" hidden>
+    <div class="tk-row"><p id="cw-whatif-text"></p><button type="button" class="tk-btn tk-btn--ghost" id="cw-reset">Undo all changes</button></div>
+  </div>
+
+  <section class="tk-view" id="view-coverage">
+    <div class="tk-kpis" id="cw-tiles"></div>
+    <div class="tk-legend">
+      <span><i class="tk-b-low tk-t-solid"></i>Satisfied</span><span><i class="tk-b-med tk-t-solid"></i>Satisfied with exceptions</span>
+      <span><i class="tk-b-high tk-t-solid"></i>Partly covered</span><span><i class="tk-b-crit tk-t-solid"></i>Deficient</span>
+      <span><i class="tk-st-proof"></i>No current proof</span><span><i class="tk-st-unmapped"></i>No control mapped</span>
+    </div>
+    <div class="tk-card">
+      <div class="tk-card__head">
+        <div><h2 id="cw-req-title">Requirements</h2><p class="tk-sub">Select a requirement to see which controls and evidence stand behind it.</p></div>
+        <div class="tk-tools tk-noprint">
+          <select id="cw-fw" aria-label="Framework"></select>
+          <select id="cw-status" aria-label="Status">
+            <option value="gaps">Gaps only</option><option value="all">Every status</option><option value="Satisfied">Satisfied</option>
+            <option value="Satisfied with exceptions">Satisfied with exceptions</option><option value="Partial">Partly covered</option>
+            <option value="Deficient">Deficient</option><option value="proof">No current proof</option><option value="Unmapped">No control mapped</option>
+          </select>
+          <input class="tk-input" type="search" id="cw-q" placeholder="Search id or title" aria-label="Search requirements">
+        </div>
+      </div>
+      <div class="tk-tablewrap"><table class="tk-table">
+        <thead><tr><th>Requirement</th><th>Status</th><th>Controls behind it</th><th>Why</th></tr></thead>
+        <tbody id="cw-reqs"></tbody>
+      </table></div>
+      <p class="tk-msg" id="cw-req-more"></p>
+      <div class="tk-actions tk-noprint">
+        <button type="button" class="tk-btn tk-btn--ghost" id="cw-dl-status">Download this list (CSV)</button>
+        <button type="button" class="tk-btn tk-btn--ghost" id="cw-dl-map">Download the full crosswalk (CSV)</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="tk-view" id="view-controls" hidden>
+    <div class="tk-card">
+      <div class="tk-card__head">
+        <div><h2>Test once, satisfy many</h2><p class="tk-sub">Pick a control to see every requirement its evidence supports.</p></div>
+        <select id="cw-control" aria-label="Control"></select>
+      </div>
+      <div class="tk-stack" id="cw-control-body"></div>
+    </div>
+    <div class="tk-card">
+      <div class="tk-card__head"><div><h2>Controls that carry the most</h2><p class="tk-sub">Requirements supported by each control, across all four frameworks.</p></div></div>
+      <div class="tk-bars" id="cw-control-rank"></div>
+    </div>
+  </section>
+
+  <section class="tk-view" id="view-translate" hidden>
+    <div class="tk-card">
+      <div class="tk-card__head">
+        <div><h2>Say it in another framework</h2><p class="tk-sub">Pick a requirement to see its counterparts, linked through the controls that meet it.</p></div>
+        <div class="tk-tools">
+          <select id="cw-t-fw" aria-label="Framework"></select>
+          <select id="cw-t-req" aria-label="Requirement"></select>
+        </div>
+      </div>
+      <div class="tk-stack" id="cw-translate-body"></div>
+    </div>
+  </section>
+
+  <section class="tk-view" id="view-what-if" hidden>
+    <div class="tk-card">
+      <div class="tk-card__head"><div><h2>What if a test fails?</h2><p class="tk-sub">Change the result of any evidence item and watch what it breaks across the frameworks.</p></div></div>
+      <div class="tk-stack" id="cw-impact"></div>
+      <div class="tk-tablewrap"><table class="tk-table">
+        <thead><tr><th>Evidence</th><th>Controls</th><th>Result</th><th>Requirements it supports</th></tr></thead>
+        <tbody id="cw-evidence"></tbody>
+      </table></div>
+    </div>
+  </section>
+</div>

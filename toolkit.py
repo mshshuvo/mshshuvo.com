@@ -2,7 +2,7 @@
 
 Each tool is three static pieces, so the site's strict Content Security Policy needs no exceptions:
     templates/toolkit/<slug>.html   plain HTML markup (no template logic)
-    static/toolkit/<slug>.js        the tool's behaviour
+    static/toolkit/<slug>.js        the tool's behaviour (plus optional data scripts listed under "scripts")
     static/toolkit/toolkit.css      shared styles (tk- prefix), with static/toolkit/tk-common.js
 
 `standalone()` joins the same pieces into one self-contained HTML file that visitors can download
@@ -34,6 +34,36 @@ TOOLS = [
         "privacy": "Your register never leaves your browser. It is saved on this device only, and nothing is sent "
                    "to this site or anyone else.",
     },
+    {
+        "slug": "audit-sampling",
+        "name": "Audit Sampling Calculator",
+        "title": "How many to test, and which ones.",
+        "seo_title": "Free Audit Sampling Calculator for Control Testing",
+        "short": "Size a control-test sample with exact attribute-sampling maths, draw a selection anyone can "
+                 "re-perform, and see what your results let you conclude.",
+        "lead": "Three steps: size the sample from the assurance you need, draw the items with a repeatable seed, "
+                "then enter your results to see whether the control can be relied on.",
+        "meta": "Free audit sampling calculator: attribute sample sizes at 90, 95 or 99% confidence, re-performable "
+                "random selection with stratification, and an upper deviation limit. Runs in your browser.",
+        "facts": ["Internal audit", "ITGC and SOX testing", "Attribute sampling", "Re-performable selection"],
+        "privacy": "The population you load never leaves your browser, and nothing is sent to this site or anyone else.",
+        "scripts": ["audit-sampling-data.js"],
+    },
+    {
+        "slug": "control-crosswalk",
+        "name": "Control Crosswalk Explorer",
+        "title": "Test once, satisfy many.",
+        "seo_title": "Free Control Crosswalk: ISO 27001, SOC 2, NIST CSF 2.0 and CIS Controls",
+        "short": "See what one control proves across ISO 27001, SOC 2, NIST CSF 2.0 and CIS Controls, translate a "
+                 "requirement between frameworks, and test what breaks when evidence fails.",
+        "lead": "A worked crosswalk for a fictional payments company: 41 common controls mapped to four frameworks. "
+                "Explore coverage, translate requirements, and see the blast radius of a failed test.",
+        "meta": "Free interactive control crosswalk across ISO/IEC 27001:2022, SOC 2, NIST CSF 2.0 and CIS Controls "
+                "v8.1. See coverage, map requirements between frameworks and test what-if failures.",
+        "facts": ["ISO/IEC 27001:2022", "SOC 2", "NIST CSF 2.0", "CIS Controls v8.1"],
+        "privacy": "It uses built-in sample data and sends nothing to this site or anyone else.",
+        "scripts": ["control-crosswalk-data.js"],
+    },
 ]
 BY_SLUG = {t["slug"]: t for t in TOOLS}
 
@@ -62,6 +92,11 @@ def _tokens() -> str:
     return block.group(0)
 
 
+def script_files(tool: dict) -> list[str]:
+    """Scripts a tool needs, in load order: shared helpers, any data files, then the tool itself."""
+    return ["tk-common.js", *tool.get("scripts", []), f"{tool['slug']}.js"]
+
+
 def fragment(slug: str) -> str:
     return (ROOT / "templates" / "toolkit" / f"{slug}.html").read_text(encoding="utf-8")
 
@@ -80,7 +115,7 @@ def standalone(slug: str) -> str:
     tool = BY_SLUG[slug]
     static = ROOT / "static" / "toolkit"
     css = _tokens() + _BASE_CSS + (static / "toolkit.css").read_text(encoding="utf-8")
-    scripts = [(static / "tk-common.js").read_text(encoding="utf-8"), (static / f"{slug}.js").read_text(encoding="utf-8")]
+    scripts = [(static / name).read_text(encoding="utf-8") for name in script_files(tool)]
     for text in scripts:
         if "</script" in text.lower():
             raise ValueError(f"{slug}: script text would close its own script element")

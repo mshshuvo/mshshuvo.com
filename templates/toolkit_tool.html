@@ -3,8 +3,8 @@
 {% block title %}{{ tool.seo_title }} · {{ site.name }}{% endblock %}
 {% block description %}{{ tool.meta }}{% endblock %}
 {% block head %}<link rel="stylesheet" href="{{ asset('toolkit/toolkit.css') }}">
-  <script src="{{ asset('toolkit/tk-common.js') }}" defer></script>
-  <script src="{{ asset('toolkit/' ~ tool.slug ~ '.js') }}" defer></script>{% endblock %}
+  {% for name in scripts %}<script src="{{ asset('toolkit/' ~ name) }}" defer></script>
+  {% endfor %}{% endblock %}
 {% block structured_data %}<script type="application/ld+json">{{ {"@context": "https://schema.org", "@graph": [
   breadcrumb_ld(("Toolkit", "/toolkit"), (tool.name, "/toolkit/" ~ tool.slug)),
   {"@type": "WebApplication", "name": tool.name, "url": site_url ~ "/toolkit/" ~ tool.slug, "description": tool.meta,
