@@ -265,6 +265,70 @@ async function handleAssessment(request, env) {
   return json(200, { success: true });
 }
 
+// ---------------------------------------------------------------- anonymous visit counter
+// The page script reports one page view (and whether it starts a browser session). Only the page path,
+// the referring site's hostname and the visitor's country are kept, as hourly totals. No IP address,
+// user agent, cookie or identifier is stored.
+const MAX_VISIT_BYTES = 512;
+const BOT_UA = /bot|crawl|spider|slurp|headless|lighthouse|pingdom|uptime|monitor|curl|wget|python|java\/|httpclient|okhttp|scanner|zap|nuclei|nmap|preview|facebookexternalhit|embedly|whatsapp|telegram/i;
+const PATH_RE = /^\/[a-z0-9/_.-]{0,120}$/;
+const HOST_RE = /^[a-z0-9.-]{1,80}$/;
+
+export function parseVisit(body) {
+  if (body === null || typeof body !== "object" || Array.isArray(body)) return null;
+  let path = typeof body.p === "string" ? body.p.toLowerCase() : "";
+  if (path.length > 1) path = path.replace(/\/+$/, "").replace(/\.html$/, "");
+  if (!PATH_RE.test(path)) return null;
+  let ref = typeof body.r === "string" ? body.r.toLowerCase().replace(/^www\./, "") : "";
+  if (ref && (!HOST_RE.test(ref) || ref === "mshshuvo.com")) ref = "";
+  return { path, ref, session: body.s === 1 ? 1 : 0 };
+}
+
+async function handleVisit(request, env) {
+  if (!ALLOWED_ORIGINS.has(request.headers.get("Origin"))) return json(403, { success: false, message: "Forbidden" });
+  if (!(request.headers.get("Content-Type") || "").toLowerCase().startsWith("application/json")) {
+    return json(415, { success: false, message: "Unsupported content type" });
+  }
+  const raw = await readLimited(request, MAX_VISIT_BYTES);
+  if (raw === null) return json(413, { success: false, message: "Too large" });
+  let body;
+  try { body = JSON.parse(raw); } catch { return json(400, { success: false, message: "Invalid request" }); }
+  const visit = parseVisit(body);
+  if (!visit) return json(400, { success: false, message: "Invalid request" });
+  if (BOT_UA.test(request.headers.get("User-Agent") || "")) return new Response(null, { status: 204 });
+  const country = String((request.cf && request.cf.country) || "").slice(0, 2);
+  try {
+    await statsStub(env).fetch("https://stats/visit", { method: "POST", body: JSON.stringify({ ...visit, country }) });
+  } catch (err) {
+    console.log(JSON.stringify({ event: "visit_store_failed", error: describe(err) }));
+  }
+  return new Response(null, { status: 204 });
+}
+
+const HOUR = 3600000;
+
+// Plain-text visitor section for the daily email. rows: hourly totals for the reported window.
+export function buildVisitDigest(rows, week, since, now) {
+  const sum = (list, key) => list.reduce((x, r) => x + r[key], 0);
+  const top = (list, key, n) => {
+    const by = {};
+    for (const r of list) if (r[key]) by[r[key]] = (by[r[key]] || 0) + r.views;
+    return Object.entries(by).sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0])).slice(0, n);
+  };
+  const day = (t) => new Date(t).toISOString().slice(0, 16).replace("T", " ") + " UTC";
+  const fmt = (pairs) => pairs.map(([k, v]) => `${k} ${v}`).join(", ") || "none";
+  const views = sum(rows, "views");
+  return [
+    "VISITORS",
+    `${views} page view${views === 1 ? "" : "s"} in ${sum(rows, "sessions")} visit${sum(rows, "sessions") === 1 ? "" : "s"} between ${day(since)} and ${day(now)}.`,
+    `  Countries: ${fmt(top(rows, "country", 10))}`,
+    `  Top pages: ${fmt(top(rows, "path", 8))}`,
+    `  Came from: ${fmt(top(rows, "ref", 6))}`,
+    `Last 7 days: ${sum(week, "views")} page views in ${sum(week, "sessions")} visits from ${new Set(week.map((r) => r.country).filter(Boolean)).size} countries.`,
+    "",
+  ].join("\n");
+}
+
 function statsStub(env) {
   return env.STATS.get(env.STATS.idFromName("global"));
 }
@@ -312,6 +376,8 @@ export class AssessmentStats {
     this.sql.exec(`CREATE TABLE IF NOT EXISTS completions (id INTEGER PRIMARY KEY AUTOINCREMENT,
       ts INTEGER NOT NULL, check_slug TEXT NOT NULL, score INTEGER NOT NULL, answers TEXT NOT NULL, country TEXT)`);
     this.sql.exec("CREATE TABLE IF NOT EXISTS meta (key TEXT PRIMARY KEY, value INTEGER NOT NULL)");
+    this.sql.exec(`CREATE TABLE IF NOT EXISTS visits (hour INTEGER NOT NULL, country TEXT NOT NULL, path TEXT NOT NULL,
+      ref TEXT NOT NULL, views INTEGER NOT NULL, sessions INTEGER NOT NULL, PRIMARY KEY (hour, country, path, ref))`);
   }
 
   meta(key, fallback) {
@@ -331,6 +397,13 @@ export class AssessmentStats {
         Date.now(), r.check, r.score, JSON.stringify(r.answers), r.country || "");
       return new Response("ok");
     }
+    if (pathname === "/visit") {
+      const v = await request.json();
+      this.sql.exec(`INSERT INTO visits (hour, country, path, ref, views, sessions) VALUES (?, ?, ?, ?, 1, ?)
+        ON CONFLICT(hour, country, path, ref) DO UPDATE SET views = views + 1, sessions = sessions + excluded.sessions`,
+        Math.floor(Date.now() / HOUR) * HOUR, v.country || "", v.path, v.ref || "", v.session ? 1 : 0);
+      return new Response("ok");
+    }
     if (pathname === "/digest") {
       // Rows after the last reported id; the cursor only moves on /ack, after the email went out.
       const now = Date.now();
@@ -340,12 +413,23 @@ export class AssessmentStats {
       const totals = Object.fromEntries(this.sql.exec(
         "SELECT check_slug AS c, COUNT(*) AS n FROM completions GROUP BY check_slug").toArray().map((t) => [t.c, t.n]));
       const lastId = rows.length ? rows[rows.length - 1].id : this.meta("last_id", 0);
-      return Response.json({ rows, totals, since: this.meta("last_ts", now - 86400000), now, lastId });
+      // Visits: whole hours from the last reported hour up to (not including) the current one.
+      const until = Math.floor(now / HOUR) * HOUR;
+      const from = this.meta("visits_until", until - 24 * HOUR);
+      const q = "SELECT country, path, ref, SUM(views) AS views, SUM(sessions) AS sessions FROM visits WHERE hour >= ? AND hour < ? GROUP BY country, path, ref";
+      const visits = this.sql.exec(q, from, until).toArray();
+      const week = this.sql.exec(q, until - 7 * 24 * HOUR, until).toArray();
+      return Response.json({ rows, totals, since: this.meta("last_ts", now - 86400000), now, lastId,
+        visits, week, visitsFrom: from, visitsUntil: until });
     }
     if (pathname === "/ack") {
-      const { now, lastId } = await request.json();
+      const { now, lastId, visitsUntil } = await request.json();
       this.setMeta("last_id", lastId);
       this.setMeta("last_ts", now);
+      if (visitsUntil) {
+        this.setMeta("visits_until", visitsUntil);
+        this.sql.exec("DELETE FROM visits WHERE hour < ?", visitsUntil - 400 * 24 * HOUR);  // keep about 13 months
+      }
       return new Response("ok");
     }
     return new Response("not found", { status: 404 });
@@ -354,21 +438,28 @@ export class AssessmentStats {
 
 export async function runDigest(env) {
   const res = await statsStub(env).fetch("https://stats/digest", { method: "POST" });
-  const { rows, totals, since, now, lastId } = await res.json();
-  if (!rows.length) {
+  const { rows, totals, since, now, lastId, visits = [], week = [], visitsFrom, visitsUntil } = await res.json();
+  const views = visits.reduce((x, r) => x + r.views, 0);
+  if (!rows.length && !views) {
     console.log(JSON.stringify({ event: "assessment_digest_skipped" }));
     return false;
   }
   if (!env.CONTACT_TO) throw new Error("CONTACT_TO not set");
+  const parts = [];
+  if (rows.length) parts.push(`${rows.length} readiness check${rows.length === 1 ? "" : "s"} completed`);
+  if (views) parts.push(`${views} page view${views === 1 ? "" : "s"}`);
+  const text = (views ? buildVisitDigest(visits, week, visitsFrom, visitsUntil) + "\n" : "")
+    + (rows.length ? buildDigest(rows, totals, since, now)
+      : "--\nDaily digest from mshshuvo.com. Visits are counted anonymously: no cookies, IP addresses or identifiers are stored.");
   await sendMail(env, {
     to: env.CONTACT_TO,
     from: env.CONTACT_FROM,
     replyTo: env.CONTACT_FROM,
-    subject: `[mshshuvo.com] ${rows.length} readiness check${rows.length === 1 ? "" : "s"} completed`,
-    text: buildDigest(rows, totals, since, now),
+    subject: `[mshshuvo.com] ${parts.join(" · ")}`,
+    text,
   });
-  await statsStub(env).fetch("https://stats/ack", { method: "POST", body: JSON.stringify({ now, lastId }) });
-  console.log(JSON.stringify({ event: "assessment_digest_sent", count: rows.length }));
+  await statsStub(env).fetch("https://stats/ack", { method: "POST", body: JSON.stringify({ now, lastId, visitsUntil }) });
+  console.log(JSON.stringify({ event: "assessment_digest_sent", count: rows.length, views }));
   return true;
 }
 
@@ -378,6 +469,10 @@ export default {
     if (url.pathname === "/api/contact") {
       if (request.method !== "POST") return json(405, { success: false, message: "Method not allowed" });
       return handleContact(request, env);
+    }
+    if (url.pathname === "/api/visit") {
+      if (request.method !== "POST") return json(405, { success: false, message: "Method not allowed" });
+      return handleVisit(request, env);
     }
     if (url.pathname === "/api/assessment") {
       if (request.method !== "POST") return json(405, { success: false, message: "Method not allowed" });
