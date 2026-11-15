@@ -8,6 +8,7 @@ All interactivity runs in the browser from static/js/site.js. The only
 server-side code is the Cloudflare Worker in worker/ (contact form).
 """
 import hashlib
+import html
 import json
 from datetime import datetime
 from functools import lru_cache
@@ -71,15 +72,14 @@ def asset(filename: str) -> str:
 
 
 @app.template_filter("seo_title")
-def seo_title(title) -> Markup:
+def seo_title(title):
     """Keep titles within what Google shows (about 60 characters): drop the name suffix when it does not fit.
-    The captured title block is already HTML-escaped, so it is returned as Markup and never escaped twice."""
-    import html as _html
-    title = " ".join(str(title).split())
+    Only strip() and slicing are used, so an already-escaped title keeps its type and is never escaped twice."""
+    title = title.strip()
     suffix = f" · {SITE['name']}"
-    if len(_html.unescape(title)) > 60 and title.endswith(suffix):
+    if len(html.unescape(str(title))) > 60 and title.endswith(suffix):
         title = title[: -len(suffix)]
-    return Markup(title)
+    return title
 
 
 @app.template_filter("ldjson")
