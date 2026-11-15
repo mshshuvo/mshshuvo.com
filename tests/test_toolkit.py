@@ -17,7 +17,8 @@ class ToolkitTests(unittest.TestCase):
         for t in toolkit.TOOLS:
             for key in ("name", "title", "seo_title", "short", "lead", "meta", "facts", "privacy"):
                 self.assertTrue(t[key], f"{t['slug']}: {key}")
-            self.assertTrue((ROOT / "static" / "toolkit" / f"{t['slug']}.js").is_file(), t["slug"])
+            for name in toolkit.script_files(t):
+                self.assertTrue((ROOT / "static" / "toolkit" / name).is_file(), name)
             self.assertTrue((ROOT / "templates" / "toolkit" / f"{t['slug']}.html").is_file(), t["slug"])
 
     def test_pages_render(self):
@@ -28,6 +29,8 @@ class ToolkitTests(unittest.TestCase):
             html = client.get(f"/toolkit/{t['slug']}").get_data(as_text=True)
             self.assertIn(t["title"], html)
             self.assertIn(f'/downloads/{t["slug"]}.html', html)
+            for name in toolkit.script_files(t):
+                self.assertIn(f"/static/toolkit/{name}?v=", html)
         self.assertEqual(client.get("/toolkit/nope").status_code, 404)
         self.assertEqual(client.get("/downloads/nope.html").status_code, 404)
 
