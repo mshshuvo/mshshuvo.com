@@ -416,6 +416,14 @@ details[open] .tl__more::after { content: "hide −"; }
   .case__facts { position: static; }
   .aside { border-left: 0; border-top: 1px solid var(--color-border); padding: var(--s3) 0 0; }
 }
+/* Six links plus the contact button need about 900px, so the menu collapses below that. */
+@media (max-width: 900px) {
+  .nav__toggle { display: block; }
+  .nav__links { display: none; position: absolute; top: 72px; left: 0; right: 0; flex-direction: column; align-items: stretch; gap: 0; background: var(--color-background); border-bottom: 1px solid var(--color-border); padding: var(--s1) var(--s2) var(--s2); }
+  .nav__links.is-open { display: flex; }
+  .nav__links a { padding: 12px 0; font-size: 1rem; }
+  .nav__links a.btn { justify-content: center; margin-top: var(--s1); }
+}
 @media (max-width: 720px) {
   body { font-size: 16px; }
   .nav__inner { height: 64px; }

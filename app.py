@@ -1,4 +1,4 @@
-"""mshshuvo.com — personal site for Sabbir Hossain (Ethan).
+"""mshshuvo.com — personal site for Sabbir Hossain.
 
 Flask is used to *build* the site: `python build.py` renders every page to
 static HTML in dist/, which Cloudflare Pages serves. `python app.py` runs a
@@ -13,7 +13,7 @@ from datetime import datetime
 from functools import lru_cache
 from pathlib import Path
 
-from flask import Flask, abort, render_template
+from flask import Flask, Response, abort, render_template
 from markupsafe import Markup
 
 from content import (ARTICLES, CERT_VERIFY, SKILLS, ROLES_FIT, FRAMEWORKS, CERTIFICATIONS, EARLY_WRITING, EDUCATION, EXPERIENCE, POLICIES, PRESS,
@@ -22,6 +22,7 @@ from assessments import ASSESSMENTS, BANDS
 from assessments import BY_SLUG as ASSESSMENTS_BY_SLUG
 from insights import all_tags, load_posts
 import skillmap
+import toolkit as tk
 
 PROJECTS_BY_SLUG = {p["slug"]: p for p in PROJECTS}
 SERVICES_BY_SLUG = {s["slug"]: s for s in SERVICES}
@@ -213,6 +214,27 @@ def assessment_check(slug):
     others = [a for a in ASSESSMENTS if a is not check]
     service = SERVICES_BY_SLUG.get(check["service"])
     return render_template("assessment_check.html", check=check, bands=BANDS, others=others, service=service)
+
+
+@app.get("/toolkit")
+def toolkit():
+    return render_template("toolkit.html", tools=tk.TOOLS, licence=tk.LICENCE)
+
+
+@app.get("/toolkit/<slug>")
+def toolkit_tool(slug):
+    tool = tk.BY_SLUG.get(slug) or abort(404)
+    return render_template("toolkit_tool.html", tool=tool, licence=tk.LICENCE,
+                           others=[t for t in tk.TOOLS if t is not tool])
+
+
+@app.get("/downloads/<slug>.html")
+def toolkit_download(slug):
+    """Local preview of the downloadable copy; the build writes the same file to dist/downloads/."""
+    if slug not in tk.BY_SLUG:
+        abort(404)
+    return Response(tk.standalone(slug), mimetype="text/html",
+                    headers={"Content-Disposition": f'attachment; filename="{slug}.html"'})
 
 
 @app.get("/security")

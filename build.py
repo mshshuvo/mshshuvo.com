@@ -16,6 +16,7 @@ from pathlib import Path
 
 from app import ASSESSMENTS, POSTS, PROJECTS, SECURITY_HEADERS, SERVICES, SITE, app
 from assessments import worker_spec
+import toolkit
 
 ROOT = Path(__file__).parent
 DIST = ROOT / "dist"
@@ -26,9 +27,10 @@ BING_SITE_AUTH = "EDD4DB453EB168ED05257A3F0C13D1F5"  # gitleaks:allow
 INDEXNOW_KEY = "53de5a436f6b78ef495a04f085b56ab9"  # gitleaks:allow (public verification key)
 
 PAGES = ["/", "/projects", "/experience", "/publications", "/recommendations",
-         "/services", "/assessment", "/contact", "/insights", "/insights/follow", "/security"] + \
+         "/services", "/assessment", "/toolkit", "/contact", "/insights", "/insights/follow", "/security"] + \
         [f"/projects/{p['slug']}" for p in PROJECTS] + [f"/insights/{p['slug']}" for p in POSTS] + \
-        [f"/services/{s['slug']}" for s in SERVICES] + [f"/assessment/{a['slug']}" for a in ASSESSMENTS]
+        [f"/services/{s['slug']}" for s in SERVICES] + [f"/assessment/{a['slug']}" for a in ASSESSMENTS] + \
+        [f"/toolkit/{t['slug']}" for t in toolkit.TOOLS]
 
 
 def rss_feed() -> str:
@@ -80,7 +82,14 @@ def main() -> None:
     (ROOT / "worker" / "assessments.json").write_text(json.dumps(worker_spec(), indent=2, ensure_ascii=False) + "\n")
     lines = ["/*"] + [f"  {k}: {v}" for k, v in SECURITY_HEADERS.items()]
     lines += ["", "/static/*", "  Cache-Control: public, max-age=604800", ""]
+    # Toolkit downloads are self-contained files with inline code, so they are only ever saved, never shown.
+    lines += ["/downloads/*", "  Content-Disposition: attachment", ""]
     (DIST / "_headers").write_text("\n".join(lines))
+
+    downloads = DIST / "downloads"
+    downloads.mkdir()
+    for tool in toolkit.TOOLS:
+        (downloads / f"{tool['slug']}.html").write_text(toolkit.standalone(tool["slug"]), encoding="utf-8")
 
     # RFC 9116 security.txt (Expires must be under a year away; refreshed on every build)
     wk = DIST / ".well-known"
