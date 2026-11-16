@@ -59,6 +59,13 @@ class ToolkitTests(unittest.TestCase):
             links = set(re.findall(r'href="(https?://[^"]+)"', html))
             self.assertEqual(links, {f"{toolkit.SITE_URL}/toolkit", toolkit.SITE["linkedin"]})
             self.assertIn("Built by", html)
+            # The file pins its own scripts and style by hash and allows no network connections.
+            csp = re.search(r'http-equiv="Content-Security-Policy" content="([^"]+)"', html).group(1)
+            self.assertIn("default-src 'none'", csp)
+            self.assertIn("connect-src 'none'", csp)
+            for body in re.findall(r"<script>(.*?)</script>", html, re.S):
+                self.assertIn(toolkit._sha256(body), csp)
+            self.assertIn(toolkit._sha256(re.search(r"<style>(.*?)</style>", html, re.S).group(1)), csp)
             self.assertIn(toolkit.LICENCE, html)
 
 

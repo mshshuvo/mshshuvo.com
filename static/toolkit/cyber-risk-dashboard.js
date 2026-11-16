@@ -49,7 +49,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const money = (m) => "$" + (m >= 10 ? m.toFixed(0) : m.toFixed(1)) + "M";
   const trendOf = (r) => { const d = score(r) - (r.prev || score(r)); return d > 0 ? ["↑", "Getting worse"] : d < 0 ? ["↓", "Improving"] : ["→", "No change"]; };
   const cats = () => [...new Set(CATS.concat(data.risks.map((r) => r.cat).filter(Boolean)))];
-  const pill = (b) => `<span class="tk-pill tk-b-${b} tk-t-pill">${BAND[b]}</span>`;
+  const pill = (b) => TK.html`<span class="tk-pill tk-b-${b} tk-t-pill">${BAND[b]}</span>`;
 
   // Last four quarter labels, oldest first, then the current one.
   function quarters() {
@@ -66,7 +66,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const exp = ab.reduce((a, r) => a + (Number(r.exp) || 0), 0);
     const diff = ab.length - prevAb;
     const qs = quarters(), now = qs[4];
-    $("rd-meta").innerHTML = `<b>${esc(data.org || "Your organisation")}</b> · Q${now[0]} ${now[1]} · as of ${fmtDate(iso(TODAY))}`;
+    $("rd-meta").innerHTML = TK.html`<b>${esc(data.org || "Your organisation")}</b> · Q${now[0]} ${now[1]} · as of ${fmtDate(iso(TODAY))}`;
 
     if (!risks.length) {
       $("rd-headline").textContent = "The register is empty. Add your first risk in the Risk register tab.";
@@ -81,101 +81,100 @@ document.addEventListener("DOMContentLoaded", () => {
         `${od.length} action plan${od.length === 1 ? " is" : "s are"} past due.`;
     }
 
-    const k = (cls, lab, val, delta) => `<div class="tk-kpi tk-kpi--${cls}"><span class="tk-kpi__lab">${lab}</span><span class="tk-kpi__val tk-num">${val}</span><span class="tk-kpi__delta">${delta}</span></div>`;
-    $("rd-kpis").innerHTML =
-      k(ab.length ? "watch" : "calm", "Above appetite", ab.length, diff === 0 ? "Same as last quarter" : (diff > 0 ? "▲ " : "▼ ") + Math.abs(diff) + " vs last quarter") +
-      k(crit.length ? "alert" : "calm", "Critical", crit.length, crit.length ? esc(crit[0].title) + (crit.length > 1 ? ` and ${crit.length - 1} more` : "") : "None right now") +
-      k(od.length ? "alert" : "calm", "Plans past due", od.length, od.length ? esc(od.map((r) => r.id).join(", ")) : "All plans on schedule") +
-      k("plain", "Potential loss", money(exp), "Estimate, risks above appetite");
+    const k = (cls, lab, val, delta) => TK.html`<div class="tk-kpi tk-kpi--${cls}"><span class="tk-kpi__lab">${lab}</span><span class="tk-kpi__val tk-num">${val}</span><span class="tk-kpi__delta">${delta}</span></div>`;
+    $("rd-kpis").innerHTML = TK.html`${k(ab.length ? "watch" : "calm", "Above appetite", ab.length, diff === 0 ? "Same as last quarter" : (diff > 0 ? "▲ " : "▼ ") + Math.abs(diff) + " vs last quarter")}${
+      k(crit.length ? "alert" : "calm", "Critical", crit.length, crit.length ? crit[0].title + (crit.length > 1 ? ` and ${crit.length - 1} more` : "") : "None right now")}${
+      k(od.length ? "alert" : "calm", "Plans past due", od.length, od.length ? od.map((r) => r.id).join(", ") : "All plans on schedule")}${
+      k("plain", "Potential loss", money(exp), "Estimate, risks above appetite")}`;
 
     let h = "";
     for (let l = 5; l >= 1; l--) {
-      h += `<div class="tk-ax tk-ax--y"><b>${l}</b>&nbsp;${L_LABEL[l]}</div>`;
+      h = TK.html`${h}${TK.html`<div class="tk-ax tk-ax--y"><b>${l}</b>&nbsp;${L_LABEL[l]}</div>`}`;
       for (let i = 1; i <= 5; i++) {
         const n = risks.filter((r) => { const [a, b] = shown(r); return a === l && b === i; }).length;
         const b = band(l * i), key = l + "-" + i;
-        h += n
-          ? `<button type="button" class="tk-cell tk-b-${b} tk-t-full" data-cell="${key}" aria-pressed="${st.cell === key}"
+        h = TK.html`${h}${n
+          ? TK.html`<button type="button" class="tk-cell tk-b-${b} tk-t-full" data-cell="${key}" aria-pressed="${st.cell === key}"
                aria-label="${n} risk${n > 1 ? "s" : ""}, likelihood ${L_LABEL[l]}, impact ${I_LABEL[i]}"
                data-tip="${n} risk${n > 1 ? "s" : ""} · ${BAND[b]} · ${L_LABEL[l]} × ${I_LABEL[i]}">${n}</button>`
-          : `<div class="tk-cell tk-cell--empty tk-b-${b} tk-t-empty" aria-hidden="true"></div>`;
+          : TK.html`<div class="tk-cell tk-cell--empty tk-b-${b} tk-t-empty" aria-hidden="true"></div>`}`;
       }
     }
-    h += '<div class="tk-ax tk-ax--y"><b>↑</b>&nbsp;Likelihood</div>' + [1, 2, 3, 4, 5].map((i) => `<div class="tk-ax">${I_LABEL[i]}</div>`).join("");
-    $("rd-heat").innerHTML = h;
+    h = TK.html`${h}${TK.html`${TK.html`<div class="tk-ax tk-ax--y"><b>↑</b>&nbsp;Likelihood</div>`}${[1, 2, 3, 4, 5].map((i) => TK.html`<div class="tk-ax">${I_LABEL[i]}</div>`)}`}`;
+    $("rd-heat").innerHTML = TK.html`${h}`;
 
-    $("rd-decisions").innerHTML = decs.length ? decs.slice().sort((a, b) => (a.by || "9").localeCompare(b.by || "9")).map((r) => {
+    $("rd-decisions").innerHTML = TK.html`${decs.length ? decs.slice().sort((a, b) => (a.by || "9").localeCompare(b.by || "9")).map((r) => {
       const late = r.by && day(r.by) < TODAY;
-      return `<div class="tk-dec"><p class="tk-dec__ask">${esc(r.ask)}</p>
+      return TK.html`<div class="tk-dec"><p class="tk-dec__ask">${esc(r.ask)}</p>
         <p class="tk-dec__why">${esc(r.title)}. ${esc(r.means)}</p>
-        <div class="tk-tags">${pill(band(score(r)))}${r.cost ? `<span class="tk-tag">${esc(r.cost)}</span>` : ""}
-        ${r.by ? `<span class="tk-tag ${late ? "tk-tag--over" : ""}">Decide by ${fmtDate(r.by)}</span>` : ""}<span class="tk-tag">Owner: ${esc(r.owner || "not set")}</span></div></div>`;
-    }).join("") : '<p class="tk-muted">Nothing is waiting on you.</p>';
+        <div class="tk-tags">${pill(band(score(r)))}${r.cost ? TK.html`<span class="tk-tag">${esc(r.cost)}</span>` : ""}
+        ${r.by ? TK.html`<span class="tk-tag ${late ? "tk-tag--over" : ""}">Decide by ${fmtDate(r.by)}</span>` : ""}<span class="tk-tag">Owner: ${esc(r.owner || "not set")}</span></div></div>`;
+    }) : TK.html`<p class="tk-muted">Nothing is waiting on you.</p>`}`;
 
     let list = risks.slice().sort((a, b) => score(b) - score(a) || (b.exp || 0) - (a.exp || 0));
     if (st.cell) {
       const [l, i] = st.cell.split("-").map(Number);
       list = risks.filter((r) => { const [a, b] = shown(r); return a === l && b === i; });
       $("rd-risks-title").textContent = `Risks rated ${L_LABEL[l]} × ${I_LABEL[i]}`;
-      $("rd-filternote").innerHTML = '<button type="button" class="tk-link" id="rd-clearcell">Show top risks</button>';
+      $("rd-filternote").innerHTML = TK.html`<button type="button" class="tk-link" id="rd-clearcell">Show top risks</button>`;
     } else {
       $("rd-risks-title").textContent = st.all ? "All risks" : "Top risks";
-      $("rd-filternote").innerHTML = risks.length > 6 ? `<button type="button" class="tk-link" id="rd-toggleall">${st.all ? "Show top 6 only" : "Show all " + risks.length}</button>` : "";
+      $("rd-filternote").innerHTML = TK.html`${risks.length > 6 ? TK.html`<button type="button" class="tk-link" id="rd-toggleall">${st.all ? "Show top 6 only" : "Show all " + risks.length}</button>` : ""}`;
       if (!st.all) list = list.slice(0, 6);
     }
-    $("rd-risks").innerHTML = list.map((r) => {
+    $("rd-risks").innerHTML = TK.html`${TK.join(list.map((r) => {
       const s = score(r), b = band(s), [arrow, word] = trendOf(r), open = st.open === r.id;
-      return `<div class="tk-risk"><button type="button" aria-expanded="${open}" data-open="${esc(r.id)}">
+      return TK.html`<div class="tk-risk"><button type="button" aria-expanded="${open}" data-open="${esc(r.id)}">
         <span class="tk-b-${b} tk-t-solid"></span>
         <span class="tk-risk__main"><span class="tk-risk__title">${esc(r.title)}</span>
           <span class="tk-tags">${pill(b)}<span>${esc(r.cat)}</span><span>Owner: ${esc(r.owner || "not set")}</span><span>${arrow} ${word}</span>
-          ${overdue(r) ? '<span class="tk-tag tk-tag--over">Plan past due</span>' : ""}${above(r) ? "" : '<span class="tk-tag">Within appetite</span>'}</span></span>
+          ${overdue(r) ? TK.html`<span class="tk-tag tk-tag--over">Plan past due</span>` : ""}${above(r) ? "" : TK.html`<span class="tk-tag">Within appetite</span>`}</span></span>
         <span class="tk-risk__side"><span class="tk-score tk-num">${s}</span><span>of 25</span></span></button>
-        ${open ? `<dl class="tk-detail">
+        ${open ? TK.html`<dl class="tk-detail">
           <div><dt>What it means</dt><dd>${esc(r.means || "Not described yet.")}</dd></div>
           <div><dt>What we are doing</dt><dd>${esc(r.plan || "No plan recorded.")}<div class="tk-prog" role="img" aria-label="${r.prog}% complete"><i data-w="${r.prog}"></i></div>
             <span class="tk-muted">${r.prog}% done${r.due ? " · due " + fmtDate(r.due) : ""}</span></dd></div>
           <div><dt>Numbers</dt><dd>Without controls: ${r.iL * r.iI} · With controls: ${s} · Last quarter: ${r.prev || s}<br>Potential loss: about ${money(Number(r.exp) || 0)}</dd></div>
         </dl>` : ""}</div>`;
-    }).join("") || '<p class="tk-muted">No risks here.</p>';
+    })) || TK.html`<p class="tk-muted">No risks here.</p>`}`;
 
     const perCat = cats().map((c) => [c, risks.filter((r) => r.cat === c)]).filter((x) => x[1].length);
     const max = Math.max(1, ...perCat.map((x) => x[1].length));
-    $("rd-bars").innerHTML = perCat.map(([c, all]) => {
+    $("rd-bars").innerHTML = TK.html`${TK.join(perCat.map(([c, all]) => {
       const a = all.filter(above).length, w = all.length - a;
-      return `<div class="tk-bar"><span>${esc(c)}</span><span class="tk-bar__track" data-tip="${esc(c)}: ${a} above appetite, ${w} within">
-        ${a ? `<i class="tk-s-a" data-w="${(a / max) * 100}"></i>` : ""}${w ? `<i class="tk-s-b" data-w="${(w / max) * 100}"></i>` : ""}</span>
+      return TK.html`<div class="tk-bar"><span>${esc(c)}</span><span class="tk-bar__track" data-tip="${esc(c)}: ${a} above appetite, ${w} within">
+        ${a ? TK.html`<i class="tk-s-a" data-w="${(a / max) * 100}"></i>` : ""}${w ? TK.html`<i class="tk-s-b" data-w="${(w / max) * 100}"></i>` : ""}</span>
         <span class="tk-num tk-muted">${a}</span></div>`;
-    }).join("") || '<p class="tk-muted">No risks yet.</p>';
+    })) || TK.html`<p class="tk-muted">No risks yet.</p>`}`;
 
     const series = data.history.map((v, i) => [`Q${qs[i][0]} ${String(qs[i][1]).slice(2)}`, v]).concat([["Now", ab.length]]);
     const tmax = Math.max(1, ...series.map((x) => x[1]));
-    $("rd-trend").innerHTML = series.map((x, i) =>
-      `<div class="tk-trend__col ${i === 4 ? "tk-trend__col--now" : ""}" data-tip="${x[0]}: ${x[1]} above appetite"><span class="tk-trend__v tk-num">${x[1]}</span><span class="tk-trend__bar" data-h="${(x[1] / tmax) * 78}"></span></div>`).join("");
-    $("rd-trendx").innerHTML = series.map((x) => `<span>${x[0]}</span>`).join("");
+    $("rd-trend").innerHTML = TK.html`${series.map((x, i) =>
+      TK.html`<div class="tk-trend__col ${i === 4 ? "tk-trend__col--now" : ""}" data-tip="${x[0]}: ${x[1]} above appetite"><span class="tk-trend__v tk-num">${x[1]}</span><span class="tk-trend__bar" data-h="${(x[1] / tmax) * 78}"></span></div>`)}`;
+    $("rd-trendx").innerHTML = TK.html`${series.map((x) => TK.html`<span>${x[0]}</span>`)}`;
     dims($("view-executive"));
   }
 
-  const opts = (n) => [1, 2, 3, 4, 5].map((v) => `<option${v === n ? " selected" : ""}>${v}</option>`).join("");
+  const opts = (n) => [1, 2, 3, 4, 5].map((v) => TK.html`<option${v === n ? " selected" : ""}>${v}</option>`);
   function renderRegister() {
     const q = st.q.toLowerCase();
     const list = data.risks.filter((r) => (!st.cat || r.cat === st.cat) && (!q || (r.title + " " + r.owner + " " + r.id).toLowerCase().includes(q)));
     const val = (r) => (st.sort === "score" ? score(r) : String(r[st.sort] ?? "").toLowerCase());
     list.sort((a, b) => (val(a) > val(b) ? 1 : val(a) < val(b) ? -1 : 0) * st.dir);
-    $("rd-rows").innerHTML = list.map((r) => {
+    $("rd-rows").innerHTML = TK.html`${TK.join(list.map((r) => {
       const s = score(r), b = band(s), id = esc(r.id);
-      return `<tr><td class="tk-num">${id}</td><td>${esc(r.title)}</td><td>${esc(r.cat)}</td><td>${esc(r.owner)}</td>
+      return TK.html`<tr><td class="tk-num">${id}</td><td>${esc(r.title)}</td><td>${esc(r.cat)}</td><td>${esc(r.owner)}</td>
         <td><select id="rd-L-${id}" data-edit="L" data-id="${id}" aria-label="Likelihood for ${id}">${opts(r.L)}</select></td>
         <td><select id="rd-I-${id}" data-edit="I" data-id="${id}" aria-label="Impact for ${id}">${opts(r.I)}</select></td>
         <td><span class="tk-pill tk-b-${b} tk-t-pill"><span class="tk-num">${s}</span> ${BAND[b]}</span></td>
         <td><div class="tk-prog"><i data-w="${r.prog}"></i></div><span class="tk-muted">${r.prog}%</span></td>
-        <td class="tk-num">${r.due ? fmtDate(r.due) : ""}${overdue(r) ? ' <span class="tk-tag tk-tag--over">Past due</span>' : ""}</td>
+        <td class="tk-num">${r.due ? fmtDate(r.due) : ""}${overdue(r) ? TK.html` <span class="tk-tag tk-tag--over">Past due</span>` : ""}</td>
         <td><button type="button" class="tk-link" data-editrow="${id}">Edit</button> · <button type="button" class="tk-link" data-del="${id}" aria-label="Remove ${id}">Remove</button></td></tr>`;
-    }).join("") || '<tr><td colspan="10" class="tk-muted">No risks match. Add one, or import a register.</td></tr>';
+    })) || TK.html`<tr><td colspan="10" class="tk-muted">No risks match. Add one, or import a register.</td></tr>`}`;
     dims($("rd-rows"));
     const c = cats();
-    $("rd-fcat").innerHTML = '<option value="">All areas</option>' + c.map((x) => `<option${x === st.cat ? " selected" : ""}>${esc(x)}</option>`).join("");
-    $("rd-cats").innerHTML = c.map((x) => `<option value="${esc(x)}">`).join("");
+    $("rd-fcat").innerHTML = TK.html`${TK.html`<option value="">All areas</option>`}${c.map((x) => TK.html`<option${x === st.cat ? " selected" : ""}>${esc(x)}</option>`)}`;
+    $("rd-cats").innerHTML = TK.html`${c.map((x) => TK.html`<option value="${esc(x)}">`)}`;
   }
   function renderSettings() {
     $("rd-org").value = data.org || "";
@@ -192,7 +191,7 @@ document.addEventListener("DOMContentLoaded", () => {
     $("rd-editor-title").textContent = r ? "Edit " + r.id : "Add a risk";
     $("f-id").value = r ? r.id : "";
     const base = r || { title: "", means: "", cat: "", owner: "", iL: 3, iI: 3, L: 3, I: 3, prev: "", exp: "", plan: "", prog: 0, due: "", ask: "", cost: "", by: "" };
-    ["iL", "iI", "L", "I"].forEach((f) => { $("f-" + f).innerHTML = opts(Number(base[f])); });
+    ["iL", "iI", "L", "I"].forEach((f) => { $("f-" + f).innerHTML = TK.html`${opts(Number(base[f]))}`; });
     FIELDS.forEach((f) => { if (!["iL", "iI", "L", "I"].includes(f)) $("f-" + f).value = base[f] ?? ""; });
     $("rd-form-err").hidden = true;
     $("rd-editor").scrollIntoView({ block: "nearest" });
@@ -234,7 +233,8 @@ document.addEventListener("DOMContentLoaded", () => {
     TK.download("cyber-risk-register.csv", TK.toCSV([COLS.map((c) => c[0])].concat(data.risks.map((r) => COLS.map((c) => r[c[1]])))));
     $("rd-msg").textContent = "Register downloaded. Edit it in Excel and import it back any time.";
   });
-  $("rd-file").addEventListener("change", (e) => TK.readFile(e.target, (text) => {
+  $("rd-file").addEventListener("change", (e) => TK.readFile(e.target, (text, name, err) => {
+    if (err) { $("rd-msg").textContent = err; return; }
     const t = TK.parseTable(text), msg = $("rd-msg");
     if (!t.headers.map((h) => h.toLowerCase()).includes("risk")) { msg.textContent = 'That file has no "risk" column. Download the register once to get the expected columns.'; return; }
     const seen = new Set(), out = [];

@@ -78,8 +78,10 @@ npx wrangler dev           # full site + contact API at http://127.0.0.1:8787
 - How it is secured, free-tier limits, and what is deliberately not enabled: [docs/SECURITY-CONTROLS.md](docs/SECURITY-CONTROLS.md)
 - One-time Cloudflare/GitHub setup: [docs/CLOUDFLARE-SETUP.md](docs/CLOUDFLARE-SETUP.md)
 - Reporting a vulnerability: [SECURITY.md](SECURITY.md)
+- Checklist every change must pass (repeated in the pull request template): [SECURITY-CHECKLIST.md](SECURITY-CHECKLIST.md)
 
-CI (`.github/workflows/ci.yml`): Bandit, pip-audit, Gitleaks, Trivy, npm audit, Worker unit tests,
+CI (`.github/workflows/ci.yml`): Bandit, pip-audit, Gitleaks, Trivy, npm audit, ESLint security rules for browser
+code (no-unsanitized), Worker and toolkit unit tests,
 OWASP ZAP baseline on the built site, then deploy. CodeQL and Dependabot run alongside.
 Monitoring (`monitor.yml`): hourly health/header/TLS checks and a weekly ZAP scan of production,
 alerting via GitHub issues.

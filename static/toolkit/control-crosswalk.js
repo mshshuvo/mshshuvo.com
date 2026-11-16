@@ -95,7 +95,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const label = (s) => LABEL[s] || s;
   const CLS = { "Satisfied": "tk-b-low", "Satisfied with exceptions": "tk-b-med", "Partial": "tk-b-high", "Deficient": "tk-b-crit",
     "Effective": "tk-b-low", "Exception": "tk-b-med", "Failed": "tk-b-crit" };
-  const pill = (s) => `<span class="tk-pill ${CLS[s] || "tk-b-none"} tk-t-pill">${esc(label(s))}</span>`;
+  const pill = (s) => TK.html`<span class="tk-pill ${CLS[s] || "tk-b-none"} tk-t-pill">${esc(label(s))}</span>`;
   const PROOF = ["Evidence stale", "Not tested", "No evidence"], OK = ["Satisfied", "Satisfied with exceptions"];
   const isGap = (s) => !OK.includes(s) && s !== "Excluded";
   const EV_STATES = ["Effective", "Exception", "Failed", "Stale", "Untested"];
@@ -107,7 +107,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const changed = () => Object.keys(st.ovr).length;
 
   function renderTop() {
-    $("cw-meta").innerHTML = `<b>${esc(D.org)}</b> · sample data · as of ${TK.fmtDate(TK.iso(new Date()))}`;
+    $("cw-meta").innerHTML = TK.html`<b>${esc(D.org)}</b> · sample data · as of ${TK.fmtDate(TK.iso(new Date()))}`;
     let ok = 0;
     D.frameworks.forEach((f) => { const c = cur.summary(f.key); ok += c.Satisfied + c["Satisfied with exceptions"]; });
     $("cw-headline").textContent = `${D.evidence.length} pieces of evidence satisfy ${ok} requirements across ${D.frameworks.length} frameworks. ` +
@@ -119,17 +119,17 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function renderCoverage() {
-    $("cw-tiles").innerHTML = D.frameworks.map((f) => {
+    $("cw-tiles").innerHTML = TK.html`${D.frameworks.map((f) => {
       const c = cur.summary(f.key), total = cur.results[f.key].length - c.Excluded, cov = cur.coverage(f.key);
       const proof = PROOF.reduce((a, s) => a + c[s], 0);
-      const seg = (cls, v, name) => (v ? `<i class="${cls}" data-w="${(v / total) * 100}" data-tip="${v} ${name}"></i>` : "");
+      const seg = (cls, v, name) => (v ? TK.html`<i class="${cls}" data-w="${(v / total) * 100}" data-tip="${v} ${name}"></i>` : "");
       const delta = cov - base.coverage(f.key);
-      return `<button type="button" class="tk-kpi" data-fw="${f.key}" aria-pressed="${st.fw === f.key}">
+      return TK.html`<button type="button" class="tk-kpi" data-fw="${f.key}" aria-pressed="${st.fw === f.key}">
         <span class="tk-kpi__lab">${esc(f.name)}</span>
         <span class="tk-kpi__val tk-num">${cov.toFixed(0)}%</span>
         <span class="tk-stackbar">${seg("tk-b-low tk-t-solid", c.Satisfied, "satisfied")}${seg("tk-b-med tk-t-solid", c["Satisfied with exceptions"], "satisfied with exceptions")}${seg("tk-b-high tk-t-solid", c.Partial, "partly covered")}${seg("tk-b-crit tk-t-solid", c.Deficient, "deficient")}${seg("tk-st-proof", proof, "with no current proof")}${seg("tk-st-unmapped", c.Unmapped, "with no control mapped")}</span>
         <span class="tk-kpi__delta">${c.Satisfied + c["Satisfied with exceptions"]} of ${total} satisfied · ${c.Deficient} deficient${Math.abs(delta) > 0.05 ? ` · ${delta > 0 ? "▲" : "▼"} ${Math.abs(delta).toFixed(0)} pts` : ""}</span></button>`;
-    }).join("");
+    })}`;
 
     const q = st.q.toLowerCase();
     const rows = D.frameworks.filter((f) => !st.fw || f.key === st.fw).flatMap((f) => cur.results[f.key]).filter((r) =>
@@ -142,74 +142,74 @@ document.addEventListener("DOMContentLoaded", () => {
     st.rows = rows;
     $("cw-req-title").textContent = `${rows.length} requirement${rows.length === 1 ? "" : "s"}` + (st.fw ? " in " + FW[st.fw].name : "");
     const show = st.all ? rows : rows.slice(0, 40);
-    $("cw-reqs").innerHTML = show.map((r) => {
+    $("cw-reqs").innerHTML = TK.html`${TK.join(show.map((r) => {
       const key = r.fw + "|" + r.id, open = st.open === key;
-      let h = `<tr class="${open ? "tk-open" : ""}"><td><button type="button" class="tk-rowbtn" data-req="${esc(key)}" aria-expanded="${open}"><b class="tk-num">${esc(r.id)}</b> ${esc(r.title)}
-          ${st.fw ? "" : `<span class="tk-muted">· ${esc(FW[r.fw].name)}</span>`}</button></td>
+      let h = TK.html`<tr class="${open ? "tk-open" : ""}"><td><button type="button" class="tk-rowbtn" data-req="${esc(key)}" aria-expanded="${open}"><b class="tk-num">${esc(r.id)}</b> ${esc(r.title)}
+          ${st.fw ? "" : TK.html`<span class="tk-muted">· ${esc(FW[r.fw].name)}</span>`}</button></td>
         <td>${pill(r.status)}</td>
-        <td><div class="tk-chiprow">${r.maps.map((m) => `<span class="tk-chip tk-chip--static ${m[3] ? "" : "tk-chip--partial"}" data-tip="${esc((CTL[m[0]] || {}).title || "Control not defined")}${m[3] ? "" : " (partial)"}">${esc(m[0])}</span>`).join("") || '<span class="tk-muted">None</span>'}</div></td>
+        <td><div class="tk-chiprow">${TK.join(r.maps.map((m) => TK.html`<span class="tk-chip tk-chip--static ${m[3] ? "" : "tk-chip--partial"}" data-tip="${esc((CTL[m[0]] || {}).title || "Control not defined")}${m[3] ? "" : " (partial)"}">${esc(m[0])}</span>`)) || TK.html`<span class="tk-muted">None</span>`}</div></td>
         <td class="tk-muted">${esc(r.reason)}</td></tr>`;
       if (open) {
-        h += `<tr class="tk-open"><td colspan="4">${r.maps.map((m) => {
+        h = TK.html`${h}${TK.html`<tr class="tk-open"><td colspan="4">${TK.join(r.maps.map((m) => {
           const c = CTL[m[0]], evs = cur.byControl[m[0]] || [];
-          return `<p class="tk-issue">${pill(cur.cstate[m[0]])}<b>${esc(m[0])}</b><span>${esc(c ? c.title : "Control not defined")} (${m[3] ? "full" : "partial"} match)</span>
-            <span class="tk-muted">${evs.length ? "Evidence: " + evs.map((e) => esc(e + " " + label(cur.evState[e]).toLowerCase())).join(", ") : "No evidence on file"}</span></p>`;
-        }).join("") || '<p class="tk-muted">No control is mapped. Add one, or record why the requirement does not apply.</p>'}
-          <p><button type="button" class="tk-link" data-translate="${esc(key)}">See counterparts in other frameworks</button></p></td></tr>`;
+          return TK.html`<p class="tk-issue">${pill(cur.cstate[m[0]])}<b>${esc(m[0])}</b><span>${esc(c ? c.title : "Control not defined")} (${m[3] ? "full" : "partial"} match)</span>
+            <span class="tk-muted">${evs.length ? "Evidence: " + evs.map((e) => e + " " + label(cur.evState[e]).toLowerCase()).join(", ") : "No evidence on file"}</span></p>`;
+        })) || TK.html`<p class="tk-muted">No control is mapped. Add one, or record why the requirement does not apply.</p>`}
+          <p><button type="button" class="tk-link" data-translate="${esc(key)}">See counterparts in other frameworks</button></p></td></tr>`}`;
       }
       return h;
-    }).join("") || '<tr><td colspan="4" class="tk-muted">Nothing matches these filters.</td></tr>';
-    $("cw-req-more").innerHTML = rows.length > show.length ? `Showing 40 of ${rows.length}. <button type="button" class="tk-link" id="cw-showall">Show all</button>` : "";
+    })) || TK.html`<tr><td colspan="4" class="tk-muted">Nothing matches these filters.</td></tr>`}`;
+    $("cw-req-more").innerHTML = TK.html`${rows.length > show.length ? TK.html`Showing 40 of ${rows.length}. <button type="button" class="tk-link" id="cw-showall">Show all</button>` : ""}`;
   }
 
   const supported = (cid) => { const out = {}; D.mappings.forEach((m) => { if (m[0] === cid && TITLE[m[1] + "|" + m[2]] && !(m[2] in FW[m[1]].excluded)) (out[m[1]] ||= []).push(m); }); return out; };
   function renderControls() {
     const c = CTL[st.control], sup = supported(c.id), total = Object.values(sup).reduce((a, v) => a + v.length, 0), evs = cur.byControl[c.id] || [];
-    $("cw-control-body").innerHTML = `<p class="tk-dec__ask">${esc(c.title)}</p>
+    $("cw-control-body").innerHTML = TK.html`<p class="tk-dec__ask">${esc(c.title)}</p>
       <div class="tk-tags">${pill(cur.cstate[c.id])}<span class="tk-tag">Owner: ${esc(c.owner || "not set")}</span><span class="tk-tag">${esc(c.freq || "No frequency set")}</span><span class="tk-tag">${esc(c.domain)}</span></div>
       <p>Test this once and it supports <b>${total}</b> requirement${total === 1 ? "" : "s"} in ${Object.keys(sup).length} framework${Object.keys(sup).length === 1 ? "" : "s"}.</p>
-      ${evs.map((e) => `<p class="tk-issue">${pill(cur.evState[e])}<b>${esc(e)}</b><span>${esc(EV[e].title)}</span>${EV[e].valid === null ? "" : `<span class="tk-muted">valid until ${dateIn(EV[e].valid)}</span>`}</p>`).join("") || '<p class="tk-muted">No evidence on file for this control.</p>'}
-      <div class="tk-cols">${D.frameworks.map((f) => `<div><h3>${esc(f.name)} <span class="tk-muted">${(sup[f.key] || []).length}</span></h3><div class="tk-chiprow">${(sup[f.key] || []).map((m) =>
-        `<span class="tk-chip tk-chip--static ${m[3] ? "" : "tk-chip--partial"}" data-tip="${esc(TITLE[f.key + "|" + m[2]])}${m[3] ? "" : " (partial)"}">${esc(m[2])}</span>`).join("") || '<span class="tk-muted">None</span>'}</div></div>`).join("")}</div>
+      ${TK.join(evs.map((e) => TK.html`<p class="tk-issue">${pill(cur.evState[e])}<b>${esc(e)}</b><span>${esc(EV[e].title)}</span>${EV[e].valid === null ? "" : TK.html`<span class="tk-muted">valid until ${dateIn(EV[e].valid)}</span>`}</p>`)) || TK.html`<p class="tk-muted">No evidence on file for this control.</p>`}
+      <div class="tk-cols">${D.frameworks.map((f) => TK.html`<div><h3>${esc(f.name)} <span class="tk-muted">${(sup[f.key] || []).length}</span></h3><div class="tk-chiprow">${TK.join((sup[f.key] || []).map((m) =>
+        TK.html`<span class="tk-chip tk-chip--static ${m[3] ? "" : "tk-chip--partial"}" data-tip="${esc(TITLE[f.key + "|" + m[2]])}${m[3] ? "" : " (partial)"}">${esc(m[2])}</span>`)) || TK.html`<span class="tk-muted">None</span>`}</div></div>`)}</div>
       <p class="tk-muted">Dashed chips are partial matches: they contribute but do not meet the requirement alone. Hover or focus a chip for its title.</p>`;
     const rank = D.controls.map((x) => [x[0], Object.values(supported(x[0])).reduce((a, v) => a + v.length, 0)]).sort((a, b) => b[1] - a[1]).slice(0, 10);
     const max = Math.max(1, rank[0][1]);
-    $("cw-control-rank").innerHTML = rank.map(([id, n]) => `<div class="tk-bar ${id === st.control ? "tk-bar--on" : ""}" data-tip="${esc(CTL[id].title)}">
-      <button type="button" class="tk-link" data-control="${esc(id)}">${esc(id)}</button><span class="tk-bar__track"><i class="tk-s-b" data-w="${(n / max) * 100}"></i></span><span class="tk-num tk-muted">${n}</span></div>`).join("");
+    $("cw-control-rank").innerHTML = TK.html`${rank.map(([id, n]) => TK.html`<div class="tk-bar ${id === st.control ? "tk-bar--on" : ""}" data-tip="${esc(CTL[id].title)}">
+      <button type="button" class="tk-link" data-control="${esc(id)}">${esc(id)}</button><span class="tk-bar__track"><i class="tk-s-b" data-w="${(n / max) * 100}"></i></span><span class="tk-num tk-muted">${n}</span></div>`)}`;
   }
 
   function renderTranslate() {
     const f = FW[st.tfw];
     if (!f.reqs.some((r) => r[0] === st.treq)) st.treq = (f.reqs.find((r) => D.mappings.some((m) => m[1] === f.key && m[2] === r[0])) || f.reqs[0])[0];
-    $("cw-t-fw").innerHTML = D.frameworks.map((x) => `<option value="${x.key}"${x.key === st.tfw ? " selected" : ""}>${esc(x.name)}</option>`).join("");
-    $("cw-t-req").innerHTML = f.reqs.map(([id, t]) => `<option value="${esc(id)}"${id === st.treq ? " selected" : ""}>${esc(id + " · " + t)}</option>`).join("");
+    $("cw-t-fw").innerHTML = TK.html`${D.frameworks.map((x) => TK.html`<option value="${x.key}"${x.key === st.tfw ? " selected" : ""}>${esc(x.name)}</option>`)}`;
+    $("cw-t-req").innerHTML = TK.html`${f.reqs.map(([id, t]) => TK.html`<option value="${esc(id)}"${id === st.treq ? " selected" : ""}>${esc(id + " · " + t)}</option>`)}`;
     const res = cur.results[f.key].find((r) => r.id === st.treq), eq = TKC.equivalents(D, f.key, st.treq);
     const others = D.frameworks.filter((x) => x.key !== f.key);
-    $("cw-translate-body").innerHTML = `<p class="tk-dec__ask"><span class="tk-num">${esc(st.treq)}</span> ${esc(TITLE[f.key + "|" + st.treq])}</p>
-      <div class="tk-tags">${pill(res.status)}${res.maps.map((m) => `<span class="tk-tag" data-tip="${esc((CTL[m[0]] || {}).title || "")}">Met by ${esc(m[0])}${m[3] ? "" : " (partial)"}</span>`).join("")}</div>
-      ${res.maps.length ? "" : '<p class="tk-muted">No control is mapped to this requirement, so it has no counterparts yet.</p>'}
+    $("cw-translate-body").innerHTML = TK.html`<p class="tk-dec__ask"><span class="tk-num">${esc(st.treq)}</span> ${esc(TITLE[f.key + "|" + st.treq])}</p>
+      <div class="tk-tags">${pill(res.status)}${res.maps.map((m) => TK.html`<span class="tk-tag" data-tip="${esc((CTL[m[0]] || {}).title || "")}">Met by ${esc(m[0])}${m[3] ? "" : " (partial)"}</span>`)}</div>
+      ${res.maps.length ? "" : TK.html`<p class="tk-muted">No control is mapped to this requirement, so it has no counterparts yet.</p>`}
       <div class="tk-cols">${others.map((x) => {
         const ids = x.reqs.map((r) => r[0]).filter((id) => eq[x.key] && eq[x.key].has(id));
-        return `<div><h3>${esc(x.name)} <span class="tk-muted">${ids.length}</span></h3>${ids.map((id) => `<p class="tk-issue"><b class="tk-num">${esc(id)}</b><span class="tk-muted">${esc(TITLE[x.key + "|" + id])}</span></p>`).join("") || '<p class="tk-muted">No counterpart.</p>'}</div>`;
-      }).join("")}</div>
+        return TK.html`<div><h3>${esc(x.name)} <span class="tk-muted">${ids.length}</span></h3>${TK.join(ids.map((id) => TK.html`<p class="tk-issue"><b class="tk-num">${esc(id)}</b><span class="tk-muted">${esc(TITLE[x.key + "|" + id])}</span></p>`)) || TK.html`<p class="tk-muted">No counterpart.</p>`}</div>`;
+      })}</div>
       <p class="tk-muted">Counterparts share a control with this requirement. They are related, not identical: check the wording before relying on one for the other.</p>`;
   }
 
   function renderWhatIf() {
     const max = Math.max(1, ...cur.impacts.map((i) => i.total));
-    $("cw-evidence").innerHTML = cur.impacts.map((i) => {
+    $("cw-evidence").innerHTML = TK.html`${cur.impacts.map((i) => {
       const e = EV[i.id];
-      return `<tr><td><b class="tk-num">${esc(i.id)}</b> ${esc(e.title)}</td><td class="tk-muted">${esc(e.controls.join(", "))}</td>
-        <td><select id="cw-ev-${esc(i.id)}" data-ev="${esc(i.id)}" aria-label="Result of ${esc(i.id)}">${EV_STATES.map((s) => `<option value="${s}"${s === i.state ? " selected" : ""}>${label(s)}</option>`).join("")}</select>
-          ${st.ovr[i.id] ? '<span class="tk-tag tk-tag--over">changed</span>' : ""}</td>
+      return TK.html`<tr><td><b class="tk-num">${esc(i.id)}</b> ${esc(e.title)}</td><td class="tk-muted">${esc(e.controls.join(", "))}</td>
+        <td><select id="cw-ev-${esc(i.id)}" data-ev="${esc(i.id)}" aria-label="Result of ${esc(i.id)}">${EV_STATES.map((s) => TK.html`<option value="${s}"${s === i.state ? " selected" : ""}>${label(s)}</option>`)}</select>
+          ${st.ovr[i.id] ? TK.html`<span class="tk-tag tk-tag--over">changed</span>` : ""}</td>
         <td><div class="tk-bar"><span class="tk-num">${i.total}</span><span class="tk-bar__track" data-tip="${Object.entries(i.reqs).map(([k, v]) => FW[k].name + ": " + v.length).join(" · ") || "Supports nothing in scope"}"><i class="tk-s-a" data-w="${(i.total / max) * 100}"></i></span><span></span></div></td></tr>`;
-    }).join("");
-    if (!changed()) { $("cw-impact").innerHTML = '<p class="tk-muted">Nothing changed yet. Set any result to Failed to see what it breaks.</p>'; return; }
+    })}`;
+    if (!changed()) { $("cw-impact").innerHTML = TK.html`<p class="tk-muted">Nothing changed yet. Set any result to Failed to see what it breaks.</p>`; return; }
     const diffs = D.frameworks.flatMap((f) => cur.results[f.key].map((r, i) => [r, base.results[f.key][i].status]).filter(([r, was]) => r.status !== was));
-    $("cw-impact").innerHTML = `<div class="tk-tags">${D.frameworks.map((f) => `<span class="tk-tag">${esc(f.name)}: ${base.coverage(f.key).toFixed(0)}% → ${cur.coverage(f.key).toFixed(0)}%</span>`).join("")}</div>
+    $("cw-impact").innerHTML = TK.html`<div class="tk-tags">${D.frameworks.map((f) => TK.html`<span class="tk-tag">${esc(f.name)}: ${base.coverage(f.key).toFixed(0)}% → ${cur.coverage(f.key).toFixed(0)}%</span>`)}</div>
       <p><b>${diffs.length}</b> requirement${diffs.length === 1 ? "" : "s"} changed status.</p>
-      ${diffs.slice(0, 30).map(([r, was]) => `<p class="tk-issue"><b class="tk-num">${esc(r.id)}</b><span class="tk-muted">${esc(FW[r.fw].name)}</span>${pill(was)}<span>→</span>${pill(r.status)}</p>`).join("")}
-      ${diffs.length > 30 ? `<p class="tk-muted">and ${diffs.length - 30} more.</p>` : ""}`;
+      ${diffs.slice(0, 30).map(([r, was]) => TK.html`<p class="tk-issue"><b class="tk-num">${esc(r.id)}</b><span class="tk-muted">${esc(FW[r.fw].name)}</span>${pill(was)}<span>→</span>${pill(r.status)}</p>`)}
+      ${diffs.length > 30 ? TK.html`<p class="tk-muted">and ${diffs.length - 30} more.</p>` : ""}`;
   }
   function render() { cur = changed() ? TKC.assess(D, st.ovr) : base; renderTop(); renderCoverage(); renderControls(); renderTranslate(); renderWhatIf(); dims($("tk-crosswalk")); }
 
@@ -242,9 +242,9 @@ document.addEventListener("DOMContentLoaded", () => {
   $("cw-dl-map").addEventListener("click", () => TK.download("control-crosswalk.csv", TK.toCSV([["control_id", "control", "framework", "requirement_id", "requirement", "strength"]]
     .concat(D.mappings.filter((m) => TITLE[m[1] + "|" + m[2]]).map((m) => [m[0], (CTL[m[0]] || {}).title || "", FW[m[1]].name, m[2], TITLE[m[1] + "|" + m[2]], m[3] ? "full" : "partial"])))));
 
-  $("cw-fw").innerHTML = '<option value="">All frameworks</option>' + D.frameworks.map((f) => `<option value="${f.key}">${esc(f.name)}</option>`).join("");
+  $("cw-fw").innerHTML = TK.html`${TK.html`<option value="">All frameworks</option>`}${D.frameworks.map((f) => TK.html`<option value="${f.key}">${esc(f.name)}</option>`)}`;
   const domains = [...new Set(D.controls.map((c) => c[2]))];
-  $("cw-control").innerHTML = domains.map((d) => `<optgroup label="${esc(d)}">${D.controls.filter((c) => c[2] === d).map((c) => `<option value="${esc(c[0])}">${esc(c[0] + " · " + c[1])}</option>`).join("")}</optgroup>`).join("");
+  $("cw-control").innerHTML = TK.html`${domains.map((d) => TK.html`<optgroup label="${esc(d)}">${D.controls.filter((c) => c[2] === d).map((c) => TK.html`<option value="${esc(c[0])}">${esc(c[0] + " · " + c[1])}</option>`)}</optgroup>`)}`;
   st.control = D.controls.map((x) => [x[0], Object.values(supported(x[0])).reduce((a, v) => a + v.length, 0)]).sort((a, b) => b[1] - a[1])[0][0];
   $("cw-control").value = st.control;
   TK.tips(); TK.tabs(["coverage", "controls", "translate", "what-if"]); render();
