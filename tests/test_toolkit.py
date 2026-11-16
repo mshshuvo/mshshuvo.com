@@ -63,9 +63,11 @@ class ToolkitTests(unittest.TestCase):
             csp = re.search(r'http-equiv="Content-Security-Policy" content="([^"]+)"', html).group(1)
             self.assertIn("default-src 'none'", csp)
             self.assertIn("connect-src 'none'", csp)
-            for body in re.findall(r"<script>(.*?)</script>", html, re.S):
+            bodies = re.findall(r"<script>(.*?)</script[^>]*>", html, re.S | re.I)
+            self.assertEqual(len(bodies), len(re.findall(r"<script\b", html, re.I)), "every script is a plain inline block")
+            for body in bodies:
                 self.assertIn(toolkit._sha256(body), csp)
-            self.assertIn(toolkit._sha256(re.search(r"<style>(.*?)</style>", html, re.S).group(1)), csp)
+            self.assertIn(toolkit._sha256(re.search(r"<style>(.*?)</style[^>]*>", html, re.S | re.I).group(1)), csp)
             self.assertIn(toolkit.LICENCE, html)
 
 
