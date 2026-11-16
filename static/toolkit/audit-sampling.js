@@ -199,7 +199,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const lower = t.headers.map((h) => h.toLowerCase());
     const guess = (re) => t.headers[lower.findIndex((h) => re.test(h))] || "";
     const fill = (id, optional, pick) => {
-      $(id).innerHTML = (optional ? '<option value="">None</option>' : "") + t.headers.map((h) => `<option value="${esc(h)}"${h === pick ? " selected" : ""}>${esc(h)}</option>`).join("");
+      $(id).innerHTML = TK.html`${optional ? TK.html`<option value="">None</option>` : ""}${t.headers.map((h) => TK.html`<option value="${esc(h)}"${h === pick ? " selected" : ""}>${esc(h)}</option>`)}`;
     };
     fill("as-idcol", false, guess(/(^|_)id$|number|ticket|ref/) || t.headers[0]);
     fill("as-groupcol", true, guess(/risk|tier|group|strat/));
@@ -252,7 +252,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (s.method === "frequency") {
       $("as-n-text").textContent = s.test_all ? `Test all ${plural(s.n, "occurrence")}: the population is no larger than the sample.`
         : `Test ${plural(s.n, "item")}. Any exception means the control cannot be relied on without more work.`;
-      $("as-n-tags").innerHTML = `<span class="tk-tag">Guide range ${s.range[0]}–${s.range[1]}</span><span class="tk-tag">Judgmental, not statistical</span>`;
+      $("as-n-tags").innerHTML = TK.html`<span class="tk-tag">Guide range ${s.range[0]}–${s.range[1]}</span><span class="tk-tag">Judgmental, not statistical</span>`;
       $("as-compare").innerHTML = "";
       $("as-size-note").textContent = "A common practitioner convention, not set by any standard. Record your own basis.";
       return;
@@ -260,30 +260,29 @@ document.addEventListener("DOMContentLoaded", () => {
     const k = s.allowed_deviations;
     $("as-n-text").textContent = s.test_all ? `The population is too small for sampling to give this assurance. Test every item.`
       : `Test ${plural(s.n, "item")}. If you find no more than ${plural(k, "exception")}, you can say with ${pct(s.confidence)} confidence that fewer than ${pct(s.tolerable_rate)} of all items fail.`;
-    $("as-n-tags").innerHTML = `<span class="tk-tag">Exceptions allowed: ${k}</span><span class="tk-tag">${s.population ? "Exact, for a population of " + s.population : "Large-population model"}</span>`;
+    $("as-n-tags").innerHTML = TK.html`<span class="tk-tag">Exceptions allowed: ${k}</span><span class="tk-tag">${s.population ? "Exact, for a population of " + s.population : "Large-population model"}</span>`;
     const rows = [0.9, 0.95, 0.99].map((c) => { try { return [c, TKS.attributeSize(c, s.tolerable_rate, s.expected_rate, s.population).n]; } catch (e) { return [c, null]; } });
     const max = Math.max(1, ...rows.map((r) => r[1] || 0));
-    $("as-compare").innerHTML = rows.map(([c, n]) => `<div class="tk-bar ${c === s.confidence ? "tk-bar--on" : ""}" data-tip="${pct(c)} confidence needs ${n ?? "more than 5000"} items">
-      <span>${pct(c)} confidence</span><span class="tk-bar__track"><i class="tk-s-b" data-w="${n ? (n / max) * 100 : 100}"></i></span><span class="tk-num tk-muted">${n ?? "–"}</span></div>`).join("");
+    $("as-compare").innerHTML = TK.html`${rows.map(([c, n]) => TK.html`<div class="tk-bar ${c === s.confidence ? "tk-bar--on" : ""}" data-tip="${pct(c)} confidence needs ${n ?? "more than 5000"} items">
+      <span>${pct(c)} confidence</span><span class="tk-bar__track"><i class="tk-s-b" data-w="${n ? (n / max) * 100 : 100}"></i></span><span class="tk-num tk-muted">${n ?? "–"}</span></div>`)}`;
   }
 
   function renderDraw() {
     const has = Boolean(st.pop), d = st.drawn, fr = st.fr;
-    $("as-pop-tags").innerHTML = has
-      ? `<span class="tk-tag">${plural(st.pop.rows.length, "row")} read</span><span class="tk-tag">${fr.frame.length} eligible</span>
-         <span class="tk-tag">Fingerprint <span class="tk-num">${TKS.sha256(st.pop.text).slice(0, 16)}…</span></span>` : "";
-    $("as-issues").innerHTML = !has ? '<p class="tk-muted">Load a population to check it.</p>' : fr.issues.length
-      ? fr.issues.slice(0, 50).map(([check, sev, ref, msg]) => `<p class="tk-issue"><span class="tk-pill ${sev === "High" ? "tk-b-crit" : "tk-b-med"} tk-t-pill">${sev}</span><b>${esc(ref)}</b><span>${esc(msg)}</span></p>`).join("")
-        + (fr.issues.length > 50 ? `<p class="tk-muted">and ${fr.issues.length - 50} more.</p>` : "")
-      : '<p class="tk-issue"><span class="tk-tag tk-tag--ok">Clean</span><span>No blank or duplicate IDs, and every item is inside the period.</span></p>';
+    $("as-pop-tags").innerHTML = TK.html`${has
+      ? TK.html`<span class="tk-tag">${plural(st.pop.rows.length, "row")} read</span><span class="tk-tag">${fr.frame.length} eligible</span>
+         <span class="tk-tag">Fingerprint <span class="tk-num">${TKS.sha256(st.pop.text).slice(0, 16)}…</span></span>` : ""}`;
+    $("as-issues").innerHTML = TK.html`${!has ? TK.html`<p class="tk-muted">Load a population to check it.</p>` : fr.issues.length
+      ? TK.html`${fr.issues.slice(0, 50).map(([check, sev, ref, msg]) => TK.html`<p class="tk-issue"><span class="tk-pill ${sev === "High" ? "tk-b-crit" : "tk-b-med"} tk-t-pill">${sev}</span><b>${esc(ref)}</b><span>${esc(msg)}</span></p>`)}${fr.issues.length > 50 ? TK.html`<p class="tk-muted">and ${fr.issues.length - 50} more.</p>` : ""}`
+      : TK.html`<p class="tk-issue"><span class="tk-tag tk-tag--ok">Clean</span><span>No blank or duplicate IDs, and every item is inside the period.</span></p>`}`;
     const alloc = d ? Object.entries(d.allocation) : [];
     $("as-alloc-h").hidden = !alloc.length;
     const amax = Math.max(1, ...alloc.map((a) => a[1]));
-    $("as-alloc").innerHTML = alloc.sort((a, b) => b[1] - a[1]).map(([g, n]) =>
-      `<div class="tk-bar"><span>${esc(g)}</span><span class="tk-bar__track" data-tip="${esc(g)}: ${n} of the sample"><i class="tk-s-a" data-w="${(n / amax) * 100}"></i></span><span class="tk-num tk-muted">${n}</span></div>`).join("");
+    $("as-alloc").innerHTML = TK.html`${alloc.sort((a, b) => b[1] - a[1]).map(([g, n]) =>
+      TK.html`<div class="tk-bar"><span>${esc(g)}</span><span class="tk-bar__track" data-tip="${esc(g)}: ${n} of the sample"><i class="tk-s-a" data-w="${(n / amax) * 100}"></i></span><span class="tk-num tk-muted">${n}</span></div>`)}`;
     $("as-sel-h").textContent = d ? `Selected items (${d.selected.length})` : "Selected items";
-    $("as-selected").innerHTML = d ? d.selected.map((s, i) => `<tr><td class="tk-num">${i + 1}</td><td class="tk-num">${esc(s.item_id)}</td><td>${esc(s.stratum)}</td></tr>`).join("")
-      : `<tr><td colspan="3" class="tk-muted">${has ? "Nothing to select yet." : "Load a population to draw the sample."}</td></tr>`;
+    $("as-selected").innerHTML = TK.html`${d ? d.selected.map((s, i) => TK.html`<tr><td class="tk-num">${i + 1}</td><td class="tk-num">${esc(s.item_id)}</td><td>${esc(s.stratum)}</td></tr>`)
+      : TK.html`<tr><td colspan="3" class="tk-muted">${has ? "Nothing to select yet." : "Load a population to draw the sample."}</td></tr>`}`;
     ["as-dl-tracker", "as-dl-record", "as-copy"].forEach((id) => { $(id).disabled = !d; });
   }
 
@@ -300,7 +299,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (e.upper === null) { $("as-meter").innerHTML = ""; return; }
     const max = Math.max(e.upper, s.tolerable_rate) * 1.1, over = e.upper > s.tolerable_rate;
     $("as-meter").innerHTML =
-      `<div class="tk-bar ${over ? "tk-bar--bad" : "tk-bar--on"}" data-tip="Worst rate the results cannot rule out at ${pct(s.confidence)} confidence"><span>Could be as high as</span><span class="tk-bar__track"><i class="tk-s-b" data-w="${(e.upper / max) * 100}"></i></span><span class="tk-num tk-muted">${TKS.upPct(e.upper)}</span></div>
+      TK.html`<div class="tk-bar ${over ? "tk-bar--bad" : "tk-bar--on"}" data-tip="Worst rate the results cannot rule out at ${pct(s.confidence)} confidence"><span>Could be as high as</span><span class="tk-bar__track"><i class="tk-s-b" data-w="${(e.upper / max) * 100}"></i></span><span class="tk-num tk-muted">${TKS.upPct(e.upper)}</span></div>
        <div class="tk-bar" data-tip="The most you said you can tolerate"><span>Tolerable rate</span><span class="tk-bar__track"><i class="tk-s-b" data-w="${(s.tolerable_rate / max) * 100}"></i></span><span class="tk-num tk-muted">${(s.tolerable_rate * 100).toFixed(1)}%</span></div>`;
   }
   function refresh() { compute(); renderSize(); renderDraw(); renderVerdict(); dims($("tk-sampling")); }
@@ -346,7 +345,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const b = new Uint8Array(8); crypto.getRandomValues(b);
     $("as-seed").value = Array.from(b, (x) => x.toString(16).padStart(2, "0")).join(""); refresh();
   });
-  $("as-file").addEventListener("change", (e) => TK.readFile(e.target, (text, name) => { if (setPopulation(text, name)) { $("as-from").value = ""; $("as-to").value = ""; refresh(); } }));
+  $("as-file").addEventListener("change", (e) => TK.readFile(e.target, (text, name, err) => { if (err) { $("as-pop-msg").textContent = err; return; } if (setPopulation(text, name)) { $("as-from").value = ""; $("as-to").value = ""; refresh(); } }));
   $("as-paste-open").addEventListener("click", () => { $("as-paste").hidden = false; $("as-paste-text").focus(); });
   $("as-paste-cancel").addEventListener("click", () => { $("as-paste").hidden = true; });
   $("as-paste-use").addEventListener("click", () => {

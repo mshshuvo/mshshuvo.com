@@ -8,6 +8,8 @@ Each tool is three static pieces, so the site's strict Content Security Policy n
 `standalone()` joins the same pieces into one self-contained HTML file that visitors can download
 and open offline. That file makes no network requests.
 """
+import base64
+import hashlib
 import re
 from html import escape
 from pathlib import Path
@@ -120,15 +122,36 @@ def standalone(slug: str) -> str:
         if "</script" in text.lower():
             raise ValueError(f"{slug}: script text would close its own script element")
     name, author = escape(tool["name"]), escape(SITE["name"])
+    style_body = f"\n{css}\n"
+    script_bodies = [f"\n{text}\n" for text in scripts]
     return (
         "<!doctype html>\n"
         f"<!-- {name}. Built by {author}, {SITE_URL}/toolkit. {LICENCE} -->\n"
         '<html lang="en">\n<head>\n<meta charset="utf-8">\n'
+        f'<meta http-equiv="Content-Security-Policy" content="{offline_csp(style_body, script_bodies)}">\n'
         '<meta name="viewport" content="width=device-width, initial-scale=1">\n'
         f"<title>{name}</title>\n"
         f'<meta name="author" content="{author}, {SITE_URL}">\n'
-        f"<style>\n{css}\n</style>\n</head>\n<body>\n"
+        f"<style>{style_body}</style>\n</head>\n<body>\n"
         f'<header class="page-head"><div class="sa-wrap"><h1>{name}</h1><p>{escape(tool["lead"])}</p></div></header>\n'
         f'<main class="sa-wrap">\n{fragment(slug)}\n{credit_html()}\n</main>\n'
-        + "".join(f"<script>\n{text}\n</script>\n" for text in scripts)
+        + "".join(f"<script>{body}</script>\n" for body in script_bodies)
         + "</body>\n</html>\n")
+
+
+def _sha256(text: str) -> str:
+    return "'sha256-" + base64.b64encode(hashlib.sha256(text.encode("utf-8")).digest()).decode() + "'"
+
+
+def offline_csp(style_body: str, script_bodies: list[str]) -> str:
+    """Policy for the downloaded file: only its own inline style and scripts (pinned by hash) may run, and it
+    can make no network connection at all, so it provably cannot send anything anywhere."""
+    return "; ".join([
+        "default-src 'none'",
+        "script-src " + " ".join(_sha256(b) for b in script_bodies),
+        "style-src " + _sha256(style_body),
+        "img-src data:",
+        "connect-src 'none'",
+        "form-action 'none'",
+        "base-uri 'none'",
+    ])
