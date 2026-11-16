@@ -632,3 +632,11 @@ details[open] .tl__more::after { content: "hide −"; }
   .nav__links a { font-size: .8125rem; }
   .brand__name { display: none; }
 }
+
+/* ---------- wide screens: use more width, keep text at a readable line length ---------- */
+@media (min-width: 1440px) {
+  .wrap { width: min(1280px, 100% - var(--s8)); }
+  .hero h1 { font-size: 3.9rem; }
+}
+/* Long paragraphs never exceed a comfortable line length, whatever the screen width */
+.fineprint, .callout p, .wrap--narrow > p { max-width: 75ch; }
