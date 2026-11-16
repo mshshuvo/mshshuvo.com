@@ -3,6 +3,7 @@ title: "When \"HIPAA Compliant\" Becomes a Risk: AI Agents and Patient Records"
 date: 2026-11-16
 tags: [AI Governance, Privacy, Governance & Risk]
 summary: A psychologist plans to let an AI agent organize all his patient files because the tool is "HIPAA compliant". A risk practitioner's breakdown of why that belief is the real danger, with a 12-item risk register and the controls that fix it.
+canonical_url: https://lnkd.in/p/grS5Mv32
 cover: hipaa-compliant-is-not-a-feature-cover
 cover_alt: "\"HIPAA compliant\" is not a feature. AI agents, patient records, false assurance."
 ---
