@@ -211,3 +211,37 @@ tr.tk-open td { background: var(--color-background); }
 .tk-bars--wide { margin-top: 12px; }
 .tk-grid2--top { align-items: start; }
 .tk-grid2--top .tk-form { align-items: start; }
+
+/* Access Review & SoD Analyzer */
+.tk-find, .tk-urgent { border: 1px solid var(--color-border); border-radius: var(--radius-sm); background: var(--color-background); overflow: hidden; display: grid; grid-template-columns: 6px minmax(0, 1fr) auto; }
+.tk-find__main, .tk-urgent__main { all: unset; box-sizing: border-box; cursor: pointer; padding: 11px 12px; display: flex; flex-direction: column; gap: 5px; min-width: 0; }
+.tk-find__main:focus-visible, .tk-urgent:focus-visible { outline: 2px solid var(--color-primary); outline-offset: -2px; }
+.tk-find__main:hover, .tk-urgent:hover { background: var(--color-surface-hover); }
+.tk-find__side { padding: 10px 12px 10px 0; display: flex; align-items: center; }
+.tk-find__side select { width: 190px; }
+.tk-find > .tk-detail { grid-column: 1 / -1; }
+.tk-find--done .tk-risk__title { color: var(--color-text); font-weight: 500; }
+button.tk-urgent { all: unset; box-sizing: border-box; cursor: pointer; display: grid; grid-template-columns: 6px minmax(0, 1fr); border: 1px solid var(--color-border); border-radius: var(--radius-sm); background: var(--color-background); overflow: hidden; }
+.tk-list { gap: 8px; margin-top: var(--s2); }
+.tk-ul { margin: 2px 0 6px; padding-left: 18px; }
+.tk-ul li { margin: 2px 0; }
+.tk-detail dd + dt { margin-top: 8px; }
+.tk-comment { width: 100%; }
+.tk-prog--big { height: 10px; margin: 8px 0 12px; }
+.tk-bars--sys .tk-bar { grid-template-columns: 150px minmax(0, 1fr) 26px; }
+.tk-bars--sys .tk-link { text-align: left; }
+.tk-bars--rules .tk-bar { grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr) 26px; }
+.tk-loaders { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--s2); }
+.tk-loader { border: 1px solid var(--color-border); border-radius: var(--radius); background: var(--color-surface); padding: var(--s3); display: flex; flex-direction: column; gap: 8px; min-width: 0; }
+.tk-loader h3 { font-size: 1rem; margin: 0; }
+.tk-loader .tk-actions { margin-top: auto; }
+.tk-loader .tk-issue b, .tk-loader .tk-msg b { color: var(--color-heading); overflow-wrap: anywhere; }
+@media (max-width: 860px) { .tk-loaders { grid-template-columns: minmax(0, 1fr); } }
+@media (max-width: 640px) {
+  .tk-find { grid-template-columns: 6px minmax(0, 1fr); }
+  .tk-find__side { grid-column: 2; padding: 0 12px 12px; }
+  .tk-find__side select { width: 100%; min-width: 0; }
+  .tk-bars--rules .tk-bar, .tk-bars--sys .tk-bar { grid-template-columns: minmax(0, 1fr) 26px; }
+  .tk-bars--rules .tk-bar > :first-child, .tk-bars--sys .tk-bar > :first-child { grid-column: 1 / -1; }
+}
+@media print { .tk-find__side { display: none; } .tk-find { grid-template-columns: 6px minmax(0, 1fr); } }

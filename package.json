@@ -3,7 +3,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "test": "node --no-warnings --test worker/index.test.mjs tests/toolkit.test.mjs",
+    "test": "node --no-warnings --test worker/index.test.mjs tests/toolkit.test.mjs tests/access-review.test.mjs",
     "dev": "wrangler dev",
     "deploy": "wrangler deploy",
     "lint": "eslint static"
