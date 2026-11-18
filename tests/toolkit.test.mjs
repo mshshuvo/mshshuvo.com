@@ -6,7 +6,7 @@ import fs from "node:fs";
 import vm from "node:vm";
 
 const code = fs.readFileSync(new URL("../static/toolkit/tk-common.js", import.meta.url), "utf8");
-const sandbox = { document: {}, navigator: {}, localStorage: null, setTimeout, URL, Blob };
+const sandbox = { document: {}, navigator: {}, localStorage: null, setTimeout, URL, Blob, TextEncoder };
 vm.createContext(sandbox);
 vm.runInContext(code + "\nthis.TK = TK;", sandbox);
 const { TK } = sandbox;
@@ -59,4 +59,10 @@ test("files over 5 MB are refused before they are read", () => {
   assert.equal(result.text, null);
   assert.match(result.err, /limit is 5 MB/);
   assert.equal(input.value, "");
+});
+
+test("sha256 matches the standard test vectors", () => {
+  assert.equal(TK.sha256(""), "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855");
+  assert.equal(TK.sha256("abc"), "ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad");
+  assert.equal(TK.sha256("a".repeat(1000)), "41edece42d63e8d9bf515a9ba6932e1c20cbc9f5a5d134645adb5db1b9737ea3");
 });

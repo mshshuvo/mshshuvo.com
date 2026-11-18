@@ -1,0 +1,138 @@
+// Reference data for the Access Review & SoD Analyzer.
+// STARTER_RULES is a generic segregation-of-duties rule set written for this tool (not copied from any
+// vendor or ERP rule set). SAMPLE is a fictional lender, Northgate Lending: a staff list, access exports
+// from five systems and a role map. Dates are days before the review date, so the sample always tells
+// the same story. Email addresses use the reserved .example domain.
+"use strict";
+const TK_ACCESS_DATA = {
+  // [rule_id, function_a, function_b, risk, process, what_could_go_wrong]
+  starterRules: [
+    ["SOD-01", "Maintain vendors", "Release payments", "High", "Procure to pay", "Create a fake vendor and pay it."],
+    ["SOD-02", "Maintain vendors", "Enter supplier invoices", "High", "Procure to pay", "Set up a vendor and bill the company through it."],
+    ["SOD-03", "Enter supplier invoices", "Release payments", "High", "Procure to pay", "Enter a false invoice and release the payment."],
+    ["SOD-04", "Create purchase orders", "Record goods receipts", "Medium", "Procure to pay", "Order goods and confirm a delivery that never arrived."],
+    ["SOD-05", "Post journal entries", "Approve journal entries", "High", "Record to report", "Post and approve your own accounting entries, hiding errors or fraud."],
+    ["SOD-06", "Originate loans", "Approve loans", "High", "Lending", "Create and approve a loan with no independent credit review."],
+    ["SOD-07", "Approve loans", "Disburse funds", "Medium", "Lending", "Approve a loan and send the money with no second check."],
+    ["SOD-08", "Maintain customer details", "Disburse funds", "High", "Payments", "Change a customer's bank account and send funds to it."],
+    ["SOD-09", "Administer user access", "Approve access requests", "High", "Access management", "Grant access and approve it yourself."],
+    ["SOD-10", "Develop code", "Deploy to production", "High", "Change management", "Put unreviewed code into production."],
+    ["SOD-11", "Develop code", "Approve changes", "Medium", "Change management", "Approve your own code changes."],
+    ["SOD-12", "Administer user access", "Manage audit logs", "High", "Access management", "Grant access, then erase the record of it."],
+  ],
+  sample: {
+    org: "Northgate Lending (sample data)",
+    domain: "northgate.example",
+    // [employee_id, name, department, job_title, status, days since leaving (negative = leaving in future)]
+    people: [
+      ["E1001", "Priya Raman", "Finance", "Controller", "Active", null],
+      ["E1002", "Marc Tremblay", "Finance", "Accounts Payable Supervisor", "Active", null],
+      ["E1003", "Aisha Mohamed", "Finance", "Accounts Payable Clerk", "Active", null],
+      ["E1004", "Daniel Okafor", "Finance", "Procurement Officer", "Active", null],
+      ["E1005", "Sophie Martin", "Finance", "Senior Accountant", "Active", null],
+      ["E1006", "Kevin Liu", "Finance", "Payables Analyst", "Terminated", 40],
+      ["E1007", "Hannah Fraser", "Finance", "Financial Analyst", "Active", null],
+      ["E1010", "Omar Haddad", "Lending", "Branch Manager", "Active", null],
+      ["E1011", "Grace Chen", "Lending", "Loan Officer", "Active", null],
+      ["E1012", "Lucas Pelletier", "Lending", "Loan Officer", "Terminated", 75],
+      ["E1013", "Fatima Siddiqui", "Credit", "Credit Manager", "Active", null],
+      ["E1014", "Ryan O'Neill", "Credit", "Underwriter", "On leave", null],
+      ["E1015", "Mei Wong", "Lending", "Loan Officer", "Active", null],
+      ["E1020", "Isabelle Roy", "Member Services", "Member Services Representative", "Active", null],
+      ["E1021", "Thomas Bergeron", "Payments", "Payments Officer", "Active", null],
+      ["E1022", "Nadia Karim", "Member Services", "Teller", "Active", null],
+      ["E1023", "Jordan Blake", "Operations", "Branch Operations Lead", "Active", null],
+      ["E1024", "Chloé Gagnon", "Member Services", "Teller", "Active", null],
+      ["E1030", "Arjun Patel", "IT", "IT Manager", "Active", null],
+      ["E1031", "Emily Johnson", "IT", "Systems Administrator", "Active", null],
+      ["E1032", "Noah Williams", "IT", "Developer", "Active", null],
+      ["E1033", "Zara Ahmed", "IT", "Developer", "Active", null],
+      ["E1034", "Samuel Osei", "IT", "Release Manager", "Active", null],
+      ["E1035", "Laura Kim", "IT", "Change Manager", "Active", null],
+      ["E1036", "Victor Santos", "IT", "Service Desk Analyst", "Terminated", 12],
+      ["E1037", "Olivia Brown", "IT", "Security Analyst", "Active", null],
+      ["E1038", "Ben Cohen", "IT", "Developer", "Active", null],
+      ["E1040", "Catherine Dubois", "Executive", "Chief Executive Officer", "Active", null],
+      ["E1041", "Michael Adeyemi", "Executive", "Chief Financial Officer", "Active", null],
+      ["E1042", "Rachel Singh", "Risk", "Chief Risk Officer", "Active", null],
+      ["E1043", "Hugo Lefebvre", "Compliance", "Compliance Officer", "Active", -10],
+      ["E1050", "Paul Girard", "Lending", "Loan Officer", "Terminated", 300],
+    ],
+    // Each system exports differently, as real systems do. "style" decides how accounts are named:
+    // sso = flast + email column, erp = FLAST + employee_id, los = email as login, core = U + number with
+    // employee_id, devops = flast and nothing else (matched on the account name alone).
+    systems: [
+      ["Directory (SSO)", "sso", "directory-sso.csv"],
+      ["Finance ERP", "erp", "finance-erp.csv"],
+      ["Loan Origination", "los", "loan-origination.csv"],
+      ["Core Banking", "core", "core-banking.csv"],
+      ["DevOps Pipeline", "devops", "devops-pipeline.csv"],
+    ],
+    // [system, employee_id or null, account override or null, roles, enabled (1/0), days since last sign-in
+    //  (null = never), account_type, owner]
+    access: [
+      ["Directory (SSO)", "E1001", null, "Staff", 1, 1], ["Directory (SSO)", "E1002", null, "Staff", 1, 0],
+      ["Directory (SSO)", "E1003", null, "Staff", 1, 2], ["Directory (SSO)", "E1004", null, "Staff", 1, 1],
+      ["Directory (SSO)", "E1005", null, "Staff", 1, 0], ["Directory (SSO)", "E1006", null, "Staff", 0, 41],
+      ["Directory (SSO)", "E1007", null, "Staff", 1, 3], ["Directory (SSO)", "E1010", null, "Staff", 1, 1],
+      ["Directory (SSO)", "E1011", null, "Staff", 1, 0], ["Directory (SSO)", "E1012", null, "Staff", 1, 76],
+      ["Directory (SSO)", "E1013", null, "Staff", 1, 2], ["Directory (SSO)", "E1014", null, "Staff", 1, 30],
+      ["Directory (SSO)", "E1015", null, "Staff", 1, 5], ["Directory (SSO)", "E1020", null, "Staff", 1, 0],
+      ["Directory (SSO)", "E1021", null, "Staff", 1, 1], ["Directory (SSO)", "E1022", null, "Staff", 1, 2],
+      ["Directory (SSO)", "E1023", null, "Staff", 1, 1], ["Directory (SSO)", "E1024", null, "Staff", 1, 3],
+      ["Directory (SSO)", "E1030", null, "Staff;Access Approver", 1, 0],
+      ["Directory (SSO)", null, "apatel-adm", "Global Administrator", 1, 2],
+      ["Directory (SSO)", "E1031", null, "Staff;Helpdesk", 1, 0], ["Directory (SSO)", "E1032", null, "Staff", 1, 1],
+      ["Directory (SSO)", "E1033", null, "Staff", 1, 0], ["Directory (SSO)", "E1034", null, "Staff", 1, 2],
+      ["Directory (SSO)", "E1035", null, "Staff", 1, 1], ["Directory (SSO)", "E1036", null, "Staff;Helpdesk", 1, 14],
+      ["Directory (SSO)", "E1037", null, "Staff", 1, 0], ["Directory (SSO)", "E1038", null, "Staff", 1, 1],
+      ["Directory (SSO)", "E1040", null, "Staff", 1, 4], ["Directory (SSO)", "E1041", null, "Staff", 1, 1],
+      ["Directory (SSO)", "E1042", null, "Staff", 1, 2], ["Directory (SSO)", "E1043", null, "Staff", 1, 6],
+      ["Directory (SSO)", "E1050", null, "Staff", 0, 301],
+      ["Directory (SSO)", null, "jsmith", "Staff", 1, 10, "", "", "jsmith@northgate.example"],
+      ["Directory (SSO)", null, "svc-backup", "Staff", 1, 0, "Service", "E1031"],
+
+      ["Finance ERP", "E1001", null, "Controller", 1, 1], ["Finance ERP", "E1002", null, "AP Supervisor;Vendor Master", 1, 0],
+      ["Finance ERP", "E1003", null, "AP Clerk", 1, 2], ["Finance ERP", "E1004", null, "Buyer;Receiver", 1, 1],
+      ["Finance ERP", "E1005", null, "GL Accountant;Controller", 1, 3], ["Finance ERP", "E1006", null, "AP Clerk", 1, 35],
+      ["Finance ERP", "E1007", null, "Finance Viewer", 1, 4], ["Finance ERP", "E1030", null, "ERP Administrator", 1, 9],
+      ["Finance ERP", "E1041", null, "Controller", 1, 6], ["Finance ERP", "E1050", null, "AP Clerk", 0, 305],
+      ["Finance ERP", null, "TEMP.AUDIT", "Finance Viewer", 1, 95],
+      ["Finance ERP", null, "SVC_BANKFEED", "Integration", 1, 0, "Service", "E1006"],
+
+      ["Loan Origination", "E1010", null, "Branch Manager", 1, 1], ["Loan Origination", "E1011", null, "Loan Officer", 1, 0],
+      ["Loan Origination", "E1012", null, "Loan Officer", 1, 80], ["Loan Origination", "E1013", null, "Credit Approver", 1, 1],
+      ["Loan Origination", "E1014", null, "Credit Approver", 1, 31], ["Loan Origination", "E1015", null, "Loan Officer", 1, 200],
+      ["Loan Origination", "E1031", null, "LOS Administrator", 1, 15], ["Loan Origination", "E1050", null, "Loan Officer", 0, 302],
+
+      ["Core Banking", "E1010", null, "Member Services", 1, 2], ["Core Banking", "E1013", null, "Payments Officer", 1, 3],
+      ["Core Banking", "E1020", null, "Member Services", 1, 0], ["Core Banking", "E1021", null, "Payments Officer;Member Services", 1, 0],
+      ["Core Banking", "E1022", null, "Teller", 1, 1], ["Core Banking", "E1023", null, "Branch Ops", 1, 2],
+      ["Core Banking", "E1024", null, "Teller", 1, null], ["Core Banking", "E1031", null, "Core Administrator", 1, 6],
+
+      ["DevOps Pipeline", "E1032", null, "Developer;Release Manager", 1, 0], ["DevOps Pipeline", "E1033", null, "Developer", 1, 1],
+      ["DevOps Pipeline", "E1034", null, "Release Manager", 1, 2], ["DevOps Pipeline", "E1035", null, "Change Approver", 1, 3],
+      ["DevOps Pipeline", "E1037", null, "Platform Admin", 1, 120], ["DevOps Pipeline", "E1038", null, "Developer;Change Approver", 1, 0],
+      ["DevOps Pipeline", null, "svc-deploy", "Platform Admin", 1, 0, "Service", ""],
+    ],
+    // [system, role, function ("" = grants none of the rule functions), privileged (1/0)]
+    roleMap: [
+      ["Directory (SSO)", "Staff", "", 0], ["Directory (SSO)", "Access Approver", "Approve access requests", 0],
+      ["Directory (SSO)", "Helpdesk", "Administer user access", 0],
+      ["Directory (SSO)", "Global Administrator", "Administer user access", 1], ["Directory (SSO)", "Global Administrator", "Manage audit logs", 1],
+      ["Finance ERP", "AP Clerk", "Enter supplier invoices", 0], ["Finance ERP", "AP Supervisor", "Release payments", 0],
+      ["Finance ERP", "Vendor Master", "Maintain vendors", 0], ["Finance ERP", "Buyer", "Create purchase orders", 0],
+      ["Finance ERP", "Receiver", "Record goods receipts", 0], ["Finance ERP", "GL Accountant", "Post journal entries", 0],
+      ["Finance ERP", "Controller", "Approve journal entries", 0], ["Finance ERP", "Finance Viewer", "", 0],
+      ["Finance ERP", "ERP Administrator", "Administer user access", 1], ["Finance ERP", "Integration", "Post journal entries", 0],
+      ["Loan Origination", "Loan Officer", "Originate loans", 0], ["Loan Origination", "Credit Approver", "Approve loans", 0],
+      ["Loan Origination", "Branch Manager", "Originate loans", 0], ["Loan Origination", "Branch Manager", "Approve loans", 0],
+      ["Loan Origination", "LOS Administrator", "Administer user access", 1],
+      ["Core Banking", "Teller", "", 0], ["Core Banking", "Member Services", "Maintain customer details", 0],
+      ["Core Banking", "Payments Officer", "Disburse funds", 0],
+      ["Core Banking", "Core Administrator", "Administer user access", 1], ["Core Banking", "Core Administrator", "Manage audit logs", 1],
+      ["DevOps Pipeline", "Developer", "Develop code", 0], ["DevOps Pipeline", "Release Manager", "Deploy to production", 0],
+      ["DevOps Pipeline", "Change Approver", "Approve changes", 0], ["DevOps Pipeline", "Platform Admin", "Deploy to production", 1],
+    ],
+  },
+};

@@ -66,6 +66,24 @@ TOOLS = [
         "privacy": "It uses built-in sample data and sends nothing to this site or anyone else.",
         "scripts": ["control-crosswalk-data.js"],
     },
+    {
+        "slug": "access-review",
+        "name": "Access Review & SoD Analyzer",
+        "title": "Who still has access, and who has too much.",
+        "seo_title": "Free User Access Review & Segregation of Duties (SoD) Analyzer",
+        "short": "Match system access exports to your staff list. Find leavers who can still sign in, accounts "
+                 "nobody owns, unused and admin access, and segregation-of-duties conflicts across systems.",
+        "lead": "Load your staff list and access exports. In seconds you see who has left but can still sign in, "
+                "accounts nobody owns, unused and admin access, and people who can do both halves of a task that "
+                "should be split. Record decisions and export the evidence.",
+        "meta": "Free user access review and segregation of duties analyzer: leavers with active accounts, orphaned "
+                "and dormant accounts, privileged access and SoD conflicts across systems. Runs in your browser; "
+                "your files never leave your device.",
+        "facts": ["User access reviews", "Segregation of duties", "ITGC and SOX", "Files stay on your device"],
+        "privacy": "Your files are read in your browser and held in memory only; nothing is uploaded. Review "
+                   "decisions are saved on this device so you can pick up where you left off.",
+        "scripts": ["access-review-data.js"],
+    },
 ]
 BY_SLUG = {t["slug"]: t for t in TOOLS}
 
