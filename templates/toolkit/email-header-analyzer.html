@@ -1,0 +1,84 @@
+<div class="tk" id="tk-headers">
+  <noscript><p class="tk-card">This tool needs JavaScript. It runs entirely in your browser and sends nothing anywhere.</p></noscript>
+
+  <section class="tk-card">
+    <div class="tk-card__head"><div><h2>Paste the email's headers</h2>
+      <p class="tk-sub">The full header block, not just the From line. Nothing you paste is sent anywhere or saved.</p></div></div>
+    <div class="tk-form">
+      <label class="tk-wide">Email headers
+        <textarea id="ph-raw" rows="10" spellcheck="false" autocomplete="off" maxlength="262144"
+          placeholder="Received: from ...&#10;Authentication-Results: ...&#10;From: ...&#10;Subject: ..."></textarea></label>
+      <label class="tk-half">Your organisation's domain (optional)
+        <input id="ph-org" maxlength="120" autocomplete="off" placeholder="yourcompany.com"></label>
+      <p class="tk-half tk-muted ph-hint">Lets the tool spot look-alikes of your own domain, such as yourc0mpany.com. Only this is remembered on this device.</p>
+    </div>
+    <div class="tk-actions ph-actions">
+      <button type="button" class="tk-btn" id="ph-run">Analyse headers</button>
+      <button type="button" class="tk-btn tk-btn--ghost" id="ph-clear">Clear</button>
+      <span class="tk-muted">Try a sample:</span>
+      <button type="button" class="tk-btn tk-btn--ghost" data-sample="phish">Fake Microsoft alert</button>
+      <button type="button" class="tk-btn tk-btn--ghost" data-sample="ceo">CEO gift-card request</button>
+      <button type="button" class="tk-btn tk-btn--ghost" data-sample="clean">Genuine supplier email</button>
+    </div>
+    <p class="tk-msg" id="ph-msg" role="status"></p>
+    <details class="ph-how">
+      <summary>How to copy the full headers</summary>
+      <dl class="ph-howlist">
+        <dt>Outlook (new and web)</dt><dd>Open the email, select the three dots (…), then View, then View message source. Copy everything above the first blank line.</dd>
+        <dt>Outlook (classic desktop)</dt><dd>Open the email, select File, then Properties. Copy the Internet headers box.</dd>
+        <dt>Gmail</dt><dd>Open the email, select the three dots next to Reply, then Show original. Copy the text from the top down to the first blank line.</dd>
+        <dt>Apple Mail</dt><dd>Open the email, then View, then Message, then All Headers (or Raw Source).</dd>
+        <dt>Thunderbird</dt><dd>Open the email, then View, then Message Source (Ctrl+U).</dd>
+      </dl>
+      <p class="tk-muted">If the email is suspicious, copy the headers without clicking anything inside it. Pasting the whole source is fine: the tool ignores the message body.</p>
+    </details>
+  </section>
+
+  <div id="ph-results" hidden>
+    <div class="tk-card tk-headline tk-verdict" id="ph-verdict" tabindex="-1">
+      <p id="ph-headline"></p><p class="tk-foot" id="ph-headfoot"></p>
+    </div>
+    <div class="tk-kpis" id="ph-kpis" aria-label="Authentication results"></div>
+
+    <div class="tk-card">
+      <div class="tk-card__head"><div><h2>Red flags</h2><p class="tk-sub">Most serious first. Each one says why it matters.</p></div></div>
+      <div class="tk-stack" id="ph-findings"></div>
+    </div>
+
+    <div class="tk-grid2 tk-grid2--top">
+      <div class="tk-card">
+        <div class="tk-card__head"><div><h2>Who really sent it</h2><p class="tk-sub">The addresses behind the display name, and whether they match.</p></div></div>
+        <div class="tk-tablewrap"><table class="tk-table tk-table--tight ph-id"><tbody id="ph-identity"></tbody></table></div>
+      </div>
+      <div class="tk-card">
+        <div class="tk-card__head"><div><h2>The route it took</h2><p class="tk-sub" id="ph-route-sub"></p></div></div>
+        <ol class="ph-route" id="ph-route"></ol>
+      </div>
+    </div>
+
+    <div class="tk-card">
+      <div class="tk-card__head"><div><h2>What to do now</h2></div></div>
+      <ul class="tk-ul ph-todo">
+        <li>Don't click links, open attachments or reply until you're sure who sent it.</li>
+        <li>If it claims to be from someone you know, contact them a different way: a phone number you already have, or a new message you start yourself.</li>
+        <li>Report it with your mail app's Report phishing button, or forward it to your IT or security team with this summary.</li>
+        <li>If you already clicked a link or entered a password, change that password now and tell your IT team straight away.</li>
+        <li>In Canada you can also report fraud to the Canadian Anti-Fraud Centre (antifraudcentre-centreantifraude.ca).</li>
+      </ul>
+      <div class="tk-actions ph-actions tk-noprint">
+        <button type="button" class="tk-btn" id="ph-copy">Copy summary</button>
+        <button type="button" class="tk-btn tk-btn--ghost" id="ph-download">Download report (.txt)</button>
+        <span class="tk-muted" id="ph-copy-msg" role="status"></span>
+      </div>
+    </div>
+
+    <details class="tk-card ph-all">
+      <summary><b>All headers</b> <span class="tk-muted" id="ph-all-count"></span></summary>
+      <div class="tk-tablewrap"><table class="tk-table tk-table--tight ph-raw"><tbody id="ph-all"></tbody></table></div>
+    </details>
+
+    <p class="tk-muted ph-limits">Headers show who sent an email and how it travelled. They can't show whether a link or attachment is
+      dangerous, and a message can pass every check and still be a scam (for example from a real but hacked account).
+      The tool reads only what the headers say: it makes no DNS or reputation lookups.</p>
+  </div>
+</div>
