@@ -155,3 +155,25 @@ test("header.d=none is not treated as a signing domain", () => {
   const a = TKP.auth(TKP.parse("Authentication-Results: spf=pass; dkim=none (message not signed) header.d=none; dmarc=fail").headers);
   assert.equal(a.dkim[0].domain, "");
 });
+
+test("split Authentication-Results headers from one server are merged (Proton Mail style)", () => {
+  const h = TKP.parse([
+    "Authentication-Results: mail.protonmail.ch; dkim=pass (Good 2048 bit rsa-sha256 signature) header.d=email.shop.example header.a=rsa-sha256",
+    "Authentication-Results: mail.protonmail.ch; dmarc=pass (p=reject dis=none) header.from=email.shop.example",
+    "Authentication-Results: mail.protonmail.ch; spf=pass smtp.mailfrom=email.shop.example",
+    "Authentication-Results: mail.protonmail.ch; arc=none smtp.remote-ip=198.51.100.9",
+    "Authentication-Results: other.example; spf=fail smtp.mailfrom=email.shop.example",
+  ].join("\n")).headers;
+  const a = TKP.auth(h);
+  assert.equal(a.spf.result, "pass");
+  assert.equal(a.dkim[0].result, "pass");
+  assert.equal(a.dkim[0].domain, "email.shop.example");
+  assert.equal(a.dmarc.result, "pass");
+  assert.equal(a.dmarc.policy, "reject");
+});
+
+test("long opaque server IDs are shortened in the route", () => {
+  const hops = TKP.route(TKP.parse("Received: by " + "b77a".repeat(16) + " with HTTP; Sat, 21 Nov 2026 12:55:15 +0000").headers);
+  assert.equal(hops[0].from, "");
+  assert.match(hops[0].by, /^b77ab77ab77a… \(internal ID\)$/);
+});

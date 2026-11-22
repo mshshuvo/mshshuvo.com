@@ -108,7 +108,14 @@ const TKP = (() => {
   function auth(h) {
     // The top Authentication-Results header is the one added by the receiving server; lower ones could
     // have been written by anyone along the way, so only the first with results is trusted.
-    const ar = all(h, "authentication-results").map(authResults).find((r) => r.items.length) || null;
+    // Some providers (Proton Mail, for example) write one Authentication-Results header per check, so
+    // the top run of headers from the same receiving server is merged.
+    const list = all(h, "authentication-results").map(authResults).filter((r) => r.items.length);
+    let ar = list[0] || null;
+    if (ar && ar.by) {
+      ar = { by: ar.by, items: [] };
+      for (const r of list) { if (r.by.toLowerCase() !== list[0].by.toLowerCase()) break; ar.items.push(...r.items); }
+    }
     const arc = all(h, "arc-authentication-results").map((v) => authResults(v.replace(/^\s*i=\d+\s*;/, ""))).find((r) => r.items.length) || null;
     const src = ar || arc;
     const pick = (method) => (src ? src.items.filter((i) => i.method === method) : []);
@@ -142,6 +149,8 @@ const TKP = (() => {
     const [a, b] = ip.split(".").map(Number);
     return a === 10 || a === 127 || (a === 172 && b >= 16 && b <= 31) || (a === 192 && b === 168) || (a === 169 && b === 254) || (a === 100 && b >= 64 && b <= 127);
   }
+  // Long opaque server IDs (for example a 64-character hash) are shortened for display.
+  const short = (t) => (t.length > 40 && /^[0-9a-f]+$/i.test(t) ? `${t.slice(0, 12)}… (internal ID)` : t);
   function hop(value) {
     const v = String(value);
     const semi = v.lastIndexOf(";");
@@ -152,7 +161,7 @@ const TKP = (() => {
     const ip6 = (/\[?IPv6:([0-9a-f:.]+)\]?/i.exec(fromPart) || [])[1];
     const ip4 = (/\[(\d{1,3}(?:\.\d{1,3}){3})\]/.exec(fromPart) || IPV4.exec(fromPart) || [])[1];
     return {
-      from: part("from"), by: part("by"), with: part("with"), ip: ip6 || ip4 || "",
+      from: short(part("from")), by: short(part("by")), with: part("with"), ip: ip6 || ip4 || "",
       time: isNaN(when) ? null : when, tls: /\bwith\s+(E?SMTPS|ESMTPSA|ESMTPS|SMTPS|HTTPS|LMTPS)\b/i.test(v) || /\b(TLS|version=TLS)/i.test(v),
       raw: v.slice(0, 600),
     };
@@ -411,7 +420,7 @@ const TKP = (() => {
     if (!list.length) L.push("  None found in the headers.");
     list.forEach((x) => { L.push(`  [${SEV_LABEL[x.sev]}] ${x.title}`); if (x.evidence) L.push(`      ${x.evidence}`); });
     L.push("", "ROUTE (oldest first)");
-    r.hops.forEach((x, i) => L.push(`  ${i + 1}. ${x.from || "?"}${x.ip ? " [" + x.ip + "]" : ""} -> ${x.by || "?"}${x.time !== null ? "  " + new Date(x.time).toISOString() : ""}`));
+    r.hops.forEach((x, i) => L.push(`  ${i + 1}. ${x.from || "(sender's system)"}${x.ip ? " [" + x.ip + "]" : ""} -> ${x.by || "?"}${x.time !== null ? "  " + new Date(x.time).toISOString() : ""}`));
     L.push("", "Generated with the free Phishing Email Header Analyzer, https://mshshuvo.com/toolkit/email-header-analyzer",
       "Header analysis cannot check links or attachments. If in doubt, report the email and don't click anything.");
     return L.join("\n");
@@ -564,7 +573,7 @@ document.addEventListener("DOMContentLoaded", () => {
       : "No Received headers, so the route can't be shown.";
     $("ph-route").innerHTML = html`${R.hops.map((x, i) => html`
       <li><span class="ph-step tk-num">${i + 1}</span><div>
-        <p><b>${x.from || "unknown"}</b>${x.ip ? html` <span class="tk-code">${x.ip}</span>` : ""}${x.ip && TKP.privateIp(x.ip) ? html` <span class="tk-tag">internal</span>` : ""} <span class="tk-muted">to</span> ${x.by || "unknown"}</p>
+        <p><b>${x.from || (i === 0 ? "Sender's mail system" : "unknown")}</b>${x.ip ? html` <span class="tk-code">${x.ip}</span>` : ""}${x.ip && TKP.privateIp(x.ip) ? html` <span class="tk-tag">internal</span>` : ""} <span class="tk-muted">to</span> ${x.by || "unknown"}</p>
         <p class="tk-muted">${fmtTime(x.time)}${x.delay !== null && i > 0 ? ` · after ${fmtDelay(x.delay)}` : ""}${x.with ? ` · ${x.with}` : ""}${x.tls ? " · encrypted" : ""}</p>
       </div></li>`)}`;
 
