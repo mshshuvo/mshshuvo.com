@@ -146,7 +146,8 @@ const TKP = (() => {
     const v = String(value);
     const semi = v.lastIndexOf(";");
     const when = semi >= 0 ? Date.parse(v.slice(semi + 1).trim().replace(/\s*\([^)]*\)\s*$/, "")) : NaN;
-    const part = (kw) => ((new RegExp("\\b" + kw + "\\s+([^\\s;()]+)", "i")).exec(v.slice(0, semi >= 0 ? semi : v.length)) || [])[1] || "";
+    const KW = { from: /\bfrom\s+([^\s;()]+)/i, by: /\bby\s+([^\s;()]+)/i, with: /\bwith\s+([^\s;()]+)/i };
+    const part = (kw) => (KW[kw].exec(v.slice(0, semi >= 0 ? semi : v.length)) || [])[1] || "";
     const fromPart = (/\bfrom\s+([\s\S]*?)(?=\s\bby\b|$)/i.exec(v) || [])[1] || "";
     const ip6 = (/\[?IPv6:([0-9a-f:.]+)\]?/i.exec(fromPart) || [])[1];
     const ip4 = (/\[(\d{1,3}(?:\.\d{1,3}){3})\]/.exec(fromPart) || IPV4.exec(fromPart) || [])[1];
@@ -329,7 +330,9 @@ const TKP = (() => {
         `${from.domain} ${brandHit.why}. The real ${brandHit.brand.name} sends from ${brandHit.brand.domains.slice(0, 3).join(", ")}.`, from.address);
     }
     if (from.display && from.domain) {
-      const claimed = BRANDS.find((b) => new RegExp("\\b" + b.name.replace(/\s+/g, "\\s*") + "\\b", "i").test(from.display));
+      const words = (t) => " " + String(t).toLowerCase().replace(/[^a-z0-9]+/g, " ").trim() + " ";
+      const shown = words(from.display);
+      const claimed = BRANDS.find((b) => shown.includes(words(b.name)));
       if (claimed && !isBrandDomain(claimed, from.domain) && !(brandHit && brandHit.brand === claimed)) {
         add("high", "BRAND_NAME", `Says it is from ${claimed.name}, but isn't sent from a ${claimed.name} domain`,
           `The display name says "${from.display}", but the address is ${from.address}.`, `${from.display} <${from.address}>`);
