@@ -21,16 +21,21 @@ const TKP = (() => {
     if (truncated) text = text.slice(0, MAX_CHARS);
     const lines = text.replace(/\r\n?/g, "\n").split("\n");
     const headers = [];
-    let skipped = 0, body = false;
+    let skipped = 0, joined = 0, body = false;
     for (const line of lines) {
       if (/^[ \t]/.test(line) && headers.length) { headers[headers.length - 1].value += " " + line.trim(); continue; }
       if (line.trim() === "") { if (headers.length) { body = true; break; } continue; }
-      const m = /^([!-9;-~]{1,80}):[ \t]?(.*)$/.exec(line);
-      if (!m) { skipped++; continue; }
+      const m = /^([A-Za-z0-9][A-Za-z0-9_-]{0,79}):[ \t]?(.*)$/.exec(line);
+      if (!m) {
+        // Copying from some mail apps drops the indentation of wrapped lines. A line that isn't a new
+        // header, after the first header, is treated as the rest of the previous one.
+        if (headers.length) { headers[headers.length - 1].value += " " + line.trim(); joined++; } else skipped++;
+        continue;
+      }
       if (headers.length >= MAX_HEADERS) { skipped++; continue; }
       headers.push({ name: m[1], lname: m[1].toLowerCase(), value: m[2].trim() });
     }
-    return { headers, skipped, body, truncated };
+    return { headers, skipped, joined, body, truncated };
   }
   const all = (h, name) => h.filter((x) => x.lname === name).map((x) => x.value);
   const first = (h, name) => { const x = h.find((y) => y.lname === name); return x ? x.value : ""; };
@@ -533,6 +538,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const notes = [];
     if (R.parse.truncated) notes.push(`Only the first ${TKP.MAX_CHARS / 1024} KB were read.`);
     if (R.parse.skipped) notes.push(`${R.parse.skipped} line${R.parse.skipped === 1 ? " wasn't a header and was" : "s weren't headers and were"} skipped.`);
+    if (R.parse.joined) notes.push(`${R.parse.joined} wrapped line${R.parse.joined === 1 ? " had" : "s had"} lost their indentation and ${R.parse.joined === 1 ? "was" : "were"} joined to the header above.`);
     if (R.parse.body) notes.push("Text after the headers (the message body) was ignored.");
     $("ph-msg").textContent = notes.join(" ");
     $("ph-msg").className = "tk-msg";

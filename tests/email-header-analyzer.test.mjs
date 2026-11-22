@@ -177,3 +177,19 @@ test("long opaque server IDs are shortened in the route", () => {
   assert.equal(hops[0].from, "");
   assert.match(hops[0].by, /^b77ab77ab77a… \(internal ID\)$/);
 });
+
+test("wrapped lines that lost their indentation are joined back (copied from a mail app)", () => {
+  const p = TKP.parse([
+    "Received: from mta.example (mta.example [198.51.100.4])",
+    "by mx.example (Postfix) with ESMTPS id 4Ab1",
+    "for <x@y.example>; Mon, 15 Jun 2026 16:27:14 +0000 (UTC)",
+    "DKIM-Signature: v=1; d=a.example;",
+    "h=from:to:subject; s=pm; b=abc",
+    "From: info@a.example",
+  ].join("\n"));
+  assert.equal(p.headers.length, 3);
+  assert.equal(p.joined, 3);
+  const hop = TKP.route(p.headers)[0];
+  assert.equal(hop.by, "mx.example");
+  assert.equal(new Date(hop.time).toISOString(), "2026-06-15T16:27:14.000Z");
+});
