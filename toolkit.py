@@ -84,6 +84,21 @@ TOOLS = [
                    "decisions are saved on this device so you can pick up where you left off.",
         "scripts": ["access-review-data.js"],
     },
+    {
+        "slug": "email-header-analyzer",
+        "name": "Phishing Email Header Analyzer",
+        "title": "Is this email really from who it says?",
+        "seo_title": "Free Phishing Email Header Analyzer: SPF, DKIM, DMARC Checker",
+        "short": "Paste a suspicious email's headers and see, in plain English, who really sent it, whether it "
+                 "passed SPF, DKIM and DMARC, and the red flags that point to phishing.",
+        "lead": "Paste the headers of a suspicious email. You get a plain-English verdict, the SPF, DKIM and DMARC "
+                "results, look-alike domains, mismatched reply addresses and the route it took, ready to send to IT.",
+        "meta": "Free phishing email header analyzer: SPF, DKIM and DMARC results, look-alike domains and Reply-To "
+                "tricks in plain English. Runs in your browser.",
+        "facts": ["Phishing triage", "SPF, DKIM and DMARC", "Look-alike domains", "Nothing is uploaded"],
+        "privacy": "The headers you paste are analysed in your browser and never sent or saved. Only your "
+                   "organisation's domain, if you enter one, is remembered on this device.",
+    },
 ]
 BY_SLUG = {t["slug"]: t for t in TOOLS}
 
