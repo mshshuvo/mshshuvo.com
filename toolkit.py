@@ -99,6 +99,22 @@ TOOLS = [
         "privacy": "The headers you paste are analysed in your browser and never sent or saved. Only your "
                    "organisation's domain, if you enter one, is remembered on this device.",
     },
+    {
+        "slug": "phishing-quiz",
+        "name": "Real or Phish? Phishing Awareness Quiz",
+        "title": "Can you spot the phish?",
+        "seo_title": "Free Phishing Awareness Quiz: Real or Phish? Test Your Team",
+        "short": "Ten realistic emails, some genuine and some phishing. Decide which is which, see where links "
+                 "really go, and learn the signs that give each one away.",
+        "lead": "Ten realistic work emails, some genuine and some phishing. Pick real or phish, reveal where links "
+                "and QR codes really go, and see the tell-tale signs after every answer. Good for team training.",
+        "meta": "Free phishing awareness quiz: 10 realistic emails, real or phish? See where links really go and "
+                "learn the six signs of phishing. No sign-up.",
+        "facts": ["Awareness training", "10 emails per round", "Explains every answer", "No sign-up, nothing sent"],
+        "privacy": "The quiz runs in your browser. Your answers aren't sent anywhere; only your best score is "
+                   "remembered on this device.",
+        "scripts": ["phishing-quiz-data.js"],
+    },
 ]
 BY_SLUG = {t["slug"]: t for t in TOOLS}
 

@@ -1,0 +1,62 @@
+<div class="tk" id="tk-quiz">
+  <noscript><p class="tk-card">This quiz needs JavaScript. It runs entirely in your browser and sends nothing anywhere.</p></noscript>
+
+  <section class="tk-card pq-intro" id="pq-intro" hidden>
+    <h2>Ten emails. Real or phish?</h2>
+    <p>Each round shows 10 emails that land in the inbox of Sam Taylor at a fictional company, Northgate Logistics.
+      Some are genuine and some are phishing. Decide which is which.</p>
+    <ul class="tk-ul">
+      <li>Select any link or QR code to see where it really goes. Nothing opens, and nothing is clicked for real.</li>
+      <li>After each answer you'll see the signs that give it away, or that make it safe.</li>
+      <li>Every company and address is made up. A new mix of emails is picked each round.</li>
+    </ul>
+    <div class="tk-actions"><button type="button" class="tk-btn" id="pq-start">Start the quiz</button>
+      <span class="tk-muted" id="pq-intro-best"></span></div>
+  </section>
+
+  <section id="pq-play" hidden>
+    <div class="pq-status">
+      <p id="pq-progress" tabindex="-1"></p>
+      <progress id="pq-bar" max="10" value="0" aria-label="Progress"></progress>
+      <p id="pq-score" class="tk-num"></p>
+    </div>
+    <div id="pq-mailbox" aria-live="polite"></div>
+    <div class="pq-answer" role="group" aria-label="Your answer">
+      <button type="button" class="tk-btn tk-btn--ghost pq-choice pq-choice--real" id="pq-real" aria-pressed="false">✓ Real</button>
+      <button type="button" class="tk-btn tk-btn--ghost pq-choice pq-choice--phish" id="pq-phish" aria-pressed="false">⚠ Phish</button>
+    </div>
+    <div id="pq-feedback" class="tk-card pq-feedback" tabindex="-1" hidden></div>
+  </section>
+
+  <section id="pq-end" hidden>
+    <div class="tk-card tk-headline pq-result">
+      <p class="pq-final tk-num" id="pq-final" tabindex="-1"></p>
+      <div><p class="pq-band" id="pq-band"></p><p id="pq-note"></p><p class="tk-muted" id="pq-best"></p></div>
+    </div>
+    <div class="tk-actions tk-noprint">
+      <button type="button" class="tk-btn" id="pq-again">Play another round</button>
+      <button type="button" class="tk-btn tk-btn--ghost" id="pq-share">Copy my score to share</button>
+      <span class="tk-muted" id="pq-share-msg" role="status"></span>
+    </div>
+    <div class="tk-card">
+      <div class="tk-card__head"><div><h2>Your answers</h2><p class="tk-sub">The lesson from each email.</p></div></div>
+      <ol class="pq-review" id="pq-review"></ol>
+    </div>
+  </section>
+
+  <section class="tk-card pq-signs">
+    <div class="tk-card__head"><div><h2>Six signs of a phish</h2><p class="tk-sub">Check these before you click, reply or pay.</p></div></div>
+    <ol class="pq-signlist">
+      <li><b>The real domain.</b> Read the address from the right: the name just before the last dot is the real owner.
+        northgate.example is real; northgate-helpdesk.example and northgate.example.msgcenter.example are not.</li>
+      <li><b>Where links really go.</b> Hover over a link (or press and hold on a phone) before you tap it. The text can say anything.</li>
+      <li><b>Pressure.</b> Deadlines, locked accounts and "within 24 hours" are there to stop you checking.</li>
+      <li><b>Money or passwords.</b> Gift cards, changed bank details, refunds, fees and "confirm your password" deserve a phone call first.</li>
+      <li><b>Secrecy and odd channels.</b> "Keep this between us", a personal Gmail for company business, replies that go somewhere else.</li>
+      <li><b>Unexpected attachments and QR codes.</b> .html, .zip and .iso files, and QR codes that ask you to sign in.</li>
+    </ol>
+    <p class="tk-muted">Not sure? Check with the sender on a phone number you already have, and report it with your mail app's
+      Report phishing button. Got the full headers? Run them through the
+      <a href="https://mshshuvo.com/toolkit/email-header-analyzer">Phishing Email Header Analyzer</a>.</p>
+  </section>
+</div>
