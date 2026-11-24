@@ -57,7 +57,11 @@ class ToolkitTests(unittest.TestCase):
             self.assertNotRegex(html, r"[\s:,]url\(", "no external CSS resources")
             self.assertNotRegex(html, r"\b(fetch|XMLHttpRequest|WebSocket|sendBeacon)\s*\(")
             links = set(re.findall(r'href="(https?://[^"]+)"', html))
-            self.assertEqual(links, {f"{toolkit.SITE_URL}/toolkit", toolkit.SITE["linkedin"]})
+            # Links may only point to the site's own toolkit pages and the author's LinkedIn.
+            allowed = {f"{toolkit.SITE_URL}/toolkit", toolkit.SITE["linkedin"]} | {
+                f"{toolkit.SITE_URL}/toolkit/{x['slug']}" for x in toolkit.TOOLS}
+            self.assertTrue(links <= allowed, links - allowed)
+            self.assertIn(f"{toolkit.SITE_URL}/toolkit", links)
             self.assertIn("Built by", html)
             # The file pins its own scripts and style by hash and allows no network connections.
             csp = re.search(r'http-equiv="Content-Security-Policy" content="([^"]+)"', html).group(1)

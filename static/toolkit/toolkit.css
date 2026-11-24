@@ -279,3 +279,61 @@ button.tk-urgent { all: unset; box-sizing: border-box; cursor: pointer; display:
   .ph-id tr { border-bottom: 1px solid var(--color-border); padding: 8px 0; }
   .ph-id th, .ph-id td { border: 0; padding: 2px 0; }
 }
+
+/* Real or Phish? quiz */
+#tk-quiz > section + section { margin-top: var(--s3); }
+#pq-progress, #pq-final, #pq-feedback { scroll-margin-top: 96px; }
+.pq-intro p, .pq-intro ul { max-width: 70ch; }
+.pq-status { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; gap: 12px; align-items: center; margin-bottom: 12px; }
+.pq-status p { margin: 0; font-weight: 600; color: var(--color-heading); }
+.pq-status progress { width: 100%; height: 8px; accent-color: var(--color-primary); }
+.pq-mail { border: 1px solid var(--color-border); border-radius: var(--radius-sm); background: var(--color-background); overflow: hidden; }
+.pq-mail__head { margin: 0; padding: 12px 16px; display: grid; grid-template-columns: max-content minmax(0, 1fr); gap: 4px 14px;
+  background: var(--color-surface-hover); border-bottom: 1px solid var(--color-border); font-size: .9rem; }
+.pq-mail__head dt { color: var(--color-muted); }
+.pq-mail__head dd { margin: 0; overflow-wrap: anywhere; }
+.pq-addr { font: .82rem var(--font-mono); opacity: .9; }
+.pq-attach { padding: 10px 16px 0; display: flex; flex-wrap: wrap; gap: 8px; }
+.pq-file { border: 1px solid var(--color-border); border-radius: 999px; padding: 3px 10px; font: .8rem var(--font-mono); }
+.pq-mail__body { padding: 14px 16px 16px; }
+.pq-mail__body p { margin: 0 0 10px; max-width: 70ch; }
+.pq-link { all: unset; cursor: pointer; color: var(--color-primary); text-decoration: underline; text-underline-offset: 3px; font-weight: 600; }
+.pq-link:focus-visible { outline: 2px solid currentColor; outline-offset: 3px; border-radius: 2px; }
+.pq-reveal { font-size: .85rem; border-left: 3px solid var(--tk-warn); padding: 6px 10px; background: var(--color-surface-hover); overflow-wrap: anywhere; }
+.pq-qrwrap { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; margin: 4px 0 10px; }
+.pq-qr { width: 120px; height: 120px; fill: #111; }
+.pq-qr__bg { fill: #fff; }
+.pq-answer { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 14px; }
+.pq-choice { justify-content: center; font-size: 1.05rem; padding-block: 14px; background: var(--color-surface); color: var(--color-heading);
+  border: 2px solid var(--color-control-border); }
+.pq-choice--real:hover:not(:disabled) { border-color: var(--tk-good); background: var(--color-surface-hover); }
+.pq-choice--phish:hover:not(:disabled) { border-color: var(--tk-serious); background: var(--color-surface-hover); }
+.pq-choice:disabled { opacity: .4; cursor: default; }
+.pq-choice--real[aria-pressed="true"] { opacity: 1; border-color: var(--tk-good); background: color-mix(in srgb, var(--tk-good) 22%, var(--color-surface)); }
+.pq-choice--phish[aria-pressed="true"] { opacity: 1; border-color: var(--tk-serious); background: color-mix(in srgb, var(--tk-serious) 22%, var(--color-surface)); }
+.pq-feedback { margin-top: 14px; border-left: 4px solid var(--tk-good); }
+.pq-feedback--miss { border-left-color: var(--tk-serious); }
+.pq-feedback__verdict { font-size: 1.15rem; font-weight: 700; color: var(--color-heading); margin: 0 0 8px; }
+.pq-clues { margin: 0 0 10px; padding-left: 1.2em; }
+.pq-clues li { margin-bottom: 6px; max-width: 75ch; }
+.pq-lesson { font-style: italic; max-width: 75ch; margin-bottom: 14px; }
+.pq-result { display: flex; gap: 24px; align-items: center; flex-wrap: wrap; }
+.pq-final { font-size: 3.4rem; font-weight: 800; line-height: 1; margin: 0; color: var(--color-heading); }
+.pq-band { font-size: 1.3rem; font-weight: 700; margin: 0 0 4px; color: var(--color-heading); }
+.pq-result p { margin-top: 0; }
+.pq-review { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 10px; }
+.pq-review li { display: grid; grid-template-columns: 28px minmax(0, 1fr); gap: 8px; }
+.pq-review p { margin: 0 0 2px; }
+.pq-mark { font-weight: 800; font-size: 1.1rem; }
+.pq-ok .pq-mark { color: var(--tk-good); }
+.pq-miss .pq-mark { color: var(--tk-serious); }
+.pq-signlist { margin: 0 0 12px; padding-left: 1.3em; }
+.pq-signlist li { margin-bottom: 8px; max-width: 80ch; }
+@media (max-width: 640px) {
+  .pq-status { grid-template-columns: 1fr auto; }
+  .pq-status progress { grid-column: 1 / -1; grid-row: 2; }
+  .pq-mail__head { grid-template-columns: minmax(0, 1fr); }
+  .pq-mail__head dt { margin-top: 4px; }
+  .pq-final { font-size: 2.6rem; }
+}
+#pq-end > * + *, #pq-intro .tk-actions { margin-top: var(--s3); }
