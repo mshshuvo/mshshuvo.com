@@ -62,7 +62,9 @@ test("grades", () => {
   assert.equal(TKQ.grade(8, 10).band, "Sharp eye");
   assert.equal(TKQ.grade(6, 10).band, "Getting there");
   assert.equal(TKQ.grade(3, 10).band, "Worth a refresher");
-  assert.match(TKQ.shareText(7, 10), /7\/10.*mshshuvo\.com\/toolkit\/phishing-quiz/);
+  const share = TKQ.shareText(7, 10);
+  assert.ok(share.includes("7/10"));
+  assert.ok(share.endsWith(" https://mshshuvo.com/toolkit/phishing-quiz"));
 });
 
 test("QR pattern is deterministic and has finder squares", () => {
